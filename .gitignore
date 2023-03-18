@@ -1,0 +1,7 @@
+# dependencies
+vendor
+
+# settings
+.buildpath
+.project
+.settings
