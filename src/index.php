@@ -8,6 +8,7 @@ include "../vendor/autoload.php";
 use Rehor\Myblog\controllers\RouterController\RouterController;
 use Rehor\Myblog\routers\BramusRouter\BramusRouter;
 use Rehor\Myblog\routers\CustomRouter\CustomRouter;
+use Rehor\Myblog\routers\FlightRouter\FlightRouter;
 
 $router = new RouterController();
 
@@ -17,4 +18,4 @@ $router = new RouterController();
 //     echo "Got About from BramusRouter";
 // });
 
-$router->register(new CustomRouter())->useGet($_SERVER["REQUEST_URI"]);
+$router->register(new FlightRouter())->useGet($_SERVER["REQUEST_URI"]);

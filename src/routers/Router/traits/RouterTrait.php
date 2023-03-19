@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Rehor\Myblog\routers\CustomRouter\traits;
+namespace Rehor\Myblog\routers\Router\traits;
 
-trait CustomRouterTrait
+trait RouterTrait
 {
     public function hasCallable(callable $altFn, ?callable $userFn = null)
     {
