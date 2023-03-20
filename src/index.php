@@ -9,13 +9,8 @@ use Rehor\Myblog\controllers\RouterController\RouterController;
 use Rehor\Myblog\routers\BramusRouter\BramusRouter;
 use Rehor\Myblog\routers\CustomRouter\CustomRouter;
 use Rehor\Myblog\routers\FlightRouter\FlightRouter;
+use Rehor\Myblog\routers\IzniburakRouter\IzniburakRouter;
 
 $router = new RouterController();
 
-// $router->register(new BramusRouter())->useGet("/", function() {
-//     echo "Got Main from BramusRouter";
-// })->useGet("/about", function() {
-//     echo "Got About from BramusRouter";
-// });
-
-$router->register(new FlightRouter())->useGet($_SERVER["REQUEST_URI"]);
+$router->register(new BramusRouter())->useGet($_SERVER["REQUEST_URI"]);
