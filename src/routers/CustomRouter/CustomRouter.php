@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Rehor\Myblog\routers\CustomRouter;
 
 use Rehor\Myblog\routers\Router\Router;
-use Rehor\Myblog\routers\CustomRouter\traits\CustomRouterTrait;
+use Rehor\Myblog\routers\Router\traits\RouterTrait;
 
 class CustomRouter extends Router
 {
-    use CustomRouterTrait;
+    use RouterTrait;
 
     public function __construct()
     {

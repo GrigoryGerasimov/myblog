@@ -6,6 +6,7 @@ namespace Rehor\Myblog\controllers\RouterController\interfaces;
 
 use Rehor\Myblog\routers\Router\Router;
 
+
 interface RouterControllerInterface
 {
     public function register(Router $router): self;
