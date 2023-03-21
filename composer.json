@@ -1,21 +1,21 @@
 {
-    "name": "rehor/myblog",
-    "description": "my blog project in php",
-    "type": "project",
-    "require": {
-        "bramus/router": "^1.6",
-        "mikecao/flight": "^2.0",
-        "izniburak/router": "^2.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Rehor\\Myblog\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Grigory",
-            "email": "rehor.ger@gmail.com"
-        }
-    ]
+	"name" : "rehor/myblog",
+	"description" : "my blog project in php",
+	"type" : "project",
+	"require" : {
+		"bramus/router" : "^1.6",
+		"mikecao/flight" : "^2.0",
+		"izniburak/router" : "^2.5",
+		"twig/twig" : "^3.5"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Rehor\\Myblog\\" : "src/"
+		}
+	},
+	"authors" : [{
+			"name" : "Grigory",
+			"email" : "rehor.ger@gmail.com"
+		}
+	]
 }

@@ -8,6 +8,6 @@ trait RouterTrait
 {
     public function hasCallable(callable $altFn, ?callable $userFn = null)
     {
-        return !is_null($userFn) ? call_user_func($userFn) : call_user_func($altFn);
+        return !is_null($userFn) ? $userFn : $altFn;
     }
 }
