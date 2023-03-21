@@ -24,17 +24,18 @@ class FlightRouter extends Router
     
     public function useGet(string $path, ?callable $fn): void
     {
-        $this->router->route("GET $path", $this->hasCallable(fn() => function() use($path) {
-            echo "Got $path from FlightRouter";
-        }, $fn));
+        
+        $this->router->route("GET $path", $this->hasCallable(fn() => $this->router->view()->render(ltrim($path, "/").".php", array(
+            "message" => $this->router->response()
+        )), $fn));
         $this->router->start();
     }
     
     public function usePost(string $path, ?callable $fn): void
     {
-        $this->router->route("POST $path", $this->hasCallable(fn() => function() use($path) {
-            echo "Posted $path from FlightRouter";
-        }, $fn));
+        $this->router->route("POST $path", $this->hasCallable(fn() => $this->router->view()->render(ltrim($path, "/").".php", array(
+            "message" => $this->router->response()
+        )), $fn));
         $this->router->start();
     }
 }

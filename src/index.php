@@ -3,14 +3,23 @@
 declare(strict_types=1);
 error_reporting(E_ALL);
 
+header("Content-type: text/html; charset=utf-8");
+
 include "../vendor/autoload.php";
 
-use Rehor\Myblog\controllers\RouterController\RouterController;
-use Rehor\Myblog\routers\BramusRouter\BramusRouter;
-use Rehor\Myblog\routers\CustomRouter\CustomRouter;
-use Rehor\Myblog\routers\FlightRouter\FlightRouter;
-use Rehor\Myblog\routers\IzniburakRouter\IzniburakRouter;
 
-$router = new RouterController();
+$twigLoader = new \Twig\Loader\FilesystemLoader(dirname(__FILE__)."/views");
+$twigConfig = array(
+    "debug" => true
+);
 
-$router->register(new BramusRouter())->useGet($_SERVER["REQUEST_URI"]);
+Flight::register("view", "\Twig\Environment", array($twigLoader, $twigConfig), function($twig) {
+    $twig->addExtension(new \Twig\Extension\DebugExtension());
+});
+
+Flight::path(dirname(__FILE__)."/controllers");
+Flight::path(dirname(__FILE__)."/models");
+
+require("routes.php");
+
+Flight::start();
