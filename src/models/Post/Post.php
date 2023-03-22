@@ -23,12 +23,20 @@ class Post implements PostInterface
     
     public function add(): void
     {
-        DBController::insert($this->data);
+        try {
+            DBController::insert($this->data);
+        } catch(\Exception $e) {
+            throw $e;
+        }
     }
     
     public function update(string $uid): object
     {
-        DBController::update($uid, $this->data);
+        try {
+            return DBController::update($uid, $this->data);
+        } catch(\Exception $e) {
+            throw $e;
+        }
     }
     
     public function getOne(string $uid): object
@@ -41,14 +49,12 @@ class Post implements PostInterface
         return DBController::select();
     }
     
-    public function delete(string $uid): bool
+    public function delete(string $uid): void
     {
         try {
             DBController::delete($uid);
-            return true;
         } catch(\Exception $e) {
-            return false;
-            exit(1);
+            throw $e;
         }
     }
 }

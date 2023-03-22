@@ -12,7 +12,7 @@ abstract class BlogController
     
     abstract public static function readAll();
     
-    abstract public static function update();
+    abstract public static function update(string $uid);
     
-    abstract public static function delete();
+    abstract public static function delete(string $uid);
 }
