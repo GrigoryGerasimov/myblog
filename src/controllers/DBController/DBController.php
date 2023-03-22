@@ -52,6 +52,6 @@ class DBController implements DBControllerInterface
     
     public static function delete(string $id): void
     {
-        self::db()->query("delete from ".self::DB_TABLE_NAME);
+        self::db()->query("delete from ".self::DB_TABLE_NAME." where uid = $id");
     }
 }

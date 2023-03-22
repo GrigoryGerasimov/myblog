@@ -6,23 +6,18 @@
 <meta name="viewport" content="width=device-width, initial-scal=1.0, shrink-to-fit=no">
 <meta name="keywords" content="main, page, myblog,, blog, php">
 <meta name="description" content="Myblog main page">
-<title>Post #{{ uid }}</title>
+<title>Posts List</title>
 </head>
 <body>
-<section>
-<article>
-<h1>{{ title }}</h1>
-</article>
-<article>
-<h4>{{ author }}</h4>
-</article>
-<article>
-<pre>{{ text }}</pre>
-</article>
-</section>
-<section>
-<a href="/posts/{{ uid }}/update">Edit Post</a>
-<a href="/posts/{{ uid }}/delete">Delete Post</a>
-</section>
+<ul>
+{% for post in postsList %}
+<li>Post #{{ post.uid }}</li>
+<li>Post Title {{ post.title }}</li>
+<li>Post Author {{ post.author }}</li>
+<li>
+<a href="/posts/{{ post.uid }}">Go to the Post</a>
+</li>
+{% endfor %}
+</ul>
 </body>
 </html>

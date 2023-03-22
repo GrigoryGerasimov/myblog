@@ -14,5 +14,5 @@ interface PostInterface
     
     public function getAll(): object;
     
-    public function delete(string $uid): bool;
+    public function delete(string $uid): void;
 }
