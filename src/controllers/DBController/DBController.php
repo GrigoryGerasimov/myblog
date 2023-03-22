@@ -5,12 +5,18 @@ declare(strict_types=1);
 namespace Rehor\Myblog\controllers\DBController;
 
 use Rehor\Myblog\controllers\DBController\interfaces\DBControllerInterface;
+use Rehor\Myblog\models\QueryBuilder\QueryBuilder;
 
 class DBController implements DBControllerInterface
 {
     protected const DB_NAME = "myblog";
     
     protected const DB_TABLE_NAME = "posts";
+
+    protected static function queryBuilder()
+    {
+        return new QueryBuilder(self::DB_TABLE_NAME);
+    }
 
     protected static function db()
     {
@@ -21,37 +27,36 @@ class DBController implements DBControllerInterface
     
     public static function select(?string $id = null): object
     {
-        $sql = is_null($id) ? "select * from ".self::DB_TABLE_NAME : "select * from ".self::DB_TABLE_NAME." where uid = $id";
+        $sql = is_null($id) ?
+           self::queryBuilder()->select(["*"])->from()->getQuery() :
+           self::queryBuilder()->select(["*"])->from()->where("uid", $id)->getQuery();
         
         return self::db()->query($sql);
     }
 
     public static function insert(object $data): void
     {
-       [
-        "title" => $title,
-        "author" => $author,
-        "text" => $text
-        ] = $data;
+        $dataArray = json_decode(json_encode($data), true);
+        extract ($dataArray, EXTR_SKIP);        
         
-        self::db()->query("insert into ".self::DB_TABLE_NAME." (title, author, text) values ('$title', '$author', '$text')");
+        $sql = self::queryBuilder()->insert()->ins_fields(["title", "author", "text"])->ins_values(["'".$title."'", "'".$author."'", "'".$text."'"])->getQuery();
+        self::db()->query($sql);
     }
     
     public static function update(string $id, object $data): object
     {
-        [
-        "title" => $title,
-        "author" => $author,
-        "text" => $text
-        ] = $data;
+        $dataArray = json_decode(json_encode($data), true);
+        extract($dataArray, EXTR_SKIP);
 
-        self::db()->query("update ".self::DB_TABLE_NAME." set title = '$title', author = '$author', text = '$text' where uid = $id");
+        $sql = self::queryBuilder()->update()->set("title", "'".$title."'")->set("author", "'".$author."'")->set("text", "'".$text."'")->where("uid", $id)->getQuery();
+        self::db()->query($sql);
         
         return self::select($id);
     }
     
     public static function delete(string $id): void
     {
-        self::db()->query("delete from ".self::DB_TABLE_NAME." where uid = $id");
+        $sql = self::queryBuilder()->delete()->from()->where("uid", $id)->getQuery();
+        self::db()->query($sql);
     }
 }
