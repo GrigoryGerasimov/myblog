@@ -93,6 +93,7 @@ class BlogPostController extends BlogController
                 $updatedPost = PostRepository::updatePost($uid, self::getRequestData());
                 
                 if (!is_null($updatedPost)) {
+                    self::$renderData["uid"] = $updatedPost["uid"];
                     self::$renderData["title"] = $updatedPost["title"];
                     self::$renderData["author"] = $updatedPost["author"];
                     self::$renderData["text"] = $updatedPost["text"];

@@ -6,24 +6,29 @@
 <meta name="viewport" content="width=device-width, initial-scal=1.0, shrink-to-fit=no">
 <meta name="keywords" content="main, page, myblog,, blog, php">
 <meta name="description" content="Myblog main page">
-<title>Edit Post # {{ uid }}</title>
+<link href="/index.css" rel="stylesheet"/>
+<title>Edit Post #{{ uid }}</title>
 </head>
 <body>
-<form name="editPost" method="POST">
+<main class="blog-container">
+<section class="blog-card__large-wrapper">
+<article class="blog-card__large">
 <div>
-<label for="title">Title</label>
-<input id="title" name="title" value="{{ title }}" placeholder="Post Title"/>
+<h5 class="blog-card__card-id">#{{ uid }}</h5>
+<hr class="divider-minor"/>
 </div>
-<div>
-<label for="author">Author</label>
-<input id="author" name="author" value="{{ author }}" placeholder="Post Author"/>
-</div>
-<div>
-<label for="text">Text</label>
-<textarea id="text" name="text" placeholder="Write your post here...">{{ text }}</textarea>
-</div>
-<button type="submit">Update</button>
+<form name="editPost" method="POST" class="blog-card__edit-form">
+<input id="title" name="title" value="{{ title }}" placeholder="Post Title" class="blog-card__edit-input"/>
+<input id="author" name="author" value="{{ author }}" placeholder="Post Author" class="blog-card__edit-input"/>
+<textarea id="text" name="text" placeholder="Write your post here..." class="blog-card__edit-text-area">{{ text }}</textarea>
+<article class="blog-card__links-block">
+<a href="/posts/{{ uid }}" class="blog-card__link margin-divider">Back</a>
+<button type="submit" class="blog-card__edit-btn margin-divider">Update</button>
+</article>
 </form>
-{{ notification }}
+<h4 class="notification-success">{{ notification }}</h4>
+</article>
+</section>
+</main>
 </body>
 </html>
