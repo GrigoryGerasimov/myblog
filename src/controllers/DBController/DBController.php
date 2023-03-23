@@ -5,18 +5,13 @@ declare(strict_types=1);
 namespace Rehor\Myblog\controllers\DBController;
 
 use Rehor\Myblog\controllers\DBController\interfaces\DBControllerInterface;
-use Rehor\Myblog\models\QueryBuilder\QueryBuilder;
+use Rehor\Myblog\repositories\QueryBuilderRepository\QueryBuilderRepository;
 
 class DBController implements DBControllerInterface
 {
     protected const DB_NAME = "myblog";
     
     protected const DB_TABLE_NAME = "posts";
-
-    protected static function queryBuilder()
-    {
-        return new QueryBuilder(self::DB_TABLE_NAME);
-    }
 
     protected static function db()
     {
@@ -27,28 +22,22 @@ class DBController implements DBControllerInterface
     
     public static function select(?string $id = null): object
     {
-        $sql = is_null($id) ?
-           self::queryBuilder()->select(["*"])->from()->getQuery() :
-           self::queryBuilder()->select(["*"])->from()->where("uid", $id)->getQuery();
+        $sql = QueryBuilderRepository::buildSelectQuery(self::DB_TABLE_NAME, $id);
         
         return self::db()->query($sql);
     }
 
     public static function insert(object $data): void
     {
-        $dataArray = json_decode(json_encode($data), true);
-        extract ($dataArray, EXTR_SKIP);        
-        
-        $sql = self::queryBuilder()->insert()->ins_fields(["title", "author", "text"])->ins_values(["'".$title."'", "'".$author."'", "'".$text."'"])->getQuery();
+        $sql = QueryBuilderRepository::buildInsertQuery(self::DB_TABLE_NAME, $data);
+
         self::db()->query($sql);
     }
     
     public static function update(string $id, object $data): object
     {
-        $dataArray = json_decode(json_encode($data), true);
-        extract($dataArray, EXTR_SKIP);
+        $sql = QueryBuilderRepository::buildUpdateQuery(self::DB_TABLE_NAME, $id, $data);
 
-        $sql = self::queryBuilder()->update()->set("title", "'".$title."'")->set("author", "'".$author."'")->set("text", "'".$text."'")->where("uid", $id)->getQuery();
         self::db()->query($sql);
         
         return self::select($id);
@@ -56,7 +45,8 @@ class DBController implements DBControllerInterface
     
     public static function delete(string $id): void
     {
-        $sql = self::queryBuilder()->delete()->from()->where("uid", $id)->getQuery();
+        $sql = QueryBuilderRepository::buildDeleteQuery(self::DB_TABLE_NAME, $id);
+
         self::db()->query($sql);
     }
 }
