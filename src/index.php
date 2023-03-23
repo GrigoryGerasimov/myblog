@@ -15,3 +15,4 @@ use Rehor\Myblog\config\Config;
 
 Config::setTwig();
 Config::setFlight();
+Config::setDoctrine();

@@ -35,7 +35,20 @@ class Config
     }
     
     public static function setDoctrine()
-    {
+    {        
+        $path = ["../entities"];
+        $isDevMode = false;
         
+        $config = [
+            "driver" => "pdo_mysql",
+            "host" => "localhost:5600",
+            "user" => "root",
+            "password" => "root",
+            "dbname" => "users"
+        ];
+        
+        $ormSetupConfig = \Doctrine\ORM\ORMSetup::createAnnotationMetadataConfiguration($path, $isDevMode);
+        $driverConnection = \Doctrine\DBAL\DriverManager::getConnection($config, $ormSetupConfig);
+        new \Doctrine\ORM\EntityManager($driverConnection, $ormSetupConfig);
     }
 }
