@@ -11,7 +11,7 @@ class Post implements PostInterface
 {
     private $data;
 
-    public function __construct(object $data = null)
+    public function __construct(?object $data = null)
     {
         $this->data = $data;
     }

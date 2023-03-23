@@ -6,7 +6,7 @@ namespace Rehor\Myblog\controllers\BlogController\BlogPostController;
 
 use Rehor\Myblog\controllers\BlogController\BlogController;
 use Rehor\Myblog\controllers\BlogController\traits\BlogControllerTrait;
-use Rehor\Myblog\models\Post\Post;
+use Rehor\Myblog\repositories\PostRepository\PostRepository;
 
 class BlogPostController extends BlogController
 {
@@ -27,10 +27,10 @@ class BlogPostController extends BlogController
         
         if (self::validatePostData(self::getRequestData())) {
             try {
-                $newPost = new Post(self::getRequestData());
-                $newPost->add();
+                PostRepository::createNewPost(self::getRequestData());
                 
                 self::$renderData["notification"] = "Post successfully created!";
+
             } catch(\Exception $e) {
                 self::handleException($e);
             }
@@ -43,8 +43,7 @@ class BlogPostController extends BlogController
     public static function readOne(string $uid)
     {
         try {
-            $post = new Post();
-            $result = mysqli_fetch_assoc($post->getOne($uid));
+            $result = PostRepository::getOnePost($uid);
             
             if (!is_null($result)) {
                 self::$renderData = [
@@ -56,6 +55,7 @@ class BlogPostController extends BlogController
             }
 
             self::displayView("posts/post.php", self::$renderData);
+
         } catch(\Exception $e) {
             self::handleException($e);
         }
@@ -64,10 +64,10 @@ class BlogPostController extends BlogController
     public static function readAll()
     {
         try {
-            $post = new Post();
-            $postsList = $post->getAll();
+            $postsList = PostRepository::getAllPosts();
             
-            self::$renderData["postsList"] = $postsList->fetch_all(MYSQLI_ASSOC);
+            self::$renderData["postsList"] = $postsList;
+
         } catch(\Exception $e) {
             self::handleException($e);
         }
@@ -78,8 +78,7 @@ class BlogPostController extends BlogController
     public static function update(string $uid)
     {
         if (!self::validatePostData(self::getRequestData())) {
-            $post = new Post();
-            $result = mysqli_fetch_assoc($post->getOne($uid));
+            $result = PostRepository::getOnePost($uid);
             
             if (!is_null($result)) {
                 self::$renderData = [
@@ -91,8 +90,7 @@ class BlogPostController extends BlogController
             }
         } else {
             try {
-                $postForUpdate = new Post(self::getRequestData());
-                $updatedPost = mysqli_fetch_assoc($postForUpdate->update($uid));
+                $updatedPost = PostRepository::updatePost($uid, self::getRequestData());
                 
                 if (!is_null($updatedPost)) {
                     self::$renderData["title"] = $updatedPost["title"];
@@ -110,8 +108,7 @@ class BlogPostController extends BlogController
     
     public static function delete($uid)
     {
-        $postToDelete = new Post();
-        $result = mysqli_fetch_assoc($postToDelete->getOne($uid));
+        $result = PostRepository::getOnePost($uid);
         
         if (!is_null($result)) {
             self::$renderData = [
@@ -124,10 +121,10 @@ class BlogPostController extends BlogController
         
         if (self::validatePostData(self::getRequestData())) {
             try {
-                $deletedPost = new Post();
-                $deletedPost->delete($uid);
+                PostRepository::deletePost($uid);
                 
                 self::$renderData["notification"] = "Post successfully deleted!";
+
             } catch(\Exception $e) {
                 self::handleException($e);
             }

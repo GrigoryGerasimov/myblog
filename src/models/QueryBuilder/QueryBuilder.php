@@ -10,18 +10,18 @@ class QueryBuilder implements QueryCommandsInterface, QueryClausesInterface
 {
     private $query = "";
     
-    private $dbName;
+    private $dbTableName;
 
-    public function __construct(string $dbName)
+    public function __construct(string $dbTableName)
     {
         $this->query = new \stdClass();
-        $this->dbName = $dbName;
+        $this->dbTableName = $dbTableName;
     }
     
     public function __destruct()
     {
         $this->query = null;
-        $this->dbName = null;
+        $this->dbTableName = null;
     }
     
     public function select(array $params): self
@@ -36,7 +36,7 @@ class QueryBuilder implements QueryCommandsInterface, QueryClausesInterface
     
     public function insert(): self
     {
-        $this->query->core = "insert into $this->dbName ";
+        $this->query->core = "insert into $this->dbTableName ";
         $this->query->type[] = "insert";
         
         return $this;
@@ -58,7 +58,7 @@ class QueryBuilder implements QueryCommandsInterface, QueryClausesInterface
     
     public function update(): self
     {
-        $this->query->core = "update $this->dbName ";
+        $this->query->core = "update $this->dbTableName ";
         $this->query->type[] = "update";
         
         return $this;
@@ -100,7 +100,7 @@ class QueryBuilder implements QueryCommandsInterface, QueryClausesInterface
             throw new \Exception("FROM can be defined only under SELECT or DELETE command");
         }
 
-        $this->query->core .= " from $this->dbName";
+        $this->query->core .= " from $this->dbTableName";
 
         return $this;
     }
