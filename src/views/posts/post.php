@@ -6,23 +6,28 @@
 <meta name="viewport" content="width=device-width, initial-scal=1.0, shrink-to-fit=no">
 <meta name="keywords" content="main, page, myblog,, blog, php">
 <meta name="description" content="Myblog main page">
+<link href="/index.css" rel="stylesheet"/>
 <title>Post #{{ uid }}</title>
 </head>
 <body>
-<section>
-<article>
+<main class="blog-container">
+<section class="blog-card__large-wrapper">
+<article class="blog-card__large">
+<div>
+<h5 class="blog-card__card-id">#{{ uid }}</h5>
+<hr class="divider-minor"/>
+</div>
 <h1>{{ title }}</h1>
-</article>
-<article>
+<hr class="divider-major"/>
 <h4>{{ author }}</h4>
+<pre class="blog-card__text-block">{{ text }}</pre>
 </article>
-<article>
-<pre>{{ text }}</pre>
+<article class="blog-card__links-block">
+<a href="/posts" class="blog-card__link margin-divider">Back</a>
+<a href="/posts/{{ uid }}/update" class="blog-card__link margin-divider">Edit</a>
+<a href="/posts/{{ uid }}/delete" class="blog-card__link margin-divider">Delete</a>
 </article>
 </section>
-<section>
-<a href="/posts/{{ uid }}/update">Edit Post</a>
-<a href="/posts/{{ uid }}/delete">Delete Post</a>
-</section>
+</main>
 </body>
 </html>

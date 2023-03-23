@@ -1,25 +1,17 @@
 <?php
 
 declare(strict_types=1);
+
+ini_set("display_errors", 1);
+ini_set("display_startup_errors", 1);
 error_reporting(E_ALL);
 
 header("Content-type: text/html; charset=utf-8");
 
-include "../vendor/autoload.php";
-
-
-$twigLoader = new \Twig\Loader\FilesystemLoader(dirname(__FILE__)."/views");
-$twigConfig = array(
-    "debug" => true
-);
-
-Flight::register("view", "\Twig\Environment", array($twigLoader, $twigConfig), function($twig) {
-    $twig->addExtension(new \Twig\Extension\DebugExtension());
-});
-
-Flight::path(dirname(__FILE__)."/controllers");
-Flight::path(dirname(__FILE__)."/models");
-
+require("../vendor/autoload.php");
 require("routes.php");
 
-Flight::start();
+use Rehor\Myblog\config\Config;
+
+Config::setTwig();
+Config::setFlight();
