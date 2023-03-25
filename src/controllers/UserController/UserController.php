@@ -7,6 +7,8 @@ namespace Rehor\Myblog\controllers\UserController;
 use Rehor\Myblog\controllers\UserController\interfaces\UserControllerInterface;
 use Rehor\Myblog\controllers\UserController\traits\UserControllerTrait;
 use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\DBController\DBController;
+use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
 use Rehor\Myblog\entities\User;
 
 class UserController implements UserControllerInterface
@@ -24,13 +26,13 @@ class UserController implements UserControllerInterface
     {
         $isRegistered = false;
         
-        $requestData = \Flight::request()->data;
+        $requestData = DBConnectorRepository::requestConnectorFlight();
         
         if (!empty($requestData["email"] && !empty($requestData["password"]))) {
             $userEmail = self::handleUserInput($requestData["email"]);
             $userPassword = self::handleUserInput($requestData["password"]);
         
-            $registeredUser = $GLOBALS["entityManager"]->getRepository("Rehor\Myblog\\entities\User")->findOneBy([
+            $registeredUser = DBConnectorRepository::requestConnectorDoctrine(DBController::getDBName(), "Rehor\Myblog\\entities\User")->findOneBy([
                 "email" => $userEmail
             ]);        
         
@@ -39,16 +41,17 @@ class UserController implements UserControllerInterface
                 $newUser->email = $userEmail;
                 $newUser->password = md5($userPassword);
             
-                $GLOBALS["entityManager"]->persist($newUser);
-                $GLOBALS["entityManager"]->flush();
+                DBConnectorRepository::updateConnectorDoctrine(DBController::getDBName(), $newUser);
                 
-                $createdUser = $GLOBALS["entityManager"]->getRepository("Rehor\Myblog\\entities\User")->findOneBy([
-                    "email" => $userEmail
-                ]);
+                $createdUser = DBConnectorRepository::requestConnectorDoctrine(DBController::getDBName(), "Rehor\Myblog\\entities\User")
+                    ->findOneBy([
+                        "email" => $userEmail
+                        
+                    ]);
                 if (!is_null($createdUser)) {
                     AuthController::setSession($createdUser->id, $createdUser->email, $createdUser->password);
                     header("Location: /posts");
-                    exit(1);
+                    exit();
                 }
             } else {
                 $isRegistered = true;

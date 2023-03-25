@@ -14,6 +14,11 @@ class SessionRepository implements SessionRepositoryInterface
         return new Session();
     }
     
+    public static function initSession()
+    {
+        self::getSessionInstance()->init_session();
+    }
+    
     public static function setSession(array $params): void
     {
         self::getSessionInstance()->set_session($params);

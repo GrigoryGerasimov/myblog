@@ -39,16 +39,6 @@ class Config
         $path = ["entities"];
         $isDevMode = false;
         
-        $config = [
-            "driver" => "pdo_mysql",
-            "host" => "localhost:5600",
-            "user" => "root",
-            "password" => "root",
-            "dbname" => "myblog"
-        ];
-        
-        $ormSetupConfig = \Doctrine\ORM\ORMSetup::createAttributeMetadataConfiguration($path, $isDevMode);
-        $driverConnection = \Doctrine\DBAL\DriverManager::getConnection($config, $ormSetupConfig);
-        $GLOBALS["entityManager"] = new \Doctrine\ORM\EntityManager($driverConnection, $ormSetupConfig);
+        return \Doctrine\ORM\ORMSetup::createAttributeMetadataConfiguration($path, $isDevMode);
     }
 }
