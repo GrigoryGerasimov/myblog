@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Rehor\Myblog\repositories\SessionRepository;
+
+use Rehor\Myblog\repositories\SessionRepository\interfaces\SessionRepositoryInterface;
+use Rehor\Myblog\models\Session\Session;
+
+class SessionRepository implements SessionRepositoryInterface
+{
+    public static function getSessionInstance()
+    {
+        return new Session();
+    }
+    
+    public static function setSession(array $params): void
+    {
+        self::getSessionInstance()->set_session($params);
+    }
+    
+    public static function unsetSession(): void
+    {
+        self::getSessionInstance()->unset_session();
+    }
+    
+    public static function validateSession(): bool
+    {
+        return self::getSessionInstance()->is_session_valid();
+    }
+}

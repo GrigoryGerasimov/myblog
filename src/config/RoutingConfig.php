@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Rehor\Myblog\config;
 
 use Rehor\Myblog\controllers\BlogController\BlogPostController\BlogPostController;
+use Rehor\Myblog\controllers\UserController\UserController;
+use Rehor\Myblog\controllers\AuthController\AuthController;
 
 class RoutingConfig extends Config
 {
@@ -15,5 +17,11 @@ class RoutingConfig extends Config
         \Flight::route("/posts/@uid", function($uid) { BlogPostController::readOne($uid); });
         \Flight::route("/posts/@uid/update", function($uid) { BlogPostController::update($uid); });
         \Flight::route("/posts/@uid/delete", function($uid) { BlogPostController::delete($uid); });
+        
+        \Flight::route("/login", fn() => UserController::login());
+        \Flight::route("/register", fn() => UserController::register());
+        
+        \Flight::route("/auth/login", fn() => AuthController::auth());
+        \Flight::route("/auth/logout", fn() => AuthController::logout());
     }
 }

@@ -8,11 +8,12 @@ error_reporting(E_ALL);
 
 header("Content-type: text/html; charset=utf-8");
 
+session_start();
+
 require("../vendor/autoload.php");
 require("routes.php");
 
 use Rehor\Myblog\config\Config;
 
-Config::setTwig();
-Config::setFlight();
 Config::setDoctrine();
+Config::setFlight();
