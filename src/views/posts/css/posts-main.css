@@ -1,42 +1,4 @@
-*, * + * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-:root {
-	--main-theme: rgb(255, 255, 255, 0.85);
-	--contrast-theme: rgb(0, 0, 0, 0.85);
-	--secondary-theme: rgb(255, 77, 1);
-	--blogcard-width: 250px;
-}
-
-body {
-	width: 100%;
-	height: 100vh;
-	background-color: var(--main-theme);
-	font-family: Bahnschrift, sans-serif;
-	font-size: 0.8rem;
-	color: var(--contrast-theme);
-}
-
-.divider-major {
-	opacity: 0.5;
-	margin: 10px 0;
-}
-
-.divider-minor {
-	opacity: 0.2;
-	margin-bottom: 55px;
-}
-
-.margin-divider {
-	margin: 10px 30px;
-}
-
-.notification-success {
-	color: rgb(5,196,188);
-}
+@import "../../index.css";
 
 .blog-container {
 	width: 100%;
@@ -55,7 +17,7 @@ body {
 	width: var(--blogcard-width);
 	height: 150px;
 	padding: 20px 40px;
-	box-shadow: 1px 1px 10px 2px var(--contrast-theme);
+	box-shadow: var(--shadow-effect);
 	border-radius: 10px;
 	cursor: pointer;
 	transition: transform 0.3s ease-in-out;
@@ -144,9 +106,6 @@ body {
 .blog-card__delete-input,
 .blog-card__create-input {
 	width: inherit;
-	appearance: none;
-	outline: none;
-	border: none;
 	border-bottom: 1px solid var(--contrast-theme);
 	padding: 20px 0;
 	margin: 10px 0;
@@ -156,17 +115,11 @@ body {
 .blog-card__delete-text-area,
 .blog-card__create-text-area {
 	width: inherit;
-	appearance: none;
-	outline: none;
-	border: none;
 }
 
 .blog-card__edit-btn,
 .blog-card__delete-btn,
 .blog-card__create-btn {
-	appearance: none;
-	outline: none;
-	border: none;
 	background-color: inherit;
 	font-size: inherit;
 	cursor: pointer;

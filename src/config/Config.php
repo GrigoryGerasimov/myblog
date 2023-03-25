@@ -36,7 +36,7 @@ class Config
     
     public static function setDoctrine()
     {        
-        $path = ["../entities"];
+        $path = ["entities"];
         $isDevMode = false;
         
         $config = [
@@ -44,11 +44,11 @@ class Config
             "host" => "localhost:5600",
             "user" => "root",
             "password" => "root",
-            "dbname" => "users"
+            "dbname" => "myblog"
         ];
         
-        $ormSetupConfig = \Doctrine\ORM\ORMSetup::createAnnotationMetadataConfiguration($path, $isDevMode);
+        $ormSetupConfig = \Doctrine\ORM\ORMSetup::createAttributeMetadataConfiguration($path, $isDevMode);
         $driverConnection = \Doctrine\DBAL\DriverManager::getConnection($config, $ormSetupConfig);
-        new \Doctrine\ORM\EntityManager($driverConnection, $ormSetupConfig);
+        $GLOBALS["entityManager"] = new \Doctrine\ORM\EntityManager($driverConnection, $ormSetupConfig);
     }
 }
