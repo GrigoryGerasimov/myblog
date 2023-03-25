@@ -7,6 +7,7 @@ namespace Rehor\Myblog\controllers\BlogController\BlogPostController;
 use Rehor\Myblog\controllers\BlogController\BlogController;
 use Rehor\Myblog\controllers\BlogController\traits\BlogControllerTrait;
 use Rehor\Myblog\repositories\PostRepository\PostRepository;
+use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
 
 class BlogPostController extends BlogController
 {
@@ -16,7 +17,7 @@ class BlogPostController extends BlogController
     
     protected static function getRequestData()
     {
-        return \Flight::request()->data;
+        return DBConnectorRepository::requestConnectorFlight();
     }
 
     public static function create()

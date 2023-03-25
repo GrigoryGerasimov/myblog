@@ -6,6 +6,7 @@ namespace Rehor\Myblog\controllers\DBController;
 
 use Rehor\Myblog\controllers\DBController\interfaces\DBControllerInterface;
 use Rehor\Myblog\repositories\QueryBuilderRepository\QueryBuilderRepository;
+use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
 
 class DBController implements DBControllerInterface
 {
@@ -15,9 +16,12 @@ class DBController implements DBControllerInterface
 
     protected static function db()
     {
-        \Flight::register("db", "mysqli", array("localhost:5600", "root", "root", self::DB_NAME));
-        
-        return \Flight::db();
+        return DBConnectorRepository::initConnectorFlight(self::DB_NAME);
+    }
+    
+    public static function getDBName()
+    {
+        return self::DB_NAME;
     }
     
     public static function select(?string $id = null): object

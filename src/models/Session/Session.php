@@ -8,6 +8,11 @@ use Rehor\Myblog\models\Session\interfaces\SessionInterface;
 
 class Session implements SessionInterface
 {
+    public function init_session()
+    {
+        session_start();
+    }
+
     public function set_session(array $params): void
     {
         foreach($params as $param_key => $param_value) {
@@ -28,12 +33,16 @@ class Session implements SessionInterface
     
     public function is_session_valid(): bool
     {
-        [
-        "user_id" => $session_id,
-        "user_email" => $session_email,
-        "user_password" => $session_password
-        ] = $_SESSION;
-        
-        return !empty($session_id) && !empty($session_email) && !empty($session_password);
+        if (!empty($_SESSION)) {
+            [
+            "user_id" => $session_id,
+            "user_email" => $session_email,
+            "user_password" => $session_password
+            ] = $_SESSION;
+            
+            return !empty($session_id) && !empty($session_email) && !empty($session_password);
+        } else {
+            return false;
+        }
     }
 }
