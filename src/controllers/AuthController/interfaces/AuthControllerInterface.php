@@ -8,7 +8,9 @@ interface AuthControllerInterface
 {
     public static function auth();
     
-    public static function setSession(int $id, string $email, string $password);
+    public static function setSession(array $sessionData);
+    
+    public static function retrieveSession();
     
     public static function clearSession();
     

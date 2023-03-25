@@ -20,14 +20,22 @@ class BlogPostController extends BlogController
     {
         return DBConnectorRepository::requestConnectorFlight();
     }
+    
+    public static function isAuthorized()
+    {
+        self::$renderData["isAuth"] = AuthController::checkSession();
+        
+        if (AuthController::checkSession()) {
+            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+            self::$renderData["lastname"] = AuthController::retrieveSession()["user_lastname"];
+        }
+    }
 
     public static function create()
     {
         if (!empty(self::$renderData["notification"])) {
             self::$renderData["notification"] = "";
         };
-        
-        self::$renderData["isAuth"] = AuthController::checkSession();
         
         if (self::validatePostData(self::getRequestData())) {
             try {
@@ -40,24 +48,31 @@ class BlogPostController extends BlogController
             }
         };
         
-        self::displayView("posts/create.php", self::$renderData);
+        self::isAuthorized();
         
+        if (self::$renderData["isAuth"]) {
+            self::displayView("posts/create.php", self::$renderData);
+        } else {
+            header("Location: /posts");
+            exit();
+        }
     }
     
     public static function readOne(string $uid)
     {
         try {
             $result = PostRepository::getOnePost($uid);
-            
+
             if (!is_null($result)) {
                 self::$renderData = [
                     "uid" => $uid,
                     "title" => $result["title"],
                     "author" => $result["author"],
-                    "text" => $result["text"],
-                    "isAuth" => AuthController::checkSession()
+                    "text" => $result["text"]
                 ];
             }
+            
+            self::isAuthorized();
 
             self::displayView("posts/post.php", self::$renderData);
 
@@ -72,11 +87,12 @@ class BlogPostController extends BlogController
             $postsList = PostRepository::getAllPosts();
             
             self::$renderData["postsList"] = $postsList;
-            self::$renderData["isAuth"] = AuthController::checkSession();
 
         } catch(\Exception $e) {
             self::handleException($e);
         }
+        
+        self::isAuthorized();
 
         self::displayView("posts/postsList.php", self::$renderData);
     }
@@ -91,8 +107,7 @@ class BlogPostController extends BlogController
                     "uid" => $uid,
                     "title" => $result["title"],
                     "author" => $result["author"],
-                    "text" => $result["text"],
-                    "isAuth" => AuthController::checkSession()
+                    "text" => $result["text"]
                 ];
             }
         } else {
@@ -110,8 +125,15 @@ class BlogPostController extends BlogController
                 self::handleException($e);
             }
         }
+        
+        self::isAuthorized();
 
-        self::displayView("posts/edit.php", self::$renderData);
+        if (self::$renderData["isAuth"]) {
+            self::displayView("posts/edit.php", self::$renderData);
+        } else {
+            header("Location: /posts/$uid");
+            exit();
+        }
     }
     
     public static function delete($uid)
@@ -123,8 +145,7 @@ class BlogPostController extends BlogController
                 "uid" => $uid,
                 "title" => $result["title"],
                 "author" => $result["author"],
-                "text" => $result["text"],
-                "isAuth" => AuthController::checkSession()
+                "text" => $result["text"]
             ];
         }
         
@@ -139,6 +160,13 @@ class BlogPostController extends BlogController
             }
         }
         
-        self::displayView("posts/delete.php", self::$renderData);
+        self::isAuthorized();
+        
+        if (self::$renderData["isAuth"]) {
+            self::displayView("posts/delete.php", self::$renderData);
+        } else {
+            header("Location: /posts/$uid");
+            exit();
+        }
     }
 }
