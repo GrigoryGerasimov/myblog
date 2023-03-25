@@ -6,6 +6,7 @@ namespace Rehor\Myblog\controllers\BlogController\BlogPostController;
 
 use Rehor\Myblog\controllers\BlogController\BlogController;
 use Rehor\Myblog\controllers\BlogController\traits\BlogControllerTrait;
+use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\repositories\PostRepository\PostRepository;
 use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
 
@@ -25,6 +26,8 @@ class BlogPostController extends BlogController
         if (!empty(self::$renderData["notification"])) {
             self::$renderData["notification"] = "";
         };
+        
+        self::$renderData["isAuth"] = AuthController::checkSession();
         
         if (self::validatePostData(self::getRequestData())) {
             try {
@@ -51,7 +54,8 @@ class BlogPostController extends BlogController
                     "uid" => $uid,
                     "title" => $result["title"],
                     "author" => $result["author"],
-                    "text" => $result["text"]
+                    "text" => $result["text"],
+                    "isAuth" => AuthController::checkSession()
                 ];
             }
 
@@ -68,6 +72,7 @@ class BlogPostController extends BlogController
             $postsList = PostRepository::getAllPosts();
             
             self::$renderData["postsList"] = $postsList;
+            self::$renderData["isAuth"] = AuthController::checkSession();
 
         } catch(\Exception $e) {
             self::handleException($e);
@@ -86,7 +91,8 @@ class BlogPostController extends BlogController
                     "uid" => $uid,
                     "title" => $result["title"],
                     "author" => $result["author"],
-                    "text" => $result["text"]
+                    "text" => $result["text"],
+                    "isAuth" => AuthController::checkSession()
                 ];
             }
         } else {
@@ -117,7 +123,8 @@ class BlogPostController extends BlogController
                 "uid" => $uid,
                 "title" => $result["title"],
                 "author" => $result["author"],
-                "text" => $result["text"]
+                "text" => $result["text"],
+                "isAuth" => AuthController::checkSession()
             ];
         }
         

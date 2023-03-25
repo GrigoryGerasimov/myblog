@@ -30,7 +30,7 @@ class DBConnectorRepository implements DBConnectorRepositoryInterface
         return DBConnectorDoctrine::requestRepository($dbName, $className);
     }
     
-    public static function updateConnectorDoctrine(string $dbName, object $class): object
+    public static function updateConnectorDoctrine(string $dbName, object $class): void
     {
         DBConnectorDoctrine::insertIntoRepository($dbName, $class);
     }

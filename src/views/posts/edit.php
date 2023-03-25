@@ -1,8 +1,22 @@
-{% extends "posts/template.html" %}
+{% extends "template.html" %}
+
+{% block css %}
+
+<link href="/views/posts/css/posts-main.css" rel="stylesheet"/>
+
+{% endblock %}
 
 {% block body %}
 
-    <section class="blog-card__large-wrapper">
+<div class="blog-container">
+
+{% use "posts/template_header.html" %}
+
+   {% block header %}
+       {{ parent() }}
+   {% endblock %}
+
+    <main class="blog-card__large-wrapper">
 
         <article class="blog-card__large">
             <div>
@@ -23,6 +37,8 @@
             <h4 class="notification-success">{{ notification }}</h4>
         </article>
 
-    </section>
+    </main>
+
+</div>
 
 {% endblock %}

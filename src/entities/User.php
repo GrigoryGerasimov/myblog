@@ -19,6 +19,12 @@ class User
     #[Column(type: "string", unique: true, nullable: false)]
     protected $password;
     
+    #[Column(type: "string", nullable: false)]
+    protected $firstname;
+    
+    #[Column(type: "string", nullable: false)]
+    protected $lastname;
+    
     public function __get($name)
     {
         return $this->$name;

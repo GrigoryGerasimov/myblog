@@ -1,6 +1,14 @@
-{% extends "auth/template.html" %}
+{% extends "template.html" %}
+
+{% block css %}
+
+<link href="/views/auth/css/auth-main.css" rel="stylesheet"/>
+
+{% endblock %}
 
 {% block body %}
+
+<main class="auth-container">
 
 {% if (isAuth) %}
 
@@ -35,5 +43,7 @@
     <h4 class="notification-fail">{{ notification }}</h4>
 
 {% endif %}
+
+</main>
 
 {% endblock %}

@@ -40,14 +40,16 @@ class UserController implements UserControllerInterface
                 $newUser = new User();
                 $newUser->email = $userEmail;
                 $newUser->password = md5($userPassword);
+                $newUser->firstname = $requestData["firstname"];
+                $newUser->lastname = $requestData["lastname"];
             
                 DBConnectorRepository::updateConnectorDoctrine(DBController::getDBName(), $newUser);
                 
                 $createdUser = DBConnectorRepository::requestConnectorDoctrine(DBController::getDBName(), "Rehor\Myblog\\entities\User")
                     ->findOneBy([
                         "email" => $userEmail
-                        
                     ]);
+
                 if (!is_null($createdUser)) {
                     AuthController::setSession($createdUser->id, $createdUser->email, $createdUser->password);
                     header("Location: /posts");

@@ -14,5 +14,5 @@ interface DBConnectorRepositoryInterface
     
     public static function requestConnectorDoctrine(string $dbName, string $className): object;
     
-    public static function updateConnectorDoctrine(string $dbName, object $class): object;
+    public static function updateConnectorDoctrine(string $dbName, object $class): void;
 }
