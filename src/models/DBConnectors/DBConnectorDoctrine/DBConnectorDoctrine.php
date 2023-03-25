@@ -11,21 +11,31 @@ use \Doctrine\ORM\EntityManager;
 
 class DBConnectorDoctrine implements DBConnectorDoctrineInterface
 {
+    protected static $instance;
+
+    private function __construct($driverConfig, $ormSetup)
+    {
+        self::$instance = new EntityManager($driverConfig, $ormSetup);
+    }
+
     public static function init(string $dbName): object
     {
-        $config = [
-            "driver" => "pdo_mysql",
-            "host" => "localhost:5600",
-            "user" => "root",
-            "password" => "root",
-            "dbname" => $dbName
-        ];
+        if (is_null(self::$instance)) {
+            $config = [
+                "driver" => "pdo_mysql",
+                "host" => "localhost:5600",
+                "user" => "root",
+                "password" => "root",
+                "dbname" => $dbName
+            ];
+            
+            $ormSetup = Config::setDoctrine();
+            $driverConfig = DriverManager::getConnection($config, $ormSetup);
+            
+            new self($driverConfig, $ormSetup);
+        }
         
-        $ormSetup = Config::setDoctrine();
-        
-        $driverConfig = DriverManager::getConnection($config, $ormSetup);
-        
-        return new EntityManager($driverConfig, $ormSetup);
+        return self::$instance;
     }
     
     public static function requestRepository(string $dbName, string $className): object
@@ -35,7 +45,7 @@ class DBConnectorDoctrine implements DBConnectorDoctrineInterface
     
     public static function insertIntoRepository(string $dbName, object $class): void
     {
-        self::init($dbName)->persis($class);
+        self::init($dbName)->persist($class);
         self::init($dbName)->flush();
     }
 }

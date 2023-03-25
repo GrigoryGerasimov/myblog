@@ -1,8 +1,22 @@
-{% extends "posts/template.html" %}
+{% extends "template.html" %}
+
+{% block css %}
+
+<link href="/views/posts/css/posts-main.css" rel="stylesheet"/>
+
+{% endblock %}
 
 {% block body %}
 
-    <section class="blog-card__large-wrapper">
+<div class="blog-container">
+
+{% use "posts/template_header.html" %}
+
+   {% block header %}
+       {{ parent() }}
+   {% endblock %}
+
+    <main class="blog-card__large-wrapper">
 
         <article class="blog-card__large">
             <div>
@@ -22,6 +36,8 @@
             <a href="/posts/{{ uid }}/delete" class="blog-card__link margin-divider">Delete</a>
         </article>
 
-    </section>
+    </main>
+    
+</div>
 
 {% endblock %}

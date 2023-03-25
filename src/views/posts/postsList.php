@@ -1,12 +1,22 @@
-{% extends "posts/template.html" %}
+{% extends "template.html" %}
+
+{% block css %}
+
+<link href="/views/posts/css/posts-main.css" rel="stylesheet"/>
+
+{% endblock %}
 
 {% block body %}
 
-   <h3 class="blog-new__link">
-      <a href="/posts/create" class="blog-card__link">Create New Post</a>
-   </h3>
+<div class="blog-container">
 
-   <section class="blog-list-wrapper">
+{% use "posts/template_header.html" %}
+
+   {% block header %}
+       {{ parent() }}
+   {% endblock %}
+
+   <main class="blog-list-wrapper">
 
        {% for post in postsList %}
            <ul class="blog-card">
@@ -19,6 +29,8 @@
            </ul>
        {% endfor %}
 
-   </section>
+   </main>
+   
+</div>
 
 {% endblock %}

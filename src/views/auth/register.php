@@ -1,6 +1,14 @@
-{% extends "auth/template.html" %}
+{% extends "template.html" %}
+
+{% block css %}
+
+<link href="/views/auth/css/auth-main.css" rel="stylesheet"/>
+
+{% endblock %}
 
 {% block body %}
+
+<main class="auth-container">
 
 {% if (isRegistered) %}
 
@@ -31,6 +39,14 @@
             <label for="password" class="register-form__label">Password</label>
             <input type="password" id="password" name="password" class="styles-resetter register-form__input" required/>
         </div>
+        <div class="register-form__labelled-block">
+            <label for="firstname" class="register-form__label">First Name</label>
+            <input type="text" id="firstname" name="firstname" class="styles-resetter register-form__input" required/>
+        </div>
+        <div class="register-form__labelled-block">
+            <label for="lastname" class="register-form__label">Last Name</label>
+            <input type="text" id="lastname" name="lastname" class="styles-resetter register-form__input" required/>
+        </div>
         <div class="register-form__btn-block">
             <button type="submit" class="styles-resetter register-form__btn">Sign Up</button>
         </div>
@@ -42,5 +58,7 @@
     </form>
     
 {% endif %}
+
+</main>
 
 {% endblock %}
