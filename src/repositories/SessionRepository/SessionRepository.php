@@ -24,6 +24,11 @@ class SessionRepository implements SessionRepositoryInterface
         self::getSessionInstance()->set_session($params);
     }
     
+    public static function getSession()
+    {
+        return $_SESSION;
+    }
+    
     public static function unsetSession(): void
     {
         self::getSessionInstance()->unset_session();

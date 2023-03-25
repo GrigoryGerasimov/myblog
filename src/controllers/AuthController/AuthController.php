@@ -27,7 +27,13 @@ class AuthController implements AuthControllerInterface
             $hashedPassword = md5($password);
 
             if (!is_null($user) && $email === $user->email && $hashedPassword === $user->password) {
-                self::setSession($user->id, $user->email, $user->password);
+                self::setSession([
+                    "user_id" => $user->id,
+                    "user_email" => $user->email,
+                    "user_password" => $user->password,
+                    "user_firstname" => $user->firstname,
+                    "user_lastname" => $user->lastname
+                ]);
 
                 header("Location: /posts");
 
@@ -43,13 +49,14 @@ class AuthController implements AuthControllerInterface
         }
     }
     
-    public static function setSession(int $id, string $email, string $password)
+    public static function setSession(array $sessionData)
     {
-        SessionRepository::setSession([
-            "user_id" => $id,
-            "user_email" => $email,
-            "user_password" => $password
-        ]);
+        SessionRepository::setSession($sessionData);
+    }
+    
+    public static function retrieveSession()
+    {
+        return SessionRepository::getSession();
     }
     
     public static function clearSession()

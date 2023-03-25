@@ -2,6 +2,7 @@
 
 .blog-container {
 	width: 100%;
+	position: relative;
 }
 
 .blog-header {
@@ -21,6 +22,24 @@
 
 .blog-header__link > .blog-card__link:hover {
 	color: var(--main-theme);
+}
+
+.blog-header__signin-link {
+	position: absolute;
+	top: 50px;
+	right: 50px;
+}
+
+.blog-header__auth-block {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.blog-header__greeting {
+	color: var(--main-theme);
+	text-shadow: 1px 1px 15px var(--contrast-theme);
 }
 
 .blog-list-wrapper {

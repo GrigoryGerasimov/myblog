@@ -1,0 +1,29 @@
+{% block header %}
+
+<header class="blog-header">
+
+   {% if (isAuth) %}
+   
+   <h3 class="blog-header__link">
+      <a href="/posts/create" class="blog-card__link">Create New Post</a>
+   </h3>
+   
+   <div class="blog-header__auth-block">
+       <h4 class="blog-header__greeting margin-divider">Hello, {{ firstname }} {{ lastname }}</h4>
+       <h3 class="blog-header__link margin-divider">
+          <a href="/profile" class="blog-card__link">My Account</a>
+       </h3>
+   </div>
+   
+   
+   {% else %}
+   
+   <h3 class="blog-header__link">
+      <a href="/login" class="blog-card__link blog-header__signin-link">Sign In</a>
+   </h3>
+   
+   {% endif %}
+
+</header>
+
+{% endblock %}

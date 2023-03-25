@@ -10,7 +10,7 @@
 
 <div class="blog-container">
 
-{% use "posts/template_header.html" %}
+{% use "template_header.html" %}
 
    {% block header %}
        {{ parent() }}

@@ -10,7 +10,7 @@
 
 <div class="blog-container">
 
-{% use "posts/template_header.html" %}
+{% use "template_header.html" %}
 
    {% block header %}
        {{ parent() }}
@@ -32,8 +32,12 @@
 
         <article class="blog-card__links-block">
             <a href="/posts" class="blog-card__link margin-divider">Back</a>
+
+            {% if (isAuth) %}
             <a href="/posts/{{ uid }}/update" class="blog-card__link margin-divider">Edit</a>
             <a href="/posts/{{ uid }}/delete" class="blog-card__link margin-divider">Delete</a>
+            {% endif %}
+
         </article>
 
     </main>
