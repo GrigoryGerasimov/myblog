@@ -8,7 +8,8 @@ use Rehor\Myblog\controllers\UserController\interfaces\UserControllerInterface;
 use Rehor\Myblog\controllers\UserController\traits\UserControllerTrait;
 use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
-use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
+use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
+use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\entities\User;
 
@@ -27,15 +28,13 @@ class UserController implements UserControllerInterface
     {
         $isRegistered = false;
         
-        $requestData = DBConnectorRepository::requestConnectorFlight();
+        $requestData = DBConnectorFlightRepository::requestConnector();
         
         if (!empty($requestData["email"]) && !empty($requestData["password"])) {
             $userEmail = self::handleUserInput($requestData["email"]);
             $userPassword = self::handleUserInput($requestData["password"]);
         
-            $registeredUser = DBConnectorRepository::requestConnectorDoctrine(DBController::getDBName(), "Rehor\Myblog\\entities\User")->findOneBy([
-                "email" => $userEmail
-            ]);        
+            $registeredUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $userEmail ]); 
         
             if (is_null($registeredUser)) {
                 $newUser = new User();
@@ -44,12 +43,9 @@ class UserController implements UserControllerInterface
                 $newUser->firstname = $requestData["firstname"];
                 $newUser->lastname = $requestData["lastname"];
             
-                DBConnectorRepository::updateConnectorDoctrine(DBController::getDBName(), $newUser);
+                DBConnectorDoctrineRepository::updateConnector(DBController::getDBName(), $newUser);
                 
-                $createdUser = DBConnectorRepository::requestConnectorDoctrine(DBController::getDBName(), "Rehor\Myblog\\entities\User")
-                    ->findOneBy([
-                        "email" => $userEmail
-                    ]);
+                $createdUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $userEmail ]);
 
                 if (!is_null($createdUser)) {
 

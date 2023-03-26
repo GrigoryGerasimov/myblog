@@ -6,7 +6,7 @@ namespace Rehor\Myblog\controllers\DBController;
 
 use Rehor\Myblog\controllers\DBController\interfaces\DBControllerInterface;
 use Rehor\Myblog\repositories\QueryBuilderRepository\QueryBuilderRepository;
-use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
+use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 
 class DBController implements DBControllerInterface
 {
@@ -16,7 +16,7 @@ class DBController implements DBControllerInterface
 
     protected static function db()
     {
-        return DBConnectorRepository::initConnectorFlight(self::DB_NAME);
+        return DBConnectorFlightRepository::initConnector(self::DB_NAME);
     }
     
     public static function getDBName()
