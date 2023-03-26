@@ -48,4 +48,16 @@ class DBConnectorDoctrine implements DBConnectorDoctrineInterface
         self::init($dbName)->persist($class);
         self::init($dbName)->flush();
     }
+    
+    public static function updateInRepository(string $dbName, object $class): void
+    {
+        self::init($dbName)->merge($class);
+        self::init($dbName)->flush();
+    }
+    
+    public static function removeRepository(string $dbName, object $class): void
+    {
+        self::init($dbName)->remove($class);
+        self::init($dbName)->flush();
+    }
 }

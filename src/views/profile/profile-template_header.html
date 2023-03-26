@@ -1,0 +1,14 @@
+{% block header %}
+
+<header class="profile-header">
+   
+   <div class="profile-header__auth-block">
+       <h4 class="profile-header__greeting margin-divider">Nice to meet you, {{ firstname }} {{ lastname }}</h4>
+       <h3 class="profile-header__link margin-divider">
+          <a href="/auth/logout" class="profile-card__link">Sign Out</a>
+       </h3>
+   </div>
+
+</header>
+
+{% endblock %}

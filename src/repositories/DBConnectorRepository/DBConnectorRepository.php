@@ -34,4 +34,14 @@ class DBConnectorRepository implements DBConnectorRepositoryInterface
     {
         DBConnectorDoctrine::insertIntoRepository($dbName, $class);
     }
+    
+    public static function editConnectorDoctrine(string $dbName, object $class): void
+    {
+        DBConnectorDoctrine::updateInRepository($dbName, $class);
+    }
+    
+    public static function deleteConnectorDoctrine(string $dbName, object $class): void
+    {
+        DBConnectorDoctrine::removeRepository($dbName, $class);
+    }
 }

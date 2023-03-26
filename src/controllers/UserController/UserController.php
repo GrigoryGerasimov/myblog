@@ -9,6 +9,7 @@ use Rehor\Myblog\controllers\UserController\traits\UserControllerTrait;
 use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
+use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\entities\User;
 
 class UserController implements UserControllerInterface
@@ -17,7 +18,7 @@ class UserController implements UserControllerInterface
 
     public static function login()
     {
-        \Flight::view()->display("auth/login.php", [
+        RendererRepository::displayView("auth/login.php", [
             "isAuth" => AuthController::checkSession()
         ]);
     }
@@ -28,7 +29,7 @@ class UserController implements UserControllerInterface
         
         $requestData = DBConnectorRepository::requestConnectorFlight();
         
-        if (!empty($requestData["email"] && !empty($requestData["password"]))) {
+        if (!empty($requestData["email"]) && !empty($requestData["password"])) {
             $userEmail = self::handleUserInput($requestData["email"]);
             $userPassword = self::handleUserInput($requestData["password"]);
         
@@ -51,7 +52,15 @@ class UserController implements UserControllerInterface
                     ]);
 
                 if (!is_null($createdUser)) {
-                    AuthController::setSession($createdUser->id, $createdUser->email, $createdUser->password);
+
+                    AuthController::setSession([
+                       "user_id" => $createdUser->id,
+                       "user_email" => $createdUser->email,
+                       "user_password" => $createdUser->password,
+                       "user_firstname" => $createdUser->firstname,
+                       "user_lastname" => $createdUser->lastname
+                    ]);
+
                     header("Location: /posts");
                     exit();
                 }
@@ -60,7 +69,7 @@ class UserController implements UserControllerInterface
             }
         }
 
-        \Flight::view()->display("auth/register.php", [
+        RendererRepository::displayView("auth/register.php", [
             "isRegistered" => $isRegistered,
             "isAuth" => AuthController::checkSession()
         ]);

@@ -9,6 +9,7 @@ use Rehor\Myblog\controllers\BlogController\traits\BlogControllerTrait;
 use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\repositories\PostRepository\PostRepository;
 use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
+use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 
 class BlogPostController extends BlogController
 {
@@ -51,7 +52,7 @@ class BlogPostController extends BlogController
         self::isAuthorized();
         
         if (self::$renderData["isAuth"]) {
-            self::displayView("posts/create.php", self::$renderData);
+            RendererRepository::displayView("posts/create.php", self::$renderData);
         } else {
             header("Location: /posts");
             exit();
@@ -74,7 +75,7 @@ class BlogPostController extends BlogController
             
             self::isAuthorized();
 
-            self::displayView("posts/post.php", self::$renderData);
+            RendererRepository::displayView("posts/post.php", self::$renderData);
 
         } catch(\Exception $e) {
             self::handleException($e);
@@ -94,7 +95,7 @@ class BlogPostController extends BlogController
         
         self::isAuthorized();
 
-        self::displayView("posts/postsList.php", self::$renderData);
+        RendererRepository::displayView("posts/postsList.php", self::$renderData);
     }
     
     public static function update(string $uid)
@@ -129,7 +130,7 @@ class BlogPostController extends BlogController
         self::isAuthorized();
 
         if (self::$renderData["isAuth"]) {
-            self::displayView("posts/edit.php", self::$renderData);
+            RendererRepository::displayView("posts/edit.php", self::$renderData);
         } else {
             header("Location: /posts/$uid");
             exit();
@@ -163,7 +164,7 @@ class BlogPostController extends BlogController
         self::isAuthorized();
         
         if (self::$renderData["isAuth"]) {
-            self::displayView("posts/delete.php", self::$renderData);
+            RendererRepository::displayView("posts/delete.php", self::$renderData);
         } else {
             header("Location: /posts/$uid");
             exit();
