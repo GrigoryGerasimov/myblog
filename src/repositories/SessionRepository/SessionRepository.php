@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Rehor\Myblog\repositories\SessionRepository;
 
 use Rehor\Myblog\repositories\SessionRepository\interfaces\SessionRepositoryInterface;
-use Rehor\Myblog\models\Session\Session;
+use Rehor\Myblog\models\Sessions\Session;
 
 class SessionRepository implements SessionRepositoryInterface
 {
@@ -26,7 +26,7 @@ class SessionRepository implements SessionRepositoryInterface
     
     public static function getSession()
     {
-        return $_SESSION;
+        return self::getSessionInstance()->get_session();
     }
     
     public static function unsetSession(): void

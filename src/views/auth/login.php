@@ -21,6 +21,8 @@
 
 {% else %}
 
+    <h1 class="auth-title">Authorization</h1>
+
     <form action="/auth/login" name="login-form" method="POST" class="login-form">
         <div class="login-form__labelled-block">
             <label for="email" class="login-form__label">E-Mail</label>
