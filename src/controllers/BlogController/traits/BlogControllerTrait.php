@@ -11,11 +11,6 @@ trait BlogControllerTrait
         return (bool)count($data);
     }
     
-    public static function displayView(string $view, array $renderData): void
-    {
-        \Flight::view()->display($view, $renderData);
-    }
-    
     public static function handleException(\Exception $e): void
     {
         echo "Oops... Something bad has happened. More details here: ".$e->getMessage();

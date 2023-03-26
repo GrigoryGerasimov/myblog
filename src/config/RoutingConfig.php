@@ -7,6 +7,7 @@ namespace Rehor\Myblog\config;
 use Rehor\Myblog\controllers\BlogController\BlogPostController\BlogPostController;
 use Rehor\Myblog\controllers\UserController\UserController;
 use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\ProfileController\ProfileController;
 
 class RoutingConfig extends Config
 {
@@ -23,5 +24,9 @@ class RoutingConfig extends Config
         
         \Flight::route("/auth/login", fn() => AuthController::auth());
         \Flight::route("/auth/logout", fn() => AuthController::logout());
+        
+        \Flight::route("/profile", fn() => ProfileController::showProfile());
+        \Flight::route("/profile/update", fn() => ProfileController::updateProfile());
+        \Flight::route("/profile/delete", fn() => ProfileController::removeProfile());
     }
 }

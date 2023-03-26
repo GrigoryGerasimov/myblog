@@ -8,6 +8,7 @@ use Rehor\Myblog\controllers\AuthController\interfaces\AuthControllerInterface;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
+use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 
 class AuthController implements AuthControllerInterface
 {
@@ -39,7 +40,7 @@ class AuthController implements AuthControllerInterface
 
                 exit();
             } else {
-                \Flight::view()->display("auth/login.php", [
+                RendererRepository::displayView("auth/login.php", [
                     "notification" => "Sign in failed! Your email or password is incorrect"
                 ]);
             }
