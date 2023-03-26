@@ -7,7 +7,8 @@ namespace Rehor\Myblog\controllers\AuthController;
 use Rehor\Myblog\controllers\AuthController\interfaces\AuthControllerInterface;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
-use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
+use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
+use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 
 class AuthController implements AuthControllerInterface
@@ -17,11 +18,9 @@ class AuthController implements AuthControllerInterface
         [
         "email" => $email,
         "password" => $password
-        ] = DBConnectorRepository::requestConnectorFlight();
+        ] = DBConnectorFlightRepository::requestConnector();
         
-        $user = DBConnectorRepository::requestConnectorDoctrine(DBController::getDBName(), "Rehor\Myblog\\entities\User")->findOneBy([
-            "email" => $email
-        ]);
+        $user = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $email ]);
         
         if (!empty($email) && !empty($password)) {
 

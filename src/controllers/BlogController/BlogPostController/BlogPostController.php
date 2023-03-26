@@ -8,7 +8,7 @@ use Rehor\Myblog\controllers\BlogController\BlogController;
 use Rehor\Myblog\controllers\BlogController\traits\BlogControllerTrait;
 use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\repositories\PostRepository\PostRepository;
-use Rehor\Myblog\repositories\DBConnectorRepository\DBConnectorRepository;
+use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 
 class BlogPostController extends BlogController
@@ -19,7 +19,7 @@ class BlogPostController extends BlogController
     
     protected static function getRequestData()
     {
-        return DBConnectorRepository::requestConnectorFlight();
+        return DBConnectorFlightRepository::requestConnector();
     }
     
     public static function isAuthorized()
@@ -130,7 +130,9 @@ class BlogPostController extends BlogController
         self::isAuthorized();
 
         if (self::$renderData["isAuth"]) {
+            
             RendererRepository::displayView("posts/edit.php", self::$renderData);
+            
         } else {
             header("Location: /posts/$uid");
             exit();
@@ -164,7 +166,9 @@ class BlogPostController extends BlogController
         self::isAuthorized();
         
         if (self::$renderData["isAuth"]) {
+            
             RendererRepository::displayView("posts/delete.php", self::$renderData);
+            
         } else {
             header("Location: /posts/$uid");
             exit();
