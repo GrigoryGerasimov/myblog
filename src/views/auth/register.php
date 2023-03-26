@@ -30,6 +30,8 @@
 
 {% else %}
 
+    <h1 class="auth-title">Registration</h1>
+
     <form name="register-form" method="POST" class="register-form">
         <div class="register-form__labelled-block">
             <label for="email" class="register-form__label">E-Mail</label>

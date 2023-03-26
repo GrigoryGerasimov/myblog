@@ -44,7 +44,6 @@
 
 .blog-header__greeting {
 	color: var(--main-theme);
-	text-shadow: 1px 1px 15px var(--contrast-theme);
 }
 
 .blog-list-wrapper {

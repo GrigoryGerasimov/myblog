@@ -9,6 +9,13 @@
 	align-items: center;
 }
 
+.auth-title
+{
+	margin-bottom: 55px;
+	letter-spacing: 3px;
+	color: var(--secondary-theme);
+}
+
 .login-form,
 .register-form {
 	width: 50%;

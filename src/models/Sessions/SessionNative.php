@@ -2,18 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Rehor\Myblog\models\Session;
+namespace Rehor\Myblog\models\Sessions;
 
-use Rehor\Myblog\models\Session\interfaces\SessionInterface;
-
-class Session implements SessionInterface
+class SessionNative
 {
-    public function init_session()
+    public static function initSession()
     {
         session_start();
     }
-
-    public function set_session(array $params): void
+    
+    public static function setSession(array $params): void
     {
         foreach($params as $param_key => $param_value) {
             if (!is_null($param_value)) {
@@ -22,7 +20,12 @@ class Session implements SessionInterface
         }
     }
     
-    public function unset_session(): void
+    public static function getSession(): array
+    {
+        return $_SESSION;
+    }
+    
+    public static function unsetSession(): void
     {
         foreach($_SESSION as $session_key => &$session_value) {
             if (!empty($session_value)) {
@@ -31,7 +34,7 @@ class Session implements SessionInterface
         }
     }
     
-    public function is_session_valid(): bool
+    public static function validateSession(): bool
     {
         if (!empty($_SESSION)) {
             [
