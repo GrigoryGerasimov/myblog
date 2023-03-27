@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Rehor\Myblog\models\Sessions;
+namespace Rehor\Myblog\models\Sessions\sessions;
 
-class SessionGhostff
+class SessionGhostff extends Sessions
 {
     protected static $sessionInstance;
     

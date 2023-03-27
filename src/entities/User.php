@@ -24,6 +24,9 @@ class User
     
     #[Column(type: "string", nullable: false)]
     protected $lastname;
+
+    #[Column(type: "integer", nullable: false)]
+    protected $role;
     
     public function __get($name)
     {

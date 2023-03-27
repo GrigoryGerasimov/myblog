@@ -13,9 +13,17 @@
        <h3 class="blog-header__link margin-divider">
           <a href="/profile" class="blog-card__link">My Account</a>
        </h3>
+       
+       {% if (isAdmin) %}
+
+       <h3 class="blog-header__link">
+          <a href="/admin/auth/login" class="blog-card__link">My Admin</a>
+       </h3>
+
+       {% endif %}
+
    </div>
-   
-   
+     
    {% else %}
    
    <h3 class="blog-header__link blog-header__no-auth">

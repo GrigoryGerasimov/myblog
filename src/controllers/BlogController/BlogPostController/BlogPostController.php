@@ -7,6 +7,7 @@ namespace Rehor\Myblog\controllers\BlogController\BlogPostController;
 use Rehor\Myblog\controllers\BlogController\BlogController;
 use Rehor\Myblog\controllers\BlogController\traits\BlogControllerTrait;
 use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AdminController\AdminController;
 use Rehor\Myblog\repositories\PostRepository\PostRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
@@ -25,6 +26,7 @@ class BlogPostController extends BlogController
     public static function isAuthorized()
     {
         self::$renderData["isAuth"] = AuthController::checkSession();
+        self::$renderData["isAdmin"] = AdminController::checkAdmin();
         
         if (AuthController::checkSession()) {
             self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];

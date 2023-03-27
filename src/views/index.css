@@ -5,9 +5,9 @@
 }
 
 :root {
-	--main-theme: rgb(255, 255, 255, 0.85);
+	--main-theme: #e7e7e7;
 	--contrast-theme: rgb(0, 0, 0, 0.85);
-	--secondary-theme: rgb(255, 77, 1);
+	--secondary-theme: #d9534f;
 	--blogcard-width: 250px;
 	--shadow-effect: 1px 1px 10px 2px var(--contrast-theme);
 }

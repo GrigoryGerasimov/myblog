@@ -30,7 +30,7 @@
 
 {% else %}
 
-    <h1 class="auth-title">Registration</h1>
+    <h2 class="auth-title">Registration</h2>
 
     <form name="register-form" method="POST" class="register-form">
         <div class="register-form__labelled-block">
@@ -48,6 +48,9 @@
         <div class="register-form__labelled-block">
             <label for="lastname" class="register-form__label">Last Name</label>
             <input type="text" id="lastname" name="lastname" class="styles-resetter register-form__input" required/>
+        </div>
+        <div class="register-form__labelled-block">
+            <input type="hidden" id="defaultrole" name="role" class="styles-resetter register-form__input" value="0" required/>
         </div>
         <div class="register-form__btn-block">
             <button type="submit" class="styles-resetter register-form__btn">Sign Up</button>
