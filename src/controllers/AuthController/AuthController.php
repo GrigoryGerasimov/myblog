@@ -25,15 +25,19 @@ class AuthController implements AuthControllerInterface
         if (!empty($email) && !empty($password)) {
 
             $hashedPassword = md5($password);
+            
+            $sessionData = [
+                "user_id" => $user->id,
+                "user_email" => $user->email,
+                "user_password" => $user->password,
+                "user_firstname" => $user->firstname,
+                "user_lastname" => $user->lastname,
+                "user_role" => $user->role
+            ];
 
             if (!is_null($user) && $email === $user->email && $hashedPassword === $user->password) {
-                self::setSession([
-                    "user_id" => $user->id,
-                    "user_email" => $user->email,
-                    "user_password" => $user->password,
-                    "user_firstname" => $user->firstname,
-                    "user_lastname" => $user->lastname
-                ]);
+                
+                self::setSession($sessionData);
 
                 header("Location: /posts");
 

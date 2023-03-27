@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rehor\Myblog\models\Sessions;
 
 use Rehor\Myblog\models\Sessions\interfaces\SessionInterface;
+use Rehor\Myblog\models\Sessions\sessions\SessionNative;
 
 class Session implements SessionInterface
 {    

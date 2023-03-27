@@ -1,0 +1,22 @@
+{% block header %}
+
+<header class="admin-header">
+    
+    <div>
+        <h2 class="admin-header__title">
+            <a href="/admin" class="admin-header__title-link">{{ firstname }}'s Dashboard</a>
+        </h2>
+    </div>
+
+    <div class="admin-header__auth-block">
+        <h3 class="admin-header__link margin-divider">
+            <a href="/profile" class="admin-card__link">My Profile</a>
+        </h3>
+        <h3 class="admin-header__link margin-divider">
+            <a href="/admin/auth/logout" class="admin-card__link">Sign Out</a>
+        </h3>
+    </div>
+
+</header>
+
+{% endblock %}

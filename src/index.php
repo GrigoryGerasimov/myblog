@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 header("Content-type: text/html; charset=utf-8");
 
 require("../vendor/autoload.php");
-require("routes.php");
+require("routes/routes.php");
 
 use Rehor\Myblog\config\Config;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;

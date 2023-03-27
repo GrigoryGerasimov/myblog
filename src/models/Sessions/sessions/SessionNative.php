@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Rehor\Myblog\models\Sessions;
+namespace Rehor\Myblog\models\Sessions\sessions;
 
-class SessionNative
+class SessionNative extends Sessions
 {
     public static function initSession()
     {
@@ -27,11 +27,7 @@ class SessionNative
     
     public static function unsetSession(): void
     {
-        foreach($_SESSION as $session_key => &$session_value) {
-            if (!empty($session_value)) {
-                $session_value = null;
-            }
-        }
+        session_unset();
     }
     
     public static function validateSession(): bool

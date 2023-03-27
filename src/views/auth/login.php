@@ -21,7 +21,7 @@
 
 {% else %}
 
-    <h1 class="auth-title">Authorization</h1>
+    <h2 class="auth-title">Authorization</h2>
 
     <form action="/auth/login" name="login-form" method="POST" class="login-form">
         <div class="login-form__labelled-block">
