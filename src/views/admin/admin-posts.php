@@ -1,44 +1,29 @@
-{% extends "template.html" %}
+{% extends "admin/admin-template.html" %}
 
-{% block css %}
+{% block main %}
 
-<link href="/views/admin/css/admin-main.css" rel="stylesheet"/>
+<h5 class="admin-dahsboard__section-title full-width">Posts</h5>
+<hr class="divider-minor full-width"/>
+            
+<ul class="admin-dashboard__list full-width">
 
-{% endblock %}
+    {% for post in adminPostsList %}
 
+    <li class="admin-dashboard__list-item">
+        <h3 class="admin-dashboard__list-info">{{ post.title }}</h3>
+        <h4 class="admin-dashboard__list-info">{{ post.author }}</h4>
+        <p class="admin-dashboard__list-info">{{ post.description }}...</p>
+        <div class="admin-dashboard__list-links-block">
+            <a href="/posts/{{ post.uid }}" class="admin-dashboard__list-link margin-divider">Read more</a>
+            <a href="/posts/{{ post.uid }}/update" class="admin-dashboard__list-link margin-divider">Edit</a>
+            <a href="/posts/{{ post.uid }}/delete" class="admin-dashboard__list-link margin-divider">Delete</a>
+        </div>
+    </li>
+                
+    <hr class="divider-major margin-separator"/>
 
-{% block body %}
-
-<div class="admin-container">
-
-{% use "admin/admin-template_header.html" %}
-
-   {% block header %}
-       {{ parent() }}
-   {% endblock %}
-
-    <div class="admin__large-wrapper">
-
-        <aside class="admin-dashboard__aside">
-            <ul class="admin_dashboard__aside-list">
-                <li class="admin_dashboard__aside-list-item margin-divider">
-                    <a href="/admin/posts" class="admin_dashboard__aside-list-link">Posts</a>
-                </li>
-                <li class="admin_dashboard__aside-list-item margin-divider">
-                    <a href="/admin/users" class="admin_dashboard__aside-list-link">Users</a>
-                </li>
-                <li class="admin_dashboard__aside-list-item margin-divider">
-                    <a href="/admin/roles" class="admin_dashboard__aside-list-link">Roles</a>
-                </li>
-            </ul>
-        </aside>
-
-        <main class="admin-dashboard__main">
-            <h1>Posts</h1>
-        </main>
-
-    </div>
-    
-</div>
+    {% endfor %}
+                
+</ul>
 
 {% endblock %}

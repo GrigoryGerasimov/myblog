@@ -47,6 +47,11 @@ class DBConnectorDoctrine implements DBConnectorDoctrineInterface
     {
         return self::requestRepository($dbName, $className)->findOneBy($params);
     }
+
+    public static function retrieveAllFromRepository(string $dbName, string $className): ?array
+    {
+        return self::requestRepository($dbName, $className)->findAll();
+    }
     
     public static function insertIntoRepository(string $dbName, object $class): void
     {

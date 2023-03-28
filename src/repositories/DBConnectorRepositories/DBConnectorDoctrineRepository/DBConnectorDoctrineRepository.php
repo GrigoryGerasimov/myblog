@@ -23,6 +23,11 @@ class DBConnectorDoctrineRepository implements DBConnectorDoctrineRepositoryInte
     {
         return DBConnectorDoctrine::retrieveOneFromRepository($dbName, $className, $params);
     }
+
+    public static function retrieveAllFromConnector(string $dbName, string $className): ?array
+    {
+        return DBConnectorDoctrine::retrieveAllFromRepository($dbName, $className);
+    }
     
     public static function updateConnector(string $dbName, object $class): void
     {

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\models\Sessions\sessions;
 
+require("utils/arrays/flattenArray.php");
+
+use function Rehor\Myblog\utils\arrays\flattenArray;
+
 class SessionGhostff extends Sessions
 {
     protected static $sessionInstance;
@@ -33,12 +37,7 @@ class SessionGhostff extends Sessions
     
     public static function getSession(): array
     {
-        $sessionResult = [];
-
-        $sessionArray = self::$sessionInstance->getAll();
-        array_walk_recursive($sessionArray, function($value, $key) use(&$sessionResult) { $sessionResult[$key] = $value; });
-
-        return $sessionResult;
+        return flattenArray(self::$sessionInstance->getAll());
     }
     
     public static function unsetSession(): void

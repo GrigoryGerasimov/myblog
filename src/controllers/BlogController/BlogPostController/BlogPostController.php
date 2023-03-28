@@ -88,7 +88,7 @@ class BlogPostController extends BlogController
     {
         try {
             $postsList = PostRepository::getAllPosts();
-            
+
             self::$renderData["postsList"] = $postsList;
 
         } catch(\Exception $e) {
