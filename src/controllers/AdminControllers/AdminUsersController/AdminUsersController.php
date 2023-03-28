@@ -2,87 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Rehor\Myblog\controllers\AdminController;
+namespace Rehor\Myblog\controllers\AdminControllers\AdminUsersController;
 
-use Rehor\Myblog\controllers\AdminController\interfaces\AdminControllerInterface;
+use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
+use Rehor\Myblog\controllers\AdminControllers\AdminUsersController\interfaces\AdminUsersControllerInterface;
+use Rehor\Myblog\controllers\UserController\UserController;
 use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
-use Rehor\Myblog\controllers\AdminController\traits\AdminControllerTrait;
-use Rehor\Myblog\controllers\UserController\UserController;
-use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
+use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\entities\User;
 
-class AdminController implements AdminControllerInterface
+class AdminUsersController extends AdminController implements AdminUsersControllerInterface
 {
-    use AdminControllerTrait;
-
-    public static function authAdmin(): void
-    {
-        if (AuthController::checkSession() && self::checkAdmin()) {
-            header("Location: /admin");
-            exit();
-        } else {
-            self::preventAdmin();
-        }
-    }
-
-    public static function showAdmin(): void
-    {
-        self::show("admin/admin.php", [ "firstname" => AuthController::retrieveSession()["user_firstname"] ]);
-    }
-    
-    public static function showAdminPosts(): void
-    {        
-        self::show("admin/admin-posts.php", [
-            "firstname" => AuthController::retrieveSession()["user_firstname"],
-            "adminPostsList" => self::getList("Rehor\Myblog\\entities\Post")
-        ]);
-    }
-
     public static function showAdminUsers(): void
     {
         self::show("admin/admin-users/admin-users.php", [
             "firstname" => AuthController::retrieveSession()["user_firstname"],
             "adminUsersList" => self::getList("Rehor\Myblog\\entities\User")
         ]);
-    }
-
-    public static function showAdminRoles(): void
-    {
-        self::show("admin/admin-roles.php", [
-            "firstname" => AuthController::retrieveSession()["user_firstname"],
-            "adminRolesList" => self::getList("Rehor\Myblog\\entities\Role")
-        ]);
-    }
-
-    public static function checkAdmin(): bool
-    {
-        $currentSession = AuthController::retrieveSession();
-
-        if (count($currentSession) !== 0) {
-         
-            $userRole = $currentSession["user_role"];
-            
-            $role = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\Role", [ "id" => $userRole ]);
-            $sessionData["isAdmin"] = $role->permission;
-            
-            return $role->permission;
-        }
-
-        return false;
-    }
-
-    public static function preventAdmin(): void
-    {
-        echo "Access denied! Please contact your Admin for further clarities";
-        http_response_code(403);
-        exit(1);
-    }
-
-    public static function logoutAdmin(): void
-    {
-        AuthController::logout();
     }
 
     public static function createUsers(): void
