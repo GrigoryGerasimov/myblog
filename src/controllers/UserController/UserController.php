@@ -8,7 +8,7 @@ use Rehor\Myblog\controllers\UserController\interfaces\UserControllerInterface;
 use Rehor\Myblog\controllers\UserController\traits\UserControllerTrait;
 use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
-use Rehor\Myblog\controllers\AdminController\AdminController;
+use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;

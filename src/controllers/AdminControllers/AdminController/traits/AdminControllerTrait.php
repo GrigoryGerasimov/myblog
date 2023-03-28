@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rehor\Myblog\controllers\AdminController\traits;
+namespace Rehor\Myblog\controllers\AdminControllers\AdminController\traits;
 
 require("utils/arrays/flattenArray.php");
 
