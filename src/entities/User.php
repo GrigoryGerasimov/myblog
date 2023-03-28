@@ -18,6 +18,9 @@ class User
     
     #[Column(type: "string", unique: true, nullable: false)]
     protected $password;
+
+    #[Column(type: "string", unique: true, nullable: false)]
+    protected $username;
     
     #[Column(type: "string", nullable: false)]
     protected $firstname;

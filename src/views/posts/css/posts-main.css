@@ -129,6 +129,10 @@
 	line-height: 1.5;
 }
 
+.blog-card__text-block {
+	overflow: auto;
+}
+
 .blog-card__edit-form,
 .blog-card__delete-form,
 .blog-card__create-form {

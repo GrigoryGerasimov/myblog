@@ -15,5 +15,8 @@ function getAdminRoutes(): array
         "/admin/posts" => fn() => AdminController::showAdminPosts(),
         "/admin/users" => fn() => AdminController::showAdminUsers(),
         "/admin/roles" => fn() => AdminController::showAdminRoles(),
+        "/admin/users/create" => fn() => AdminController::createUsers(),
+        "/admin/users/@id/update" => function($id) { AdminController::updateUsers($id); },
+        "/admin/users/@id/delete" => function($id) { AdminController::deleteUsers($id); }
     ];
 }

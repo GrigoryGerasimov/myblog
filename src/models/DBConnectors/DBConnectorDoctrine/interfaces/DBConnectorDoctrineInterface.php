@@ -11,6 +11,8 @@ interface DBConnectorDoctrineInterface extends DBConnectorInterface
     public static function requestRepository(string $dbName, string $className): object;
     
     public static function retrieveOneFromRepository(string $dbName, string $className, array $params): ?object;
+
+    public static function retrieveAllFromRepository(string $dbName, string $className): ?array;
     
     public static function insertIntoRepository(string $dbName, object $class): void;
     

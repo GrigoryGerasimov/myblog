@@ -35,6 +35,10 @@ body {
 	margin: 10px 30px;
 }
 
+.margin-separator {
+	margin-bottom: 40px;
+}
+
 .height-divider {
 	line-height: 3.5;
 }
@@ -53,4 +57,8 @@ body {
 	border: none;
 	font-size: inherit;
 	background-color: inherit;
+}
+
+.full-width {
+	width: 100%;
 }
