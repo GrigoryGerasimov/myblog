@@ -21,7 +21,8 @@ trait AdminControllerTrait
 
             RendererRepository::displayView($adminPagePath, $params);
         } else {
-            self::preventAdmin();
+            header("Location: /access-denied");
+            exit(1);
         }
     }
 
@@ -77,14 +78,14 @@ trait AdminControllerTrait
         return $items;
     }
 
-    public static function validateUserData(object $userRequest): bool
+    public static function validateRequestData(object $requestData): bool
     {
-        if (!count($userRequest)) {
+        if (!count($requestData)) {
             return false;
         }
 
-        foreach ($userRequest as $userRequestValue) {
-            if ($userRequestValue === "" || is_null($userRequestValue)) {
+        foreach ($requestData as $requestDataValue) {
+            if ($requestDataValue === "" || is_null($requestDataValue)) {
                 return false;
             }
         }

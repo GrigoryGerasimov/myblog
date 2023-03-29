@@ -56,7 +56,7 @@ body {
 }
 
 .notification-fail {
-	color: rgb(255, 90, 104);
+	color: var(--secondary-theme);
 }
 
 .styles-resetter {

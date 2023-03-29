@@ -1,0 +1,36 @@
+@import "../../index.css";
+
+.utils-container {
+    width: 100%;
+	height: 100%;
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.utils__exclamation-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.utils__permission-block {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.utils__permission-block-item {
+    line-height: 1.5;
+}
+
+.utils__link {
+    text-decoration: none;
+	color: inherit;
+    font-size: larger;
+}
+
+.utils__link:hover {
+	color: var(--secondary-theme);
+}

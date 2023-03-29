@@ -42,6 +42,10 @@
             <input type="password" id="password" name="password" class="styles-resetter register-form__input" required/>
         </div>
         <div class="register-form__labelled-block">
+            <label for="username" class="register-form__label">Username</label>
+            <input type="text" id="username" name="username" class="styles-resetter register-form__input" required/>
+        </div>
+        <div class="register-form__labelled-block">
             <label for="firstname" class="register-form__label">First Name</label>
             <input type="text" id="firstname" name="firstname" class="styles-resetter register-form__input" required/>
         </div>

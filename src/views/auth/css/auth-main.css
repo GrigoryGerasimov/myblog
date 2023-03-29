@@ -41,7 +41,7 @@
 }
 
 .register-form__labelled-block {
-	margin: 10px 0;
+	margin: 20px 0;
 }
 
 .login-form__label,
@@ -52,9 +52,9 @@
 .login-form__input,
 .register-form__input {
 	flex-grow: 1;
-	box-shadow: var(--shadow-effect);
 	padding: 10px;
 	border-radius: 10px;
+	border: 1px solid var(--contrast-theme);
 }
 
 .login-form__btn-block,

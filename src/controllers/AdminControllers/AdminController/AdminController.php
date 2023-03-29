@@ -9,6 +9,7 @@ use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\traits\AdminControllerTrait;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
+use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 
 class AdminController implements AdminControllerInterface
 {
@@ -22,7 +23,8 @@ class AdminController implements AdminControllerInterface
             header("Location: /admin");
             exit();
         } else {
-            self::preventAdmin();
+            header("Location: /access-denied");
+            exit(1);
         }
     }
 
@@ -54,7 +56,7 @@ class AdminController implements AdminControllerInterface
 
     public static function preventAdmin(): void
     {
-        echo "Access denied! Please contact your Admin for further clarities";
+        RendererRepository::displayView("utils/access-denied.php", []);
         http_response_code(403);
         exit(1);
     }
