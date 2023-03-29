@@ -89,6 +89,11 @@ class BlogPostController extends BlogController
         try {
             $postsList = PostRepository::getAllPosts();
 
+            foreach ($postsList as &$post) {
+                $post["description"] = substr($post["text"], 0, 200);
+            }
+            unset($post);
+
             self::$renderData["postsList"] = $postsList;
 
         } catch(\Exception $e) {

@@ -14,6 +14,8 @@ class AdminController implements AdminControllerInterface
 {
     use AdminControllerTrait;
 
+    protected static $renderData = [];
+
     public static function authAdmin(): void
     {
         if (AuthController::checkSession() && self::checkAdmin()) {
@@ -26,7 +28,11 @@ class AdminController implements AdminControllerInterface
 
     public static function showAdmin(): void
     {
-        self::show("admin/admin.php", [ "firstname" => AuthController::retrieveSession()["user_firstname"] ]);
+        if (AuthController::checkSession()) {
+            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        }
+
+        self::show("admin/admin.php", self::$renderData);
     }
 
     public static function checkAdmin(): bool

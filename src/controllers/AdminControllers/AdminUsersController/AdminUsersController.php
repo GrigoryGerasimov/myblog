@@ -17,14 +17,20 @@ class AdminUsersController extends AdminController implements AdminUsersControll
 {
     public static function showAdminUsers(): void
     {
-        self::show("admin/admin-users/admin-users.php", [
-            "firstname" => AuthController::retrieveSession()["user_firstname"],
-            "adminUsersList" => self::getList("Rehor\Myblog\\entities\User")
-        ]);
+        if (AuthController::checkSession()) {
+            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+            self::$renderData["adminUsersList"] = self::getList("Rehor\Myblog\\entities\User");
+        }
+
+        self::show("admin/admin-users/admin-users.php", self::$renderData);
     }
 
     public static function createUsers(): void
     {
+        if (AuthController::checkSession()) {
+            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        }
+
         $request = DBConnectorFlightRepository::requestConnector();
         
         if (self::validateUserData($request)) {
@@ -51,9 +57,7 @@ class AdminUsersController extends AdminController implements AdminUsersControll
             }
         }
 
-        self::show("admin/admin-users/admin-users-create.php", [
-            "firstname" => AuthController::retrieveSession()["user_firstname"],
-        ]);
+        self::show("admin/admin-users/admin-users-create.php", self::$renderData);
     }
 
     public static function updateUsers(string $id): void
@@ -64,11 +68,11 @@ class AdminUsersController extends AdminController implements AdminUsersControll
 
         if (self::validateUserData($request)) {
 
-            $hashedPassword = md5($request["password"]);
+            $password = $request["password"] !== $userToUpdate->password ?  md5($request["password"]) : $userToUpdate->password;            
 
             try {
                 $userToUpdate->email = UserController::handleUserInput($request["email"]);
-                $userToUpdate->password = $hashedPassword;
+                $userToUpdate->password = UserController::handleUserInput($password);
                 $userToUpdate->username = UserController::handleUserInput($request["username"]);
                 $userToUpdate->firstname = UserController::handleUserInput($request["firstname"]);
                 $userToUpdate->lastname = UserController::handleUserInput($request["lastname"]);
@@ -86,7 +90,7 @@ class AdminUsersController extends AdminController implements AdminUsersControll
         }
 
         if (!is_null($userToUpdate)) {
-            self::show("admin/admin-users/admin-users-update.php", [
+            self::$renderData = [
                 "firstname" => AuthController::retrieveSession()["user_firstname"],
                 "id" => $id,
                 "email" => $userToUpdate->email,
@@ -95,7 +99,9 @@ class AdminUsersController extends AdminController implements AdminUsersControll
                 "firstname" => $userToUpdate->firstname,
                 "lastname" => $userToUpdate->lastname,
                 "role" => $userToUpdate->role
-            ]);
+            ];
+
+            self::show("admin/admin-users/admin-users-update.php", self::$renderData);
         } else {
             echo "User not found!";
         }
@@ -122,7 +128,7 @@ class AdminUsersController extends AdminController implements AdminUsersControll
         }
 
         if (!is_null($userToDelete)) {
-            self::show("admin/admin-users/admin-users-delete.php", [
+            self::$renderData = [
                 "firstname" => AuthController::retrieveSession()["user_firstname"],
                 "id" => $id,
                 "email" => $userToDelete->email,
@@ -131,7 +137,9 @@ class AdminUsersController extends AdminController implements AdminUsersControll
                 "firstname" => $userToDelete->firstname,
                 "lastname" => $userToDelete->lastname,
                 "role" => $userToDelete->role
-            ]);
+            ];
+
+            self::show("admin/admin-users/admin-users-delete.php", self::$renderData);
         } else {
             echo "User not found!";
         }

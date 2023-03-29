@@ -18,6 +18,14 @@ class AdminPostsController extends AdminController implements AdminPostsControll
         ]);
     }
 
+    public static function showOnePost(string $uid): void
+    {
+        self::show("admin/admin-posts/admin-post.php", [
+            "firstname" => AuthController::retrieveSession()["user_firstname"],
+            "uid" => $uid
+        ]);
+    }
+
     public static function createPosts(): void
     {
 
