@@ -33,27 +33,35 @@ class AdminUsersController extends AdminController implements AdminUsersControll
 
         $request = DBConnectorFlightRepository::requestConnector();
         
-        if (self::validateUserData($request)) {
-
-            $hashedPassword = md5($request["password"]);
-
-            try {
-                $newUser = new User();
-                $newUser->email = UserController::handleUserInput($request["email"]);
-                $newUser->password = $hashedPassword;
-                $newUser->username = UserController::handleUserInput($request["username"]);
-                $newUser->firstname = UserController::handleUserInput($request["firstname"]);
-                $newUser->lastname = UserController::handleUserInput($request["lastname"]);
-                $newUser->role = (int) $request["role"];
-
-                DBConnectorDoctrineRepository::updateConnector(DBController::getDBName(), $newUser);
-
-                header("Location: /admin/users");
-                exit();
-
-            } catch(\Exception $e) {
-                echo $e->getMessage();
-                exit(1);
+        if (count($request)) {
+            
+            if (self::validateRequestData($request)) {
+                
+                $hashedPassword = md5($request["password"]);
+                
+                try {
+                    $newUser = new User();
+                    $newUser->email = UserController::handleUserInput($request["email"]);
+                    $newUser->password = $hashedPassword;
+                    $newUser->username = UserController::handleUserInput($request["username"]);
+                    $newUser->firstname = UserController::handleUserInput($request["firstname"]);
+                    $newUser->lastname = UserController::handleUserInput($request["lastname"]);
+                    $newUser->role = (int) $request["role"];
+                    
+                    DBConnectorDoctrineRepository::updateConnector(DBController::getDBName(), $newUser);
+                    
+                    header("Location: /admin/users");
+                    exit();
+                
+                } catch(\Exception $e) {
+                    echo $e->getMessage();
+                    exit(1);
+                }
+            } else {
+                self::$renderData = [
+                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "error" => "Imcomplete user data provided! Please fill all the fields and try once again"
+                ];
             }
         }
 
@@ -65,55 +73,70 @@ class AdminUsersController extends AdminController implements AdminUsersControll
         $request = DBConnectorFlightRepository::requestConnector();
 
         $userToUpdate = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "id" => $id ]);
-
-        if (self::validateUserData($request)) {
-
-            $password = $request["password"] !== $userToUpdate->password ?  md5($request["password"]) : $userToUpdate->password;            
-
-            try {
-                $userToUpdate->email = UserController::handleUserInput($request["email"]);
-                $userToUpdate->password = UserController::handleUserInput($password);
-                $userToUpdate->username = UserController::handleUserInput($request["username"]);
-                $userToUpdate->firstname = UserController::handleUserInput($request["firstname"]);
-                $userToUpdate->lastname = UserController::handleUserInput($request["lastname"]);
-                $userToUpdate->role = (int) $request["role"];
-
-                DBConnectorDoctrineRepository::updateConnector(DBController::getDBName(), $userToUpdate);
-
-                header("Location: /admin/users");
-                exit();
-
-            } catch(\Exception $e) {
-                echo $e->getMessage();
-                exit(1);
+        
+        if (count($request)) {
+            
+            if (self::validateRequestData($request)) {
+                
+                $password = $request["password"] !== $userToUpdate->password ?  md5($request["password"]) : $userToUpdate->password;            
+                
+                try {
+                    $userToUpdate->email = UserController::handleUserInput($request["email"]);
+                    $userToUpdate->password = UserController::handleUserInput($password);
+                    $userToUpdate->username = UserController::handleUserInput($request["username"]);
+                    $userToUpdate->firstname = UserController::handleUserInput($request["firstname"]);
+                    $userToUpdate->lastname = UserController::handleUserInput($request["lastname"]);
+                    $userToUpdate->role = (int) $request["role"];
+                    
+                    DBConnectorDoctrineRepository::updateConnector(DBController::getDBName(), $userToUpdate);
+                    
+                    header("Location: /admin/users");
+                    exit();
+                
+                } catch(\Exception $e) {
+                    echo $e->getMessage();
+                    exit(1);
+                }
+            } else {
+                self::$renderData = [
+                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "error" => "Imcomplete user data provided! Please fill all the fields and try once again"
+                ];
             }
         }
 
-        if (!is_null($userToUpdate)) {
-            self::$renderData = [
-                "firstname" => AuthController::retrieveSession()["user_firstname"],
-                "id" => $id,
-                "email" => $userToUpdate->email,
-                "password" => $userToUpdate->password,
-                "username" => $userToUpdate->username,
-                "firstname" => $userToUpdate->firstname,
-                "lastname" => $userToUpdate->lastname,
-                "role" => $userToUpdate->role
-            ];
+        if (AuthController::checkSession()) {
+            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
 
-            self::show("admin/admin-users/admin-users-update.php", self::$renderData);
-        } else {
-            echo "User not found!";
+            if (!is_null($userToUpdate)) {
+                self::$renderData = [
+                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "id" => $id,
+                    "email" => $userToUpdate->email,
+                    "password" => $userToUpdate->password,
+                    "username" => $userToUpdate->username,
+                    "firstname" => $userToUpdate->firstname,
+                    "lastname" => $userToUpdate->lastname,
+                    "role" => $userToUpdate->role
+                ];
+            } else {
+                self::$renderData = [
+                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "error" => "No user found!"
+                ];
+            }
         }
+
+        self::show("admin/admin-users/admin-users-update.php", self::$renderData);
     }
 
     public static function deleteUsers(string $id): void
-    {
+    {        
         $request = DBConnectorFlightRepository::requestConnector();
 
         $userToDelete = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "id" => $id ]);
 
-        if (self::validateUserData($request)) {
+        if (self::validateRequestData($request)) {
 
             try {
                 DBConnectorDoctrineRepository::deleteConnector(DBController::getDBName(), $userToDelete);
@@ -126,22 +149,29 @@ class AdminUsersController extends AdminController implements AdminUsersControll
                 exit(1);
             }
         }
+        
+        if (AuthController::checkSession()) {
+            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
 
-        if (!is_null($userToDelete)) {
-            self::$renderData = [
-                "firstname" => AuthController::retrieveSession()["user_firstname"],
-                "id" => $id,
-                "email" => $userToDelete->email,
-                "password" => $userToDelete->password,
-                "username" => $userToDelete->username,
-                "firstname" => $userToDelete->firstname,
-                "lastname" => $userToDelete->lastname,
-                "role" => $userToDelete->role
-            ];
-
-            self::show("admin/admin-users/admin-users-delete.php", self::$renderData);
-        } else {
-            echo "User not found!";
+            if (!is_null($userToDelete)) {
+                self::$renderData = [
+                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "id" => $id,
+                    "email" => $userToDelete->email,
+                    "password" => $userToDelete->password,
+                    "username" => $userToDelete->username,
+                    "firstname" => $userToDelete->firstname,
+                    "lastname" => $userToDelete->lastname,
+                    "role" => $userToDelete->role
+                ];
+            } else {
+                self::$renderData = [
+                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "error" => "No user found!"
+                ];
+            }
         }
+
+        self::show("admin/admin-users/admin-users-delete.php", self::$renderData);
     }
 }

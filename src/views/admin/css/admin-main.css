@@ -34,10 +34,9 @@
 
 .admin__large-wrapper {
   width: 100%;
-  height: inherit;
+  min-height: 100vh;
   display: flex;
   position: absolute;
-  top: 135px;
 }
 
 .admin-header__link {
@@ -93,18 +92,29 @@
 }
 
 .admin-dashboard__main {
-  flex-grow: 1;
+  width: 85%;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: 140px 40px 40px;
 } 
 
 .admin-dashboard__section-title {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-dashboard__title, .admin-dashboard__title__single {
   opacity: 0.7;
-	text-align: right;
 	margin-bottom: 10px;
+}
+
+.admin-dashboard__title__single {
+  width: 100%;
+  text-align: right;
 }
 
 .admin-dashboard__list {
@@ -161,20 +171,36 @@
 
 .admin-user-creation__title,
 .admin-user-update__title,
-.admin-user-delete__title {
+.admin-user-delete__title,
+.admin-post-edit__title,
+.admin-post-delete__title {
   color: var(--contrast-theme);
 }
 
 .admin-user-creation__form,
 .admin-user-update__form,
-.admin-user-delete__form {
-	width: 50%;
+.admin-user-delete__form,
+.admin-post-creation__form,
+.admin-post-edit__form,
+.admin-post-delete__form {
 	height: fit-content;
 	display: flex;
 	flex-flow: column wrap;
 	justify-content: center;
 	align-items: center;
 	line-height: 2.5;
+}
+
+.admin-user-creation__form,
+.admin-user-update__form,
+.admin-user-delete__form {
+  width: 50%;
+}
+
+.admin-post-creation__form,
+.admin-post-edit__form,
+.admin-post-delete__form {
+  width: 100%;
 }
 
 .admin-user-creation__form__labelled-block,
@@ -199,7 +225,10 @@
 .admin-user-update__form__input,
 .admin-user-update__form__input-radio,
 .admin-user-delete__form__input,
-.admin-user-delete__form__input-radio {
+.admin-user-delete__form__input-radio,
+.admin-post-creation__form__input,
+.admin-post-edit__form__input,
+.admin-post-delete__form__input {
 	flex-grow: 1;
 	padding: 10px;
   opacity: 0.5;
@@ -207,24 +236,38 @@
 
 .admin-user-creation__form__input,
 .admin-user-update__form__input,
-.admin-user-delete__form__input {
+.admin-user-delete__form__input,
+.admin-post-creation__form__input,
+.admin-post-edit__form__input,
+.admin-post-delete__form__input {
   border-bottom: 1px solid var(--contrast-theme);
   border-radius: 10px;
 }
 
+.admin-post-creation__form__input,
+.admin-post-edit__form__input,
+.admin-post-delete__form__input {
+  width: 100%;
+}
+
 .admin-user-creation__form__btn__btn-block,
 .admin-user-update__form__btn__btn-block,
-.admin-user-delete__form__btn__btn-block {
+.admin-user-delete__form__btn__btn-block,
+.admin-post-creation__form__btn__btn-block,
+.admin-post-edit__form__btn__btn-block,
+.admin-post-delete__form__btn__btn-block {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
 	align-items: center;
-	padding: 50px 0;
 }
 
 .admin-user-creation__form__btn__btn,
 .admin-user-update__form__btn__btn,
-.admin-user-delete__form__btn__btn {
+.admin-user-delete__form__btn__btn,
+.admin-post-creation__form__btn__btn,
+.admin-post-edit__form__btn__btn,
+.admin-post-delete__form__btn__btn {
 	cursor: pointer;
 	font-weight: 700;
 	letter-spacing: 3px;
@@ -233,6 +276,45 @@
 
 .admin-user-creation__form__btn__btn:hover,
 .admin-user-update__form__btn__btn:hover,
-.admin-user-delete__form__btn__btn:hover {
+.admin-user-delete__form__btn__btn:hover,
+.admin-post-creation__form__btn__btn:hover,
+.admin-post-edit__form__btn__btn:hover,
+.admin-post-delete__form__btn__btn:hover {
 	color: var(--secondary-theme);
+}
+
+.admin-dashboard__links-block {
+	align-self: flex-end;
+	margin: 15px 0 10px;
+}
+
+.admin-dashboard__post {
+  width: 85%;
+  height: 85%;
+  line-height: 2.5;
+}
+
+.admin-dashboard__link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.admin-dashboard__link:hover {
+	color: var(--secondary-theme);
+}
+
+.admin-dashboard__text-block,
+.admin-post-creation__form__text-area,
+.admin-post-edit__form__text-area,
+.admin-post-delete__form__text-area {
+  width: 100%;
+  min-height: 50vh;
+	max-height: 80vh;
+	margin-top: 30px;
+	line-height: 1.5;
+}
+
+.admin-dashboard__text-block {
+  overflow-y: auto;
+  margin: 40px 0;
 }

@@ -2,10 +2,24 @@
 
 {% block main %}
 
-<h5 class="admin-dashboard__section-title full-width">Users</h5>
+{% if (error) %}
+
+<h4 class="notification-fail margin-separator">{{ error }}</h4>
+<a href="/admin/users" class="admin-dashboard__link margin-divider">Back</a>
+
+{% else %}
+
+<div class="admin-dashboard__section-title full-width">
+    <a href="/admin/users" class="admin-dashboard__link margin-divider">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="admin-dashboard_table-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
+        </svg>
+    </a>
+    <h4 class="admin-dashboard__title">User #{{ id }}</h4>
+</div>
 <hr class="divider-minor full-width"/>
 
-<h4 class="admin-user-delete__title margin-separator">Delete User #{{ id }}</h4>
+<h4 class="admin-user-delete__title margin-separator">Delete User</h4>
 
     <form name="user-delete-form" method="POST" class="admin-user-delete__form">
         <div class="admin-user-delete__form__labelled-block">
@@ -44,5 +58,7 @@
             <button type="submit" class="styles-resetter admin-user-delete__form__btn__btn">Delete</button>
         </div>
     </form>
+
+{% endif %}
 
 {% endblock %}

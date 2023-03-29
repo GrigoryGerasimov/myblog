@@ -27,7 +27,7 @@
             <h1>{{ title }}</h1>
             <hr class="divider-major"/>
             <h4>{{ author }}</h4>
-            <pre class="blog-card__text-block">{{ text }}</pre>
+            <div class="blog-card__text-block">{{ text }}</div>
         </article>
 
         <article class="blog-card__links-block">
