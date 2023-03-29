@@ -2,7 +2,7 @@
 
 {% block main %}
 
-<h5 class="admin-dahsboard__section-title full-width">Roles</h5>
+<h5 class="admin-dashboard__section-title full-width">Roles</h5>
 <hr class="divider-minor full-width"/>
             
 <ul class="admin-dashboard__list full-width">

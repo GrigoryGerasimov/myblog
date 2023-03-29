@@ -10,6 +10,8 @@ interface AdminPostsControllerInterface extends AdminControllerInterface
 {
     public static function showAdminPosts(): void;
 
+    public static function showOnePost(string $uid): void;
+
     public static function createPosts(): void;
 
     public static function updatePosts(string $id): void;

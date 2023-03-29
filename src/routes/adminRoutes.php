@@ -23,8 +23,9 @@ function getAdminRoutes(): array
         
         "/admin/posts" => fn() => AdminPostsController::showAdminPosts(),
         "/admin/posts/create" => fn() => AdminPostsController::createPosts(),
-        "/admin/posts/@id/update" => function($id) { AdminPostsController::updatePosts($id); },
-        "/admin/posts/@id/delete" => function($id) { AdminPostsController::deletePosts($id); },
+        "/admin/posts/@uid" => function($uid) { AdminPostsController::showOnePost($uid); },
+        "/admin/posts/@id/update" => function($uid) { AdminPostsController::updatePosts($uid); },
+        "/admin/posts/@id/delete" => function($uid) { AdminPostsController::deletePosts($uid); },
 
         "/admin/roles" => fn() => AdminRolesController::showAdminRoles(),
         "/admin/roles/create" => fn() => AdminRolesController::createRoles(),

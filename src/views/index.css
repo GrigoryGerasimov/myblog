@@ -35,6 +35,14 @@ body {
 	margin: 10px 30px;
 }
 
+.margin-divider-small {
+	margin: 0px 5px;
+}
+
+.margin-left-divider {
+	margin-left: 30px;
+}
+
 .margin-separator {
 	margin-bottom: 40px;
 }
