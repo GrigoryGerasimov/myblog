@@ -43,7 +43,7 @@
                 <input type="radio" id="role" name="role" value="1" class="margin-divider"/>admin
             </div>
         </div>
-        <div class="admin-user-creation__form__btn__btn-block">
+        <div class="admin-user-creation__form__btn__btn-block margin-top-divider">
             <button type="submit" class="styles-resetter admin-user-creation__form__btn__btn">Create</button>
         </div>
     </form>

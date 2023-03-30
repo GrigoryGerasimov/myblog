@@ -54,7 +54,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="admin-user-update__form__btn__btn-block">
+        <div class="admin-user-update__form__btn__btn-block margin-top-divider">
             <button type="submit" class="styles-resetter admin-user-update__form__btn__btn">Update</button>
         </div>
     </form>

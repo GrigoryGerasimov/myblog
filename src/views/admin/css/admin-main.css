@@ -79,7 +79,8 @@
   letter-spacing: 2px;
 }
 
-.admin_dashboard__aside-list-link, .admin-dashboard__list-link {
+.admin_dashboard__aside-list-link,
+.admin-dashboard__list-link {
   text-decoration: none;
 }
 
@@ -87,7 +88,8 @@
   color: var(--main-theme);
 }
 
-.admin_dashboard__aside-list-link:hover, .admin-dashboard__list-link:hover {
+.admin_dashboard__aside-list-link:hover,
+.admin-dashboard__list-link:hover {
   color: var(--secondary-theme);
 }
 
@@ -107,7 +109,8 @@
   align-items: center;
 }
 
-.admin-dashboard__title, .admin-dashboard__title__single {
+.admin-dashboard__title,
+.admin-dashboard__title__single {
   opacity: 0.7;
 	margin-bottom: 10px;
 }
@@ -172,8 +175,12 @@
 .admin-user-creation__title,
 .admin-user-update__title,
 .admin-user-delete__title,
+.admin-post-creation__title,
 .admin-post-edit__title,
-.admin-post-delete__title {
+.admin-post-delete__title,
+.admin-role-creation__title,
+.admin-role-edit__title,
+.admin-role-delete__title {
   color: var(--contrast-theme);
 }
 
@@ -182,7 +189,10 @@
 .admin-user-delete__form,
 .admin-post-creation__form,
 .admin-post-edit__form,
-.admin-post-delete__form {
+.admin-post-delete__form,
+.admin-role-creation__form,
+.admin-role-edit__form,
+.admin-role-delete__form {
 	height: fit-content;
 	display: flex;
 	flex-flow: column wrap;
@@ -193,7 +203,10 @@
 
 .admin-user-creation__form,
 .admin-user-update__form,
-.admin-user-delete__form {
+.admin-user-delete__form,
+.admin-role-creation__form,
+.admin-role-edit__form,
+.admin-role-delete__form {
   width: 50%;
 }
 
@@ -205,7 +218,10 @@
 
 .admin-user-creation__form__labelled-block,
 .admin-user-update__form__labelled-block,
-.admin-user-delete__form__labelled-block {
+.admin-user-delete__form__labelled-block,
+.admin-role-creation__form__labelled-block,
+.admin-role-edit__form__labelled-block,
+.admin-role-delete__form__labelled-block {
 	width: 100%;
 	display: flex;
 	flex-flow: row wrap;
@@ -220,6 +236,12 @@
 	width: 100px;
 }
 
+.admin-role-creation__form__label,
+.admin-role-edit__form__label,
+.admin-role-delete__form__label {
+  width: 150px;
+}
+
 .admin-user-creation__form__input,
 .admin-user-creation__form__input-radio,
 .admin-user-update__form__input,
@@ -228,7 +250,13 @@
 .admin-user-delete__form__input-radio,
 .admin-post-creation__form__input,
 .admin-post-edit__form__input,
-.admin-post-delete__form__input {
+.admin-post-delete__form__input,
+.admin-role-creation__form__input,
+.admin-role-creation__form__input-radio,
+.admin-role-edit__form__input,
+.admin-role-edit__form__input-radio,
+.admin-role-delete__form__input,
+.admin-role-delete__form__input-radio {
 	flex-grow: 1;
 	padding: 10px;
   opacity: 0.5;
@@ -239,7 +267,10 @@
 .admin-user-delete__form__input,
 .admin-post-creation__form__input,
 .admin-post-edit__form__input,
-.admin-post-delete__form__input {
+.admin-post-delete__form__input,
+.admin-role-creation__form__input,
+.admin-role-edit__form__input,
+.admin-role-delete__form__input {
   border-bottom: 1px solid var(--contrast-theme);
   border-radius: 10px;
 }
@@ -255,7 +286,10 @@
 .admin-user-delete__form__btn__btn-block,
 .admin-post-creation__form__btn__btn-block,
 .admin-post-edit__form__btn__btn-block,
-.admin-post-delete__form__btn__btn-block {
+.admin-post-delete__form__btn__btn-block,
+.admin-role-creation__form__btn__btn-block,
+.admin-role-edit__form__btn__btn-block,
+.admin-role-delete__form__btn__btn-block {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
@@ -267,7 +301,10 @@
 .admin-user-delete__form__btn__btn,
 .admin-post-creation__form__btn__btn,
 .admin-post-edit__form__btn__btn,
-.admin-post-delete__form__btn__btn {
+.admin-post-delete__form__btn__btn,
+.admin-role-creation__form__btn__btn,
+.admin-role-edit__form__btn__btn,
+.admin-role-delete__form__btn__btn {
 	cursor: pointer;
 	font-weight: 700;
 	letter-spacing: 3px;
@@ -279,7 +316,10 @@
 .admin-user-delete__form__btn__btn:hover,
 .admin-post-creation__form__btn__btn:hover,
 .admin-post-edit__form__btn__btn:hover,
-.admin-post-delete__form__btn__btn:hover {
+.admin-post-delete__form__btn__btn:hover,
+.admin-role-creation__form__btn__btn:hover,
+.admin-role-edit__form__btn__btn:hover,
+.admin-role-delete__form__btn__btn:hover {
 	color: var(--secondary-theme);
 }
 

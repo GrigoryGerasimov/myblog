@@ -12,6 +12,8 @@
 </div>
 <hr class="divider-minor full-width"/>
 
+<h4 class="admin-post-creation__title margin-separator">Create New Post</h4>
+
 <article class="admin-dashboard__post">
     <form name="post-create-form" method="POST" class="admin-post-creation__form">
         <input id="title" name="title" placeholder="Title" class="styles-resetter admin-post-creation__form__input"/>
