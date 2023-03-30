@@ -54,7 +54,7 @@ trait AdminControllerTrait
                 return [
                     "id" => $class->id,
                     "rolename" => $class->role_name,
-                    "permission" => $class->permission
+                    "permission" => (int) $class->permission
                 ];
             }
 
