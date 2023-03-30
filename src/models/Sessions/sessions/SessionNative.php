@@ -8,7 +8,9 @@ class SessionNative extends Sessions
 {
     public static function initSession()
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
     
     public static function setSession(array $params): void
@@ -27,7 +29,9 @@ class SessionNative extends Sessions
     
     public static function unsetSession(): void
     {
-        session_unset();
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_unset();
+        }
     }
     
     public static function validateSession(): bool

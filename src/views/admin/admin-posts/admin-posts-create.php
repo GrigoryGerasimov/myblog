@@ -19,7 +19,7 @@
         <input id="title" name="title" placeholder="Title" class="styles-resetter admin-post-creation__form__input"/>
         <input id="author" name="author" placeholder="Author" class="styles-resetter admin-post-creation__form__input"/>
         <textarea id="text" name="text" placeholder="Write your post here..." class="styles-resetter admin-post-creation__form__text-area"></textarea>
-        <article class="admin-post-creation__form__btn__btn-block">
+        <article class="admin-post-creation__form__btn__btn-block margin-top-divider">
             <button type="submit" class="styles-resetter admin-post-creation__form__btn__btn margin-divider">Send</button>
         </article>
     </form>

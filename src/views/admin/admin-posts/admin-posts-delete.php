@@ -26,7 +26,7 @@
         <input id="title" name="title" value="{{ title }}" placeholder="Title" class="styles-resetter admin-post-delete__form__input" readonly/>
         <input id="author" name="author" value="{{ author }}" placeholder="Author" class="styles-resetter admin-post-delete__form__input" readonly/>
         <textarea id="text" name="text" placeholder="Write your post here..." class="styles-resetter admin-post-delete__form__text-area" readonly>{{ text }}</textarea>
-        <article class="admin-post-delete__form__btn__btn-block">
+        <article class="admin-post-delete__form__btn__btn-block margin-top-divider">
             <button type="submit" class="styles-resetter admin-post-delete__form__btn__btn margin-divider">Delete</button>
         </article>
     </form>

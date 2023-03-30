@@ -8,6 +8,7 @@ use Rehor\Myblog\controllers\BlogController\BlogController;
 use Rehor\Myblog\controllers\BlogController\traits\BlogControllerTrait;
 use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
+use Rehor\Myblog\controllers\FileController\FileController;
 use Rehor\Myblog\repositories\PostRepository\PostRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
@@ -40,17 +41,40 @@ class BlogPostController extends BlogController
             self::$renderData["notification"] = "";
         };
         
-        if (self::validatePostData(self::getRequestData())) {
-            try {
-                PostRepository::createNewPost(self::getRequestData());
+        if (count(self::getRequestData())) {
+            
+            if (self::validatePostData(self::getRequestData())) {
                 
-                self::$renderData["notification"] = "Post successfully created!";
+                try {
+                    
+                    if ($_FILES["file"]["name"]) {
+                        try {
+                            $newBlogFilePath = FileController::uploadFile("file");
+                        } catch (\Exception $e) {
+                            self::$renderData["error"] = $e->getMessage();
+                        }
+                    }
 
-            } catch(\Exception $e) {
-                self::handleException($e);
+                    $request = self::getRequestData();
+                    if (isset($newBlogFilePath) && !empty($newBlogFilePath)) {
+                        $request["filepath"] = $newBlogFilePath;
+                    }
+                    
+                    PostRepository::createNewPost(self::getRequestData());
+
+                } catch(\Exception $e) {
+                    self::handleException($e);
+                }
+
+            } else {
+                self::$renderData["error"] = "Imcomplete post data provided! Please fill all the fields and try once again";
             }
-        };
-        
+
+            if (!isset(self::$renderData["error"]) || empty(self::$renderData["error"])) {
+                self::$renderData["notification"] = "Post successfully created!";
+            }
+        }
+
         self::isAuthorized();
         
         if (self::$renderData["isAuth"]) {

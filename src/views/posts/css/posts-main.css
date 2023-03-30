@@ -72,9 +72,13 @@
 	line-height: 1.5;
 }
 
+.blog-card__links-block,
+.blog-card__links-block__centered {
+	margin-top: 15px;
+}
+
 .blog-card__links-block {
 	align-self: flex-end;
-	margin-top: 15px;
 }
 
 .blog-card__link {

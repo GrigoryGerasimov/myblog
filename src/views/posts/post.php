@@ -30,7 +30,7 @@
             <div class="blog-card__text-block">{{ text }}</div>
         </article>
 
-        <article class="blog-card__links-block">
+        <article class="blog-card__links-block__centered">
             <a href="/posts" class="blog-card__link margin-divider">Back</a>
 
             {% if (isAuth) %}
