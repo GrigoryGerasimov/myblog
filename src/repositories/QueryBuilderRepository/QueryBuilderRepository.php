@@ -37,8 +37,8 @@ class QueryBuilderRepository implements QueryBuilderRepositoryInterface
 
         return self::QueryBuilderInstance($tableName)
            ->insert()
-           ->ins_fields(["title", "author", "text"])
-           ->ins_values(["'".$title."'", "'".$author."'", "'".$text."'"])
+           ->ins_fields(["title", "author", "text", "filepath"])
+           ->ins_values(["'".$title."'", "'".$author."'", "'".$text."'","'".$filepath."'"])
            ->getQuery();
     }
     
@@ -52,6 +52,7 @@ class QueryBuilderRepository implements QueryBuilderRepositoryInterface
            ->set("title", "'".$title."'")
            ->set("author", "'".$author."'")
            ->set("text", "'".$text."'")
+           ->set("filepath", "'".$filepath."'")
            ->where("uid", $id)->getQuery();
     }
     

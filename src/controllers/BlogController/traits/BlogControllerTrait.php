@@ -8,7 +8,17 @@ trait BlogControllerTrait
 {
     public static function validatePostData(object $data): bool
     {
-        return (bool)count($data);
+        if (!count($data)) {
+            return false;
+        }
+
+        foreach ($data as $dataValue) {
+            if ($dataValue === "" || is_null($dataValue)) {
+                return false;
+            }
+        }
+
+        return true;
     }
     
     public static function handleException(\Exception $e): void
