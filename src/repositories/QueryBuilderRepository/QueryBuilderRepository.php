@@ -14,9 +14,14 @@ class QueryBuilderRepository implements QueryBuilderRepositoryInterface
         return new QueryBuilder($tableName);
     }
     
-    public static function buildSelectQuery(string $tableName, ?string $id = null): string
+    public static function buildSelectQuery(string $tableName, ?array $params = null): string
     {
-        return is_null($id)
+        if (!is_null($params)) {
+            $arrayKey = key($params);
+            $arrayValue = $params[$arrayKey];
+        }
+        
+        return is_null($params)
            ?
            self::QueryBuilderInstance($tableName)
               ->select(["*"])
@@ -26,7 +31,7 @@ class QueryBuilderRepository implements QueryBuilderRepositoryInterface
            self::QueryBuilderInstance($tableName)
               ->select(["*"])
               ->from()
-              ->where("uid", $id)
+              ->where($arrayKey, "'".$arrayValue."'")
               ->getQuery();
     }
     
@@ -42,8 +47,11 @@ class QueryBuilderRepository implements QueryBuilderRepositoryInterface
            ->getQuery();
     }
     
-    public static function buildUpdateQuery(string $tableName, string $id, object $data): string
+    public static function buildUpdateQuery(string $tableName, ?array $params, object $data): string
     {
+        $arrayKey = key($params);
+        $arrayValue = $params[$arrayKey];
+
         $dataArray = json_decode(json_encode($data), true);
         extract($dataArray, EXTR_SKIP);
 
@@ -53,15 +61,19 @@ class QueryBuilderRepository implements QueryBuilderRepositoryInterface
            ->set("author", "'".$author."'")
            ->set("text", "'".$text."'")
            ->set("filepath", "'".$filepath."'")
-           ->where("uid", $id)->getQuery();
+           ->where($arrayKey, "'".$arrayValue."'")
+           ->getQuery();
     }
     
-    public static function buildDeleteQuery(string $tableName, string $id): string
+    public static function buildDeleteQuery(string $tableName, ?array $params): string
     {
+        $arrayKey = key($params);
+        $arrayValue = $params[$arrayKey];
+
         return self::QueryBuilderInstance($tableName)
            ->delete()
            ->from()
-           ->where("uid", $id)
+           ->where($arrayKey, "'".$arrayValue."'")
            ->getQuery();
     }
 }

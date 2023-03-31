@@ -14,5 +14,5 @@ interface FileControllerInterface
 
     public static function uploadFile(string $fileInputName): string;
 
-    public static function removeFiles(): void;
+    public static function removeFiles(string|array $filepath): void;
 }

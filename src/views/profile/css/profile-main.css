@@ -64,10 +64,25 @@
 	flex-flow: row wrap;
 }
 
-.profile-card__user-icon {
+.profile-card__user-icon-large,
+.profile-card__user-icon-medium {
+	margin-right: 50px;
+}
+
+.profile-card__user-icon-large,
+.profile-card__user-icon-medium {
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.profile-card__user-icon-large {
+	width: 150px;
+	height: 150px;
+}
+
+.profile-card__user-icon-medium {
 	width: 100px;
 	height: 100px;
-	margin-right: 50px;
 }
 
 .profile-card__user-info {
@@ -141,10 +156,15 @@
 }
 
 .profile-card__edit-input,
-.profile-card__delete-input {
+.profile-card__delete-input,
+.profile-card__edit-input-file {
 	width: inherit;
-	border-bottom: 1px solid var(--contrast-theme);
 	margin: 10px 0;
+}
+
+.profile-card__edit-input,
+.profile-card__delete-input {
+	border-bottom: 1px solid var(--contrast-theme);
 }
 
 .profile-card__edit-btn,
@@ -152,4 +172,21 @@
 	background-color: inherit;
 	font-size: inherit;
 	cursor: pointer;
+}
+
+.profile-card__user-info-cluster {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+}
+
+.profile-card__user-profile-pic-block,
+.profile-card__user-info-block {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+}
+
+.profile-card__user-info-block {
+	flex-grow: 1;
 }

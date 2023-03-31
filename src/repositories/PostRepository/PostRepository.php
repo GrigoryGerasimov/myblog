@@ -19,9 +19,9 @@ class PostRepository implements PostRepositoryInterface
         self::PostInstance($postData)->add();
     }
     
-    public static function getOnePost(string $postId): ?array
+    public static function getOnePost(array $postParams): ?array
     {
-        return mysqli_fetch_assoc(self::PostInstance()->getOne($postId));
+        return mysqli_fetch_assoc(self::PostInstance()->getOne($postParams));
     }
     
     public static function getAllPosts(): ?array
@@ -29,13 +29,13 @@ class PostRepository implements PostRepositoryInterface
         return self::PostInstance()->getAll()->fetch_all(MYSQLI_ASSOC);
     }
     
-    public static function updatePost(string $postId, object $postData): array
+    public static function updatePost(array $postParams, object $postData): array
     {
-        return mysqli_fetch_assoc(self::PostInstance($postData)->update($postId));
+        return mysqli_fetch_assoc(self::PostInstance($postData)->update($postParams));
     }
     
-    public static function deletePost(string $postId): void
+    public static function deletePost(array $postParams): void
     {
-        self::PostInstance()->delete($postId);
+        self::PostInstance()->delete($postParams);
     }
 }
