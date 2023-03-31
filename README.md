@@ -1,4 +1,3 @@
-# myblog
 # Blog in native PHP
 # Frameworks: Flight, Doctrine ORM
 # Template engine: Twig
