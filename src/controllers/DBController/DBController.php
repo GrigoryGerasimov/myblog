@@ -24,9 +24,9 @@ class DBController implements DBControllerInterface
         return self::DB_NAME;
     }
     
-    public static function select(?string $id = null): object
+    public static function select(?array $params = null): object
     {
-        $sql = QueryBuilderRepository::buildSelectQuery(self::DB_TABLE_NAME, $id);
+        $sql = QueryBuilderRepository::buildSelectQuery(self::DB_TABLE_NAME, $params);
         
         return self::db()->query($sql);
     }
@@ -38,18 +38,18 @@ class DBController implements DBControllerInterface
         self::db()->query($sql);
     }
     
-    public static function update(string $id, object $data): object
+    public static function update(?array $params, object $data): object
     {
-        $sql = QueryBuilderRepository::buildUpdateQuery(self::DB_TABLE_NAME, $id, $data);
+        $sql = QueryBuilderRepository::buildUpdateQuery(self::DB_TABLE_NAME, $params, $data);
 
         self::db()->query($sql);
         
-        return self::select($id);
+        return self::select($params);
     }
     
-    public static function delete(string $id): void
+    public static function delete(?array $params): void
     {
-        $sql = QueryBuilderRepository::buildDeleteQuery(self::DB_TABLE_NAME, $id);
+        $sql = QueryBuilderRepository::buildDeleteQuery(self::DB_TABLE_NAME, $params);
 
         self::db()->query($sql);
     }

@@ -8,11 +8,11 @@ interface PostInterface
 {
     public function add(): void;
     
-    public function update(string $uid): object;
+    public function update(array $params): object;
     
-    public function getOne(string $uid): object;
+    public function getOne(array $params): object;
     
     public function getAll(): object;
     
-    public function delete(string $uid): void;
+    public function delete(array $params): void;
 }

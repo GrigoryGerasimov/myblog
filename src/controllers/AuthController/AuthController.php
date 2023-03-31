@@ -30,6 +30,7 @@ class AuthController implements AuthControllerInterface
                 "user_id" => $user->id,
                 "user_email" => $user->email,
                 "user_password" => $user->password,
+                "user_username" => $user->username,
                 "user_firstname" => $user->firstname,
                 "user_lastname" => $user->lastname,
                 "user_role" => $user->role

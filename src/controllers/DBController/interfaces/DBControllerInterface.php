@@ -6,11 +6,11 @@ namespace Rehor\Myblog\controllers\DBController\interfaces;
 
 interface DBControllerInterface
 {
-    public static function select(?string $id): object;
+    public static function select(?array $params): object;
 
     public static function insert(object $data): void;
     
-    public static function update(string $id, object $data): object;
+    public static function update(?array $params, object $data): object;
     
-    public static function delete(string $id): void;
+    public static function delete(?array $params): void;
 }

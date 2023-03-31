@@ -21,9 +21,9 @@
         <article class="blog-card__large">
             <form name="createPost" method="POST" class="blog-card__create-form" enctype="multipart/form-data">
                 <input id="title" name="title" placeholder="Title" class="styles-resetter blog-card__create-input"/>
-                <input id="author" name="author" placeholder="Author" class="styles-resetter blog-card__create-input"/>
-                <input id="sizelimit" name="MAX_FILE_SIZE" type="hidden" value="300000"/>
-                <input id="file" name="file" type="file"/>
+                <input id="author" name="author" placeholder="Author" class="styles-resetter blog-card__create-input" value="{{ author }}" readonly/>
+                <input name="MAX_FILE_SIZE" type="hidden" value="3000000"/>
+                <input id="file" name="file" type="file" class="styles-resetter blog-card__create-input"/>
                 <textarea id="text" name="text" placeholder="Write your post here..." class="styles-resetter blog-card__create-text-area"></textarea>
                 <article class="blog-card__links-block__centered">
                     <a href="/posts/{{ uid }}" class="blog-card__link margin-divider">Back</a>

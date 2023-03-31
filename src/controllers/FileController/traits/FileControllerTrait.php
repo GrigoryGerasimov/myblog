@@ -43,6 +43,18 @@ trait FileControllerTrait
         }
     }
 
+    public static function getFileProps(string $fileInputName, string $fileProp): mixed
+    {
+        foreach ($_FILES as $key => $value) {
+            if ($fileInputName === $key) {
+                return $_FILES[$fileInputName][$fileProp];
+            } else {
+                throw new \Exception("No file identified");
+                exit(1);
+            }
+        };
+    }
+
     public static function checkFileExtension(string $filename): bool
     {
         $allowed_ext = array("png", "jpeg", "jpg", "svg", "gif");

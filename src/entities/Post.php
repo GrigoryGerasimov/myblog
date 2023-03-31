@@ -21,6 +21,9 @@ class Post
     
     #[Column(type: "string", nullable: false)]
     protected $text;
+
+    #[Column(type: "string")]
+    protected $filepath;
     
     public function __get($name)
     {

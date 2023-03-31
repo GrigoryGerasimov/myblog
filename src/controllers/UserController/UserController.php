@@ -13,12 +13,13 @@ use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepositor
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\entities\User;
+use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 
 class UserController implements UserControllerInterface
 {
     use UserControllerTrait;
 
-    public static function login()
+    public static function login(): void
     {
         RendererRepository::displayView("auth/login.php", [
             "isAuth" => AuthController::checkSession(),
@@ -26,7 +27,7 @@ class UserController implements UserControllerInterface
         ]);
     }
     
-    public static function register()
+    public static function register(): void
     {
         $isRegistered = false;
         
@@ -39,9 +40,11 @@ class UserController implements UserControllerInterface
             $registeredUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $userEmail ]); 
         
             if (is_null($registeredUser)) {
+
                 $newUser = new User();
                 $newUser->email = $userEmail;
                 $newUser->password = md5($userPassword);
+                $newUser->username = $requestData["username"];
                 $newUser->firstname = $requestData["firstname"];
                 $newUser->lastname = $requestData["lastname"];
                 $newUser->role = $requestData["role"];
@@ -56,8 +59,10 @@ class UserController implements UserControllerInterface
                        "user_id" => $createdUser->id,
                        "user_email" => $createdUser->email,
                        "user_password" => $createdUser->password,
+                       "user_username" => $createdUser->username,
                        "user_firstname" => $createdUser->firstname,
-                       "user_lastname" => $createdUser->lastname
+                       "user_lastname" => $createdUser->lastname,
+                       "user_role" => $createdUser->role
                     ]);
 
                     header("Location: /posts");
@@ -72,5 +77,10 @@ class UserController implements UserControllerInterface
             "isRegistered" => $isRegistered,
             "isAuth" => AuthController::checkSession()
         ]);
+    }
+
+    public static function getCurrentAuthUser(): array
+    {
+        return SessionRepository::getSession();
     }
 }

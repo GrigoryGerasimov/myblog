@@ -30,18 +30,18 @@ class Post implements PostInterface
         }
     }
     
-    public function update(string $uid): object
+    public function update(array $params): object
     {
         try {
-            return DBController::update($uid, $this->data);
+            return DBController::update($params, $this->data);
         } catch(\Exception $e) {
             throw $e;
         }
     }
     
-    public function getOne(string $uid): object
+    public function getOne(array $params): object
     {
-        return DBController::select($uid);
+        return DBController::select($params);
     }
     
     public function getAll(): object
@@ -49,10 +49,10 @@ class Post implements PostInterface
         return DBController::select();
     }
     
-    public function delete(string $uid): void
+    public function delete(array $params): void
     {
         try {
-            DBController::delete($uid);
+            DBController::delete($params);
         } catch(\Exception $e) {
             throw $e;
         }

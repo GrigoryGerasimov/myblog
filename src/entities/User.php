@@ -28,6 +28,9 @@ class User
     #[Column(type: "string", nullable: false)]
     protected $lastname;
 
+    #[Column(type: "string")]
+    protected $filepath;
+
     #[Column(type: "integer", nullable: false)]
     protected $role;
     

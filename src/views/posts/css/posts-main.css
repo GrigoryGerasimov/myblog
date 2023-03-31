@@ -161,3 +161,25 @@
 	font-size: inherit;
 	cursor: pointer;
 }
+
+.blog-card__img {
+	width: 100%;
+	object-fit: contain;
+} 
+
+.blog-card__btn-link {
+	background-color: var(--secondary-theme);
+	border: 1px solid var(--secondary-theme);
+	border-radius: 10px;
+	padding: 10px 15px;
+	color: var(--main-theme);
+}
+
+.blog-card__btn-link:hover {
+	background-color: var(--main-theme);
+}
+
+.blog-card__btn-link-block {
+	display: flex;
+	align-self: flex-start;
+}

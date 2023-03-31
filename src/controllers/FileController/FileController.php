@@ -15,38 +15,17 @@ class FileController implements FileControllerInterface
 
     public static function getUploadedFileName(string $fileInputName): string|array
     {
-        foreach ($_FILES as $key => $value) {
-            if ($fileInputName === $key) {
-                return $_FILES[$fileInputName]["name"];
-            } else {
-                throw new \Exception("No file identified");
-                exit(1);
-            }
-        };
+        return self::getFileProps($fileInputName, "name");
     }
 
     public static function getUploadedFileTmpName(string $fileInputName): string|array
     {
-        foreach ($_FILES as $key => $value) {
-            if ($fileInputName === $key) {
-                return $_FILES[$fileInputName]["tmp_name"];
-            } else {
-                throw new \Exception("No file identified");
-                exit(1);
-            }
-        };
+        return self::getFileProps($fileInputName, "tmp_name");
     }
 
     public static function getUploadedFileError(string $fileInputName): int
     {
-        foreach ($_FILES as $key => $value) {
-            if ($fileInputName === $key) {
-                return $_FILES[$fileInputName]["error"];
-            } else {
-                throw new \Exception("No file identified");
-                exit(1);
-            }
-        }
+        return self::getFileProps($fileInputName, "error");
     }
 
     public static function uploadFile(string $fileInputName): string
@@ -55,35 +34,48 @@ class FileController implements FileControllerInterface
 
         self::$fileDirectory = self::getFileDirectory();
 
-        if (is_uploaded_file(self::getUploadedFileTmpName($fileInputName)) && self::getUploadedFileError($fileInputName) === UPLOAD_ERR_OK) {
+        try {
+            switch (self::getUploadedFileError($fileInputName)) {
+                
+                case UPLOAD_ERR_OK: {
+                    if (is_uploaded_file(self::getUploadedFileTmpName($fileInputName))) {
 
-            try {
-                if (self::checkFileExtension($filename)) {
-                    
-                    move_uploaded_file(self::getUploadedFileTmpName($fileInputName), self::$fileDirectory.$filename);
-                    
-                    return self::$fileDirectory.$filename;
-                } else {
-                    throw new \Exception("Incorrect file format");
+                        if (self::checkFileExtension($filename)) {
+                            move_uploaded_file(self::getUploadedFileTmpName($fileInputName), self::$fileDirectory.$filename);
+                            
+                            return self::$fileDirectory.$filename;
+
+                        } else {
+                            throw new \Exception("Incorrect file format");
+                        }
+                    }
                 }
-            } catch(\Exception $e) {
-                throw $e;
+                
+                case UPLOAD_ERR_FORM_SIZE: {
+                    throw new \Exception("File max size exceeded");
+                }
             }
+        } catch (\Exception $e) {
+            throw $e;
         }
     }
 
-    public static function removeFiles(): void
+    public static function removeFiles(string|array $filepath): void
     {
-        if (is_dir(self::$fileDirectory)) {
-            $dirPath = glob(self::$fileDirectory."*", GLOB_MARK);
+        if (is_dir($filepath)) {
 
-            if ($dirPath) {
-                self::removeFiles();
+            $dirPath = glob($filepath."*", GLOB_MARK);
+
+            foreach($dirPath as $path) {
+                self::removeFiles($path);
             }
 
-            rmdir(self::$fileDirectory);
-        } elseif (is_file(self::$fileDirectory)) {
-            unlink(self::$fileDirectory);
+            rmdir($filepath);
+
+        } elseif (is_file($filepath)) {
+
+            unlink($filepath);
+            
         }
     }
 }

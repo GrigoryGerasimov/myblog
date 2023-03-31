@@ -28,12 +28,17 @@
             <hr class="divider-major"/>
             <h4>{{ author }}</h4>
             <div class="blog-card__text-block">{{ text }}</div>
+
+            {% if (filepath) %}
+            <img src="/{{ filepath }}" alt="pic" class="blog-card__img"/>
+            {% endif %}
+
         </article>
 
         <article class="blog-card__links-block__centered">
             <a href="/posts" class="blog-card__link margin-divider">Back</a>
 
-            {% if (isAuth) %}
+            {% if (isAuthor is same as (author)) %}
             <a href="/posts/{{ uid }}/update" class="blog-card__link margin-divider">Edit</a>
             <a href="/posts/{{ uid }}/delete" class="blog-card__link margin-divider">Delete</a>
             {% endif %}
