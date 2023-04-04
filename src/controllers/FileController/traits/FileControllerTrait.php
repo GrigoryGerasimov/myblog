@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\controllers\FileController\traits;
 
-use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 
 trait FileControllerTrait
@@ -43,7 +43,7 @@ trait FileControllerTrait
         }
     }
 
-    public static function getFileProps(string $fileInputName, string $fileProp): mixed
+    public static function getFileProps(string $fileInputName, string $fileProp)
     {
         foreach ($_FILES as $key => $value) {
             if ($fileInputName === $key) {

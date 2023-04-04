@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Rehor\Myblog\controllers\AuthController;
+namespace Rehor\Myblog\controllers\AuthControllers\AuthController;
 
-use Rehor\Myblog\controllers\AuthController\interfaces\AuthControllerInterface;
+use Rehor\Myblog\controllers\AuthControllers\AuthController\interfaces\AuthControllerInterface;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;

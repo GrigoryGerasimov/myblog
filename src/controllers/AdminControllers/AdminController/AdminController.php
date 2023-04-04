@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Rehor\Myblog\controllers\AdminControllers\AdminController;
 
 use Rehor\Myblog\controllers\AdminControllers\AdminController\interfaces\AdminControllerInterface;
-use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\traits\AdminControllerTrait;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;

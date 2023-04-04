@@ -41,4 +41,11 @@ class Config
         
         return \Doctrine\ORM\ORMSetup::createAttributeMetadataConfiguration($path, $isDevMode);
     }
+    
+    public static function setPHPAuth(string $dbName)
+    {
+        $db = new \PDO("mysql:dbname=$dbName;host=localhost:6500", "root", "root");
+        
+        return new \Delight\Auth\Auth($db);
+    }
 }

@@ -13,12 +13,12 @@ class FileController implements FileControllerInterface
 
     private static $fileDirectory;
 
-    public static function getUploadedFileName(string $fileInputName): string|array
+    public static function getUploadedFileName(string $fileInputName)
     {
         return self::getFileProps($fileInputName, "name");
     }
 
-    public static function getUploadedFileTmpName(string $fileInputName): string|array
+    public static function getUploadedFileTmpName(string $fileInputName)
     {
         return self::getFileProps($fileInputName, "tmp_name");
     }
@@ -60,7 +60,7 @@ class FileController implements FileControllerInterface
         }
     }
 
-    public static function removeFiles(string|array $filepath): void
+    public static function removeFiles($filepath): void
     {
         if (is_dir($filepath)) {
 

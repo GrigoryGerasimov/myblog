@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\routes\authRoutes;
 
-use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 
 function getAuthRoutes(): array
 {

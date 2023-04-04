@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Rehor\Myblog\controllers\ProfileController;
 
 use Rehor\Myblog\controllers\ProfileController\interfaces\ProfileControllerInterface;
-use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\controllers\UserController\UserController;
 use Rehor\Myblog\controllers\FileController\FileController;

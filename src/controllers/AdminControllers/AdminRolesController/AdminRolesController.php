@@ -7,7 +7,7 @@ namespace Rehor\Myblog\controllers\AdminControllers\AdminRolesController;
 use Rehor\Myblog\controllers\AdminControllers\AdminRolesController\interfaces\AdminRolesControllerInterface;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
 use Rehor\Myblog\controllers\UserController\UserController;
-use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
