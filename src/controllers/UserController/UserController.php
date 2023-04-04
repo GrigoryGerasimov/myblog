@@ -6,7 +6,7 @@ namespace Rehor\Myblog\controllers\UserController;
 
 use Rehor\Myblog\controllers\UserController\interfaces\UserControllerInterface;
 use Rehor\Myblog\controllers\UserController\traits\UserControllerTrait;
-use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;

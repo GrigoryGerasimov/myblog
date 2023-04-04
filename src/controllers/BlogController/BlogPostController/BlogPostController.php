@@ -6,7 +6,7 @@ namespace Rehor\Myblog\controllers\BlogController\BlogPostController;
 
 use Rehor\Myblog\controllers\BlogController\BlogController;
 use Rehor\Myblog\controllers\BlogController\traits\BlogControllerTrait;
-use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\controllers\FileController\FileController;

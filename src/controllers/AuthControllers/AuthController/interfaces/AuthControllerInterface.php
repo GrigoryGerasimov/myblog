@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rehor\Myblog\controllers\AuthController\interfaces;
+namespace Rehor\Myblog\controllers\AuthControllers\AuthController\interfaces;
 
 interface AuthControllerInterface
 {

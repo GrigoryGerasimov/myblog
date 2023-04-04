@@ -6,7 +6,7 @@ namespace Rehor\Myblog\controllers\AdminControllers\AdminController\traits;
 
 require("utils/arrays/flattenArray.php");
 
-use Rehor\Myblog\controllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
