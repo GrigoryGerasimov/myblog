@@ -10,7 +10,7 @@ interface SessionRepositoryInterface
 
     public static function setSession(array $params): void;
     
-    public static function getSession();
+    public static function getSession(): array;
     
     public static function unsetSession(): void;
     

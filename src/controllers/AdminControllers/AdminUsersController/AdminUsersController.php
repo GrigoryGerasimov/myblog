@@ -7,18 +7,19 @@ namespace Rehor\Myblog\controllers\AdminControllers\AdminUsersController;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
 use Rehor\Myblog\controllers\AdminControllers\AdminUsersController\interfaces\AdminUsersControllerInterface;
 use Rehor\Myblog\controllers\UserController\UserController;
-use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
+use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 use Rehor\Myblog\entities\User;
 
 class AdminUsersController extends AdminController implements AdminUsersControllerInterface
 {
     public static function showAdminUsers(): void
     {
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
             self::$renderData["adminUsersList"] = self::getList("Rehor\Myblog\\entities\User");
         }
 
@@ -27,8 +28,8 @@ class AdminUsersController extends AdminController implements AdminUsersControll
 
     public static function createUsers(): void
     {
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
         }
 
         $request = DBConnectorFlightRepository::requestConnector();
@@ -59,7 +60,7 @@ class AdminUsersController extends AdminController implements AdminUsersControll
                 }
             } else {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "error" => "Imcomplete user data provided! Please fill all the fields and try once again"
                 ];
             }
@@ -99,29 +100,29 @@ class AdminUsersController extends AdminController implements AdminUsersControll
                 }
             } else {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "error" => "Imcomplete user data provided! Please fill all the fields and try once again"
                 ];
             }
         }
 
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
 
             if (!is_null($userToUpdate)) {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "id" => $id,
                     "email" => $userToUpdate->email,
                     "password" => $userToUpdate->password,
                     "username" => $userToUpdate->username,
                     "firstname" => $userToUpdate->firstname,
                     "lastname" => $userToUpdate->lastname,
-                    "role" => $userToUpdate->role
+                    "role" => $userToUpdate->roles_mask
                 ];
             } else {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "error" => "No user found!"
                 ];
             }
@@ -150,23 +151,23 @@ class AdminUsersController extends AdminController implements AdminUsersControll
             }
         }
         
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
 
             if (!is_null($userToDelete)) {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "id" => $id,
                     "email" => $userToDelete->email,
                     "password" => $userToDelete->password,
                     "username" => $userToDelete->username,
                     "firstname" => $userToDelete->firstname,
                     "lastname" => $userToDelete->lastname,
-                    "role" => $userToDelete->role
+                    "role" => $userToDelete->roles_mask
                 ];
             } else {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "error" => "No user found!"
                 ];
             }

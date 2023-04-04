@@ -5,22 +5,32 @@ declare(strict_types=1);
 namespace Rehor\Myblog\repositories\AuthRepository;
 
 use Rehor\Myblog\repositories\AuthRepository\interfaces\AuthRepositoryInterface;
-use Rehor\Myblog\models\Auth\Auth;
+use Rehor\Myblog\models\Auths\DelightAuth\DelightAuth;
+use Rehor\Myblog\models\Auths\NativeAuth\NativeAuth;
 
 class AuthRepository implements AuthRepositoryInterface
 {
-    public static function initAuth(string $dbName): object
+    public static function processAuthRegistration(object $requestData, ?callable $fn = null)
     {
-        return Auth::init($dbName);
+        return DelightAuth::triggerRegistration($requestData);
     }
     
-    public static function processAuthRegistration(string $email, string $password, string $username, ?callable $fn = null): void
+    public static function processAuthLogin(?string $email = null, ?string $password = null): void
     {
-        Auth::triggerRegistration($email, $password, $username, $fn);
+        DelightAuth::triggerLogin($email, $password);
     }
     
-    public static function processAuthLogin(string $email, string $password): void
+    public static function processAuthLogout(): void
     {
-        Auth::triggerLogin($email, $password);
+        DelightAuth::triggerLogout();
+    }
+    
+    public static function retrieveAuthUserData(): array
+    {
+        return array(
+            "user_id" => DelightAuth::getAuthUserId(),
+            "user_email" => DelightAuth::getAuthUserEmail(),
+            "user_username" => DelightAuth::getAuthUsername()
+        );
     }
 }

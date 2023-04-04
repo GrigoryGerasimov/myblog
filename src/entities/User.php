@@ -22,17 +22,26 @@ class User
     #[Column(type: "string", unique: true, nullable: false)]
     protected $username;
     
-    #[Column(type: "string", nullable: false)]
+    #[Column(type: "string")]
     protected $firstname;
     
-    #[Column(type: "string", nullable: false)]
+    #[Column(type: "string")]
     protected $lastname;
 
     #[Column(type: "string")]
     protected $filepath;
 
     #[Column(type: "integer", nullable: false)]
-    protected $role;
+    protected $roles_mask;
+    
+    #[Column(type: "boolean")]
+    protected $verified;
+    
+    #[Column(type: "integer", nullable: false)]
+    protected $registered;
+    
+    #[column(type: "integer")]
+    protected $last_login;
     
     public function __get($name)
     {

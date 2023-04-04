@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Rehor\Myblog\controllers\AdminControllers\AdminController;
 
 use Rehor\Myblog\controllers\AdminControllers\AdminController\interfaces\AdminControllerInterface;
-use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\traits\AdminControllerTrait;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
+use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 
 class AdminController implements AdminControllerInterface
 {
@@ -19,7 +20,7 @@ class AdminController implements AdminControllerInterface
 
     public static function authAdmin(): void
     {
-        if (AuthController::checkSession() && self::checkAdmin()) {
+        if (SessionRepository::validateSession() && self::checkAdmin()) {
             header("Location: /admin");
             exit();
         } else {
@@ -30,8 +31,8 @@ class AdminController implements AdminControllerInterface
 
     public static function showAdmin(): void
     {
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
         }
 
         self::show("admin/admin.php", self::$renderData);
@@ -39,7 +40,7 @@ class AdminController implements AdminControllerInterface
 
     public static function checkAdmin(): bool
     {
-        $currentSession = AuthController::retrieveSession();
+        $currentSession = SessionRepository::getSession();
 
         if (count($currentSession) !== 0) {
          
