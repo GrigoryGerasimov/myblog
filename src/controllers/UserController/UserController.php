@@ -6,14 +6,14 @@ namespace Rehor\Myblog\controllers\UserController;
 
 use Rehor\Myblog\controllers\UserController\interfaces\UserControllerInterface;
 use Rehor\Myblog\controllers\UserController\traits\UserControllerTrait;
-use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
-use Rehor\Myblog\entities\User;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
+use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
+use Rehor\Myblog\entities\User;
 
 class UserController implements UserControllerInterface
 {
@@ -22,7 +22,7 @@ class UserController implements UserControllerInterface
     public static function login(): void
     {
         RendererRepository::displayView("auth/login.php", [
-            "isAuth" => AuthController::checkSession(),
+            "isAuth" => SessionRepository::validateSession(),
             "isAdmin" => AdminController::checkAdmin()
         ]);
     }
@@ -30,57 +30,52 @@ class UserController implements UserControllerInterface
     public static function register(): void
     {
         $isRegistered = false;
+        $notification = "";
         
         $requestData = DBConnectorFlightRepository::requestConnector();
         
-        if (!empty($requestData["email"]) && !empty($requestData["password"])) {
-            $userEmail = self::handleUserInput($requestData["email"]);
-            $userPassword = self::handleUserInput($requestData["password"]);
+        if (!empty($requestData["username"]) && !empty($requestData["email"]) && !empty($requestData["password"])) {
+            
+            $requestData["email"] = self::handleUserInput($requestData["email"]);
+            $requestData["password"] = self::handleUserInput($requestData["password"]);
+            $requestData["username"] = self::handleUserInput($requestData["username"]);
         
-            $registeredUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $userEmail ]); 
+            $registeredUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $requestData["email"] ]); 
         
             if (is_null($registeredUser)) {
-
-                $newUser = new User();
-                $newUser->email = $userEmail;
-                $newUser->password = md5($userPassword);
-                $newUser->username = $requestData["username"];
-                $newUser->firstname = $requestData["firstname"];
-                $newUser->lastname = $requestData["lastname"];
-                $newUser->role = $requestData["role"];
-            
-                DBConnectorDoctrineRepository::updateConnector(DBController::getDBName(), $newUser);
                 
-                $createdUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $userEmail ]);
-
-                if (!is_null($createdUser)) {
-
-                    AuthController::setSession([
-                       "user_id" => $createdUser->id,
-                       "user_email" => $createdUser->email,
-                       "user_password" => $createdUser->password,
-                       "user_username" => $createdUser->username,
-                       "user_firstname" => $createdUser->firstname,
-                       "user_lastname" => $createdUser->lastname,
-                       "user_role" => $createdUser->role
-                    ]);
-
-                    header("Location: /posts");
-                    exit();
+                try {
+                    
+                    $registeredUserId = AuthRepository::processAuthRegistration($requestData);
+                    
+                    if (!is_null($registeredUserId)) {
+                        
+                        header("Location: /posts");
+                        exit();
+                        
+                    }
+                    
+                } catch (\Exception $e) {
+                    
+                    $notification = $e->getMessage();
                 }
+
             } else {
+                
                 $isRegistered = true;
+                
             }
         }
 
         RendererRepository::displayView("auth/register.php", [
+            "notification" => $notification,
             "isRegistered" => $isRegistered,
-            "isAuth" => AuthController::checkSession()
+            "isAuth" => SessionRepository::validateSession()
         ]);
     }
 
     public static function getCurrentAuthUser(): array
     {
-        return SessionRepository::getSession();
+        return AuthRepository::retrieveAuthUserData();
     }
 }

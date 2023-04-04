@@ -66,6 +66,8 @@
         </div>
     </form>
     
+    <h4 class="notification-fail">{{ notification }}</h4>
+    
 {% endif %}
 
 </main>

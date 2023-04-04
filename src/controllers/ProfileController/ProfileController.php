@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Rehor\Myblog\controllers\ProfileController;
 
 use Rehor\Myblog\controllers\ProfileController\interfaces\ProfileControllerInterface;
-use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\controllers\UserController\UserController;
 use Rehor\Myblog\controllers\FileController\FileController;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
+use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 
 class ProfileController implements ProfileControllerInterface
 {
@@ -19,11 +20,11 @@ class ProfileController implements ProfileControllerInterface
     
     public static function isAuthorized()
     {
-        self::$renderData["isAuth"] = AuthController::checkSession();
+        self::$renderData["isAuth"] = SessionRepository::validateSession();
 
-        extract(AuthController::retrieveSession(), EXTR_SKIP);
+        extract(SessionRepository::getSession(), EXTR_SKIP);
         
-        if (AuthController::checkSession()) {
+        if (SessionRepository::validateSession()) {
             self::$renderData["username"] = $user_username;
             self::$renderData["firstname"] = $user_firstname;
             self::$renderData["lastname"] = $user_lastname;
@@ -34,19 +35,22 @@ class ProfileController implements ProfileControllerInterface
     public static function showProfile()
     {        
         self::isAuthorized();
-
-        $currentUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "username" => self::$renderData["username"] ]);
         
-        if (!is_null($currentUser->filepath)) {
-            self::$renderData["filepath"] = $currentUser->filepath;
-        }
-
-        if (AuthController::checkSession()) {
-
+        if (self::$renderData["isAuth"]) {
+            
+            $currentUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "username" => self::$renderData["username"] ]);
+            
+            if (!is_null($currentUser->filepath)) {
+                self::$renderData["filepath"] = $currentUser->filepath;
+            }
+            
             RendererRepository::displayView("profile/profile.php", self::$renderData);
+        
         } else {
+            
             header("Location: /posts");
             exit();
+            
         }
     }
     
@@ -93,7 +97,7 @@ class ProfileController implements ProfileControllerInterface
                         self::$renderData["filepath"] = $updatedUser->filepath;
                     }
                 
-                    AuthController::setSession([
+                    SessionRepository::setSession([
                         "user_id" => $updatedUser->id,
                         "user_email" => $updatedUser->email,
                         "user_password" => $updatedUser->password,
@@ -153,7 +157,7 @@ class ProfileController implements ProfileControllerInterface
 
                     DBConnectorDoctrineRepository::deleteConnector(DBController::getDBName(), $userToDelete);
                 
-                    AuthController::clearSession();
+                    SessionRepository::unsetSession();
 
                     header("Location: /login");
                     exit();

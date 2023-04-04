@@ -6,10 +6,11 @@ namespace Rehor\Myblog\controllers\AdminControllers\AdminController\traits;
 
 require("utils/arrays/flattenArray.php");
 
-use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
+use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 
 use function Rehor\Myblog\utils\arrays\flattenArray;
 
@@ -17,7 +18,7 @@ trait AdminControllerTrait
 {
     public static function show(string $adminPagePath, array $params)
     {
-        if (AuthController::checkSession() && self::checkAdmin()) {
+        if (SessionRepository::validateSession() && self::checkAdmin()) {
 
             RendererRepository::displayView($adminPagePath, $params);
         } else {
@@ -46,7 +47,7 @@ trait AdminControllerTrait
                     "firstname" => $class->firstname,
                     "lastname" => $class->lastname,
                     "username" => $class->username,
-                    "role" => DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\Role", [ "id" => $class->role ])->role_name 
+                    "role" => DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\Role", [ "id" => $class->roles_mask ])->role_name 
                 ];
             }
 

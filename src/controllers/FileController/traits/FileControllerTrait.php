@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\controllers\FileController\traits;
 
-use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
+use Rehor\Myblog\controllers\UserController\UserController;
 
 trait FileControllerTrait
 {
@@ -23,8 +23,9 @@ trait FileControllerTrait
     
     public static function getFileDirectory(): string
     {
-        if (AuthController::checkSession()) {
-            $currentUserId = SessionRepository::getSession()["user_id"];
+        if (SessionRepository::validateSession()) {
+            
+            $currentUserId = UserController::getCurrentAuthUser()["user_id"];
 
             $dirnameCompounds = array($currentUserId, date("Y"), date("m"), date("d"), self::getFileUniqueName(), "");
 
@@ -46,11 +47,16 @@ trait FileControllerTrait
     public static function getFileProps(string $fileInputName, string $fileProp)
     {
         foreach ($_FILES as $key => $value) {
+            
             if ($fileInputName === $key) {
+                
                 return $_FILES[$fileInputName][$fileProp];
+                
             } else {
+                
                 throw new \Exception("No file identified");
                 exit(1);
+                
             }
         };
     }

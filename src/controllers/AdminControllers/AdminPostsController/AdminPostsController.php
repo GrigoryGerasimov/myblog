@@ -6,37 +6,38 @@ namespace Rehor\Myblog\controllers\AdminControllers\AdminPostsController;
 
 use Rehor\Myblog\controllers\AdminControllers\AdminPostsController\interfaces\AdminPostsControllerInterface;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
-use Rehor\Myblog\controllers\AuthControllers\AuthController\AuthController;
+use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
+use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 use Rehor\Myblog\entities\Post;
 
 class AdminPostsController extends AdminController implements AdminPostsControllerInterface
 {
     public static function showAdminPosts(): void
     {
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
         }
 
         self::show("admin/admin-posts/admin-posts.php", [
-            "firstname" => AuthController::retrieveSession()["user_firstname"],
+            "firstname" => SessionRepository::getSession()["user_firstname"],
             "adminPostsList" => self::getList("Rehor\Myblog\\entities\Post")
         ]);
     }
 
     public static function showOnePost(string $uid): void
     {
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
         }
 
         $currentPost = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\Post", [ "uid" => $uid ]);
 
         if (!is_null($currentPost)) {
             self::$renderData = [
-                "firstname" => AuthController::retrieveSession()["user_firstname"],
+                "firstname" => SessionRepository::getSession()["user_firstname"],
                 "uid" => $uid,
                 "title" => $currentPost->title,
                 "author" => $currentPost->author,
@@ -44,7 +45,7 @@ class AdminPostsController extends AdminController implements AdminPostsControll
             ];
         } else {
             self::$renderData = [
-                "firstname" => AuthController::retrieveSession()["user_firstname"],
+                "firstname" => SessionRepository::getSession()["user_firstname"],
                 "error" => "No post found!"
             ];
         }
@@ -54,8 +55,8 @@ class AdminPostsController extends AdminController implements AdminPostsControll
 
     public static function createPosts(): void
     {
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
         }
 
         $request = DBConnectorFlightRepository::requestConnector();
@@ -81,7 +82,7 @@ class AdminPostsController extends AdminController implements AdminPostsControll
                 }
             } else {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "error" => "Imcomplete post data provided! Please fill all the fields and try once again"
                 ];
             }
@@ -116,18 +117,18 @@ class AdminPostsController extends AdminController implements AdminPostsControll
                 }
             } else {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "error" => "Imcomplete post data provided! Please fill all the fields and try once again"
                 ];
             }
         }
 
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
             
             if (!is_null($postToUpdate)) {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "uid" => $uid,
                     "title" => $postToUpdate->title,
                     "author" => $postToUpdate->author,
@@ -135,7 +136,7 @@ class AdminPostsController extends AdminController implements AdminPostsControll
                 ];
             } else {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "error" => "No post found!"
                 ];
             }
@@ -164,12 +165,12 @@ class AdminPostsController extends AdminController implements AdminPostsControll
             }
         }
 
-        if (AuthController::checkSession()) {
-            self::$renderData["firstname"] = AuthController::retrieveSession()["user_firstname"];
+        if (SessionRepository::validateSession()) {
+            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
 
             if (!is_null($postToDelete)) {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "uid" => $uid,
                     "title" => $postToDelete->title,
                     "author" => $postToDelete->author,
@@ -177,7 +178,7 @@ class AdminPostsController extends AdminController implements AdminPostsControll
                 ];
             } else {
                 self::$renderData = [
-                    "firstname" => AuthController::retrieveSession()["user_firstname"],
+                    "firstname" => SessionRepository::getSession()["user_firstname"],
                     "error" => "No post found!"
                 ];
             }
