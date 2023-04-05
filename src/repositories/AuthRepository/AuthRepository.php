@@ -10,14 +10,14 @@ use Rehor\Myblog\models\Auths\NativeAuth\NativeAuth;
 
 class AuthRepository implements AuthRepositoryInterface
 {
-    public static function processAuthRegistration(object $requestData, ?callable $fn = null)
+    public static function processAuthRegistration(object $requestData)
     {
         return DelightAuth::triggerRegistration($requestData);
     }
     
-    public static function processAuthLogin(?string $email = null, ?string $password = null): void
+    public static function processAuthLogin(?string $email = null, ?string $password = null, ?string $remember = null): void
     {
-        DelightAuth::triggerLogin($email, $password);
+        DelightAuth::triggerLogin($email, $password, $remember);
     }
     
     public static function processAuthLogout(): void
@@ -32,5 +32,10 @@ class AuthRepository implements AuthRepositoryInterface
             "user_email" => DelightAuth::getAuthUserEmail(),
             "user_username" => DelightAuth::getAuthUsername()
         );
+    }
+    
+    public static function verifyAdminStatus(): bool
+    {
+        return DelightAuth::isAdmin();
     }
 }

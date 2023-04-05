@@ -29,14 +29,18 @@ class DelightAuth implements DelightAuthInterface
         return self::$auth;
     }
     
-    public static function triggerRegistration(object $requestData, ?callable $fn = null): int
+    public static function triggerRegistration(object $requestData): int
     {
         try {
             $requestDataAssoc = json_decode(json_encode($requestData), true);
             
             extract($requestDataAssoc, EXTR_SKIP);
             
-            $createdUserId = self::init()->registerWithUniqueUsername($email, $password, $username, $fn);
+            $createdUserId = self::init()->registerWithUniqueUsername($email, $password, $username, function($selector, $token) {
+               
+                #TODO implement url and mail
+                
+            });
             
             $createdUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "id" => $createdUserId ]);
             
@@ -74,13 +78,18 @@ class DelightAuth implements DelightAuthInterface
         }
     }
     
-    public static function triggerLogin(?string $email = null, ?string $password = null): void
+    public static function triggerLogin(?string $email = null, ?string $password = null, ?string $remember = null): void
     {
         if (!is_null($email) && !is_null($password)) {
             
             try {
+                $rememberDuration = null;
                 
-                self::init()->login($email, $password);
+                if ($remember === "on") {
+                    $rememberDuration = 60 * 60 * 24;
+                }
+                
+                self::init()->login($email, $password, $rememberDuration);
             
                 $currentUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $email ]);
             
@@ -158,5 +167,18 @@ class DelightAuth implements DelightAuthInterface
     public static function getAuthUsername(): string
     {
         return self::init()->getUsername();
+    }
+    
+    public static function isAdmin(): bool
+    {
+        return self::init()->hasAnyRole(...[
+            \Delight\Auth\Role::ADMIN,
+            \Delight\Auth\Role::DIRECTOR,
+            \Delight\Auth\Role::MODERATOR,
+            \Delight\Auth\Role::MANAGER,
+            \Delight\Auth\Role::SUPER_ADMIN,
+            \Delight\Auth\Role::SUPER_EDITOR,
+            \Delight\Auth\Role::SUPER_MODERATOR
+        ]);
     }
 }

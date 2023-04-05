@@ -27,16 +27,27 @@
 	line-height: 2.5;
 }
 
+.login-form__labelled-checkbox-block,
 .login-form__labelled-block,
 .register-form__labelled-block {
 	width: 100%;
 	display: flex;
 	flex-flow: row wrap;
+}
+
+.login-form__labelled-block,
+.register-form__labelled-block {
 	justify-content: space-between;
 	align-items: baseline;
 }
 
-.login-form__labelled-block {
+.login-form__labelled-checkbox-block {
+	justify-content: center;
+	align-items: center;
+}
+
+.login-form__labelled-block,
+.login-form__labelled-checkbox-block {
 	margin: 30px 0;
 }
 

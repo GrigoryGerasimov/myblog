@@ -11,4 +11,6 @@ interface NativeAuthInterface
     public static function triggerLogin(?string $email = null, ?string $password = null): void;
     
     public static function triggerLogout(): void;
+    
+    public static function isAdmin(): bool;
 }

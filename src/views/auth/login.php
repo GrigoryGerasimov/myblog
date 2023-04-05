@@ -32,6 +32,10 @@
             <label for="password" class="login-form__label">Password</label>
             <input type="password" id="password" name="password" class="styles-resetter login-form__input" required/>
         </div>
+        <div class="login-form__labelled-checkbox-block">
+            <label for="rememberme" class="login-form__label">Remember Me</label>
+            <input type="checkbox" id="rememberme" name="rememberme" class="margin-divider"/>
+        </div>
         <div class="login-form__btn-block">
             <button type="submit" class="styles-resetter login-form__btn">Sign In</button>
         </div>

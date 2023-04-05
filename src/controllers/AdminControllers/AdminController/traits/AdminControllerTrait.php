@@ -43,7 +43,7 @@ trait AdminControllerTrait
                 return [
                     "id" => $class->id,
                     "email" => $class->email,
-                    "password" => $class->password,
+                    "password" => substr($class->password, 0, 20),
                     "firstname" => $class->firstname,
                     "lastname" => $class->lastname,
                     "username" => $class->username,

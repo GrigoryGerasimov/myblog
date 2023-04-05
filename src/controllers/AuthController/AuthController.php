@@ -15,12 +15,14 @@ class AuthController implements AuthControllerInterface
     {
         [
         "email" => $email,
-        "password" => $password
+        "password" => $password,
+        "rememberme" => $remember
         ] = DBConnectorFlightRepository::requestConnector();
+        
         
         try {
             
-            AuthRepository::processAuthLogin($email, $password);
+            AuthRepository::processAuthLogin($email, $password, $remember);
             
             header("Location: /posts");
             exit();

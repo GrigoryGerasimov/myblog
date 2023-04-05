@@ -98,4 +98,21 @@ class NativeAuth implements NativeAuthInterface
     {
         return SessionRepository::getSession();
     }
+    
+    public static function isAdmin(): bool
+    {
+        $currentSession = SessionRepository::getSession();
+        
+        if (count($currentSession) !== 0) {
+            
+            $userRole = $currentSession["user_role"];
+            
+            $role = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\Role", [ "id" => $userRole ]);
+            $sessionData["isAdmin"] = $role->permission;
+            
+            return $role->permission;
+        }
+        
+        return false;
+    }
 }
