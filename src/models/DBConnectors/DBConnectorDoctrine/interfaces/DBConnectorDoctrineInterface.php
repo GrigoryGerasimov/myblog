@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\models\DBConnectors\DBConnectorDoctrine\interfaces;
 
-use Rehor\Myblog\models\DBConnectors\interfaces\DBConnectorInterface;
+use Rehor\Myblog\models\DBConnectors\DBConnector\interfaces\DBConnectorInterface;
 
 interface DBConnectorDoctrineInterface extends DBConnectorInterface
 {

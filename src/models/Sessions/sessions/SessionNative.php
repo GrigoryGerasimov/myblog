@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\models\Sessions\sessions;
 
-class SessionNative extends Sessions
+final class SessionNative extends Sessions
 {
     public static function initSession()
     {

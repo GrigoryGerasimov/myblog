@@ -7,7 +7,7 @@ namespace Rehor\Myblog\repositories\QueryBuilderRepository;
 use Rehor\Myblog\repositories\QueryBuilderRepository\interfaces\QueryBuilderRepositoryInterface;
 use Rehor\Myblog\models\QueryBuilder\QueryBuilder;
 
-class QueryBuilderRepository implements QueryBuilderRepositoryInterface
+final class QueryBuilderRepository implements QueryBuilderRepositoryInterface
 {
     public static function QueryBuilderInstance(string $tableName)
     {

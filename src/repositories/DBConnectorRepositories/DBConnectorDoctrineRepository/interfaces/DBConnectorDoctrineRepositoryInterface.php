@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\interfaces;
 
-interface DBConnectorDoctrineRepositoryInterface
+use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorRepository\interfaces\DBConnectorRepositoryInterface;
+
+interface DBConnectorDoctrineRepositoryInterface extends DBConnectorRepositoryInterface
 {
     public static function initConnector(string $dbName): object;
     

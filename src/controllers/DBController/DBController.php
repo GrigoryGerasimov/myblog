@@ -8,7 +8,7 @@ use Rehor\Myblog\controllers\DBController\interfaces\DBControllerInterface;
 use Rehor\Myblog\repositories\QueryBuilderRepository\QueryBuilderRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 
-class DBController implements DBControllerInterface
+final class DBController implements DBControllerInterface
 {
     protected const DB_NAME = "myblog";
     

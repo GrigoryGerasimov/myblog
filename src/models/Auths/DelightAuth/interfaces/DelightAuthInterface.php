@@ -4,21 +4,11 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\models\Auths\DelightAuth\interfaces;
 
-interface DelightAuthInterface
+use Rehor\Myblog\models\Auths\Auth\interfaces\AuthInterface;
+
+interface DelightAuthInterface extends AuthInterface
 {
     public static function init(): object;
     
     public static function triggerRegistration(object $requestData): int;
-    
-    public static function triggerLogin(?string $email, ?string $password, ?string $remember): void;
-    
-    public static function triggerLogout(): void;
-    
-    public static function getAuthUserId(): int;
-    
-    public static function getAuthUserEmail(): string;
-    
-    public static function getAuthUsername(): string;
-    
-    public static function isAdmin(): bool;
 }

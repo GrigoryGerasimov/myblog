@@ -8,7 +8,7 @@ require("utils/arrays/flattenArray.php");
 
 use function Rehor\Myblog\utils\arrays\flattenArray;
 
-class SessionGhostff extends Sessions
+final class SessionGhostff extends Sessions
 {
     protected static $sessionInstance;
     

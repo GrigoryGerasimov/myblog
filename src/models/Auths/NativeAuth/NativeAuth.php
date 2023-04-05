@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Rehor\Myblog\models\Auths\NativeAuth;
 
 use Rehor\Myblog\models\Auths\NativeAuth\interfaces\NativeAuthInterface;
+use Rehor\Myblog\models\Auths\Auth\Auth;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 use Rehor\Myblog\entities\User;
 
-class NativeAuth implements NativeAuthInterface
+final class NativeAuth extends Auth implements NativeAuthInterface
 {
     public static function triggerRegistration(object $requestData): void
     {
@@ -114,5 +115,53 @@ class NativeAuth implements NativeAuthInterface
         }
         
         return false;
+    }
+    
+    public static function getAuthUserId(): ?int
+    {
+        if (SessionRepository::getSession()) {
+            
+            if (array_key_exists("user_id", SessionRepository::getSession()) && !empty(SessionRepository::getSession()["user_id"])) {
+                
+                return SessionRepository::getSession()["user_id"];
+            
+            }
+        }
+        
+        return null;
+        
+    }
+    
+    public static function getAuthUserEmail(): ?string
+    {
+        if (SessionRepository::getSession()) {
+            
+            if (array_key_exists("user_email", SessionRepository::getSession()) && !empty(SessionRepository::getSession()["user_email"])) {
+                
+                return SessionRepository::getSession()["user_email"];
+                
+            }
+        }
+        
+        return null;
+    }
+    
+    public static function getAuthUsername(): ?string
+    {
+        if (SessionRepository::getSession()) {
+            
+            if (array_key_exists("user_username", SessionRepository::getSession()) && !empty(SessionRepository::getSession()["user_username"])) {
+                
+                return SessionRepository::getSession()["user_username"];
+                
+            }
+        }
+        
+        return null;
+    }
+    
+    public static function createUserAsAdmin(): void
+    {
+        
     }
 }

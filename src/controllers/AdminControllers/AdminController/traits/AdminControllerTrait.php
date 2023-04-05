@@ -6,11 +6,10 @@ namespace Rehor\Myblog\controllers\AdminControllers\AdminController\traits;
 
 require("utils/arrays/flattenArray.php");
 
-use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
-use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
+use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
 
 use function Rehor\Myblog\utils\arrays\flattenArray;
 
@@ -18,7 +17,7 @@ trait AdminControllerTrait
 {
     public static function show(string $adminPagePath, array $params)
     {
-        if (SessionRepository::validateSession() && self::checkAdmin()) {
+        if (AuthRepository::verifyAuthStatus() && self::checkAdmin()) {
 
             RendererRepository::displayView($adminPagePath, $params);
         } else {

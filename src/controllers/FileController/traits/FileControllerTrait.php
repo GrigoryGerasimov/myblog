@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\controllers\FileController\traits;
 
-use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 use Rehor\Myblog\controllers\UserController\UserController;
+use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
 
 trait FileControllerTrait
 {
@@ -23,7 +23,7 @@ trait FileControllerTrait
     
     public static function getFileDirectory(): string
     {
-        if (SessionRepository::validateSession()) {
+        if (AuthRepository::verifyAuthStatus()) {
             
             $currentUserId = UserController::getCurrentAuthUser()["user_id"];
 

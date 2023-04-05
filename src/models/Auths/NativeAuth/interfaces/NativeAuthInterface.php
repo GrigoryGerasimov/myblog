@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace Rehor\Myblog\models\Auths\NativeAuth\interfaces;
 
-interface NativeAuthInterface
-{    
+use Rehor\Myblog\models\Auths\Auth\interfaces\AuthInterface;
+
+interface NativeAuthInterface extends AuthInterface
+{
     public static function triggerRegistration(object $requestData): void;
-    
-    public static function triggerLogin(?string $email = null, ?string $password = null): void;
-    
-    public static function triggerLogout(): void;
-    
-    public static function isAdmin(): bool;
 }
