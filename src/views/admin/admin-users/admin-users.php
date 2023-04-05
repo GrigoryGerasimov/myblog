@@ -30,7 +30,7 @@
 <tr>
     <td>{{ user.id }}</td>
     <td>{{ user.email }}</td>
-    <td>{{ user.password }}</td>
+    <td>{{ user.password }}...</td>
     <td>{{ user.username }}</td>
     <td>{{ user.firstname }}</td>
     <td>{{ user.lastname }}</td>

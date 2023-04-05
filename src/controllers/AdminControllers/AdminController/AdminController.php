@@ -11,6 +11,7 @@ use Rehor\Myblog\controllers\AdminControllers\AdminController\traits\AdminContro
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
+use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
 
 class AdminController implements AdminControllerInterface
 {
@@ -40,19 +41,7 @@ class AdminController implements AdminControllerInterface
 
     public static function checkAdmin(): bool
     {
-        $currentSession = SessionRepository::getSession();
-
-        if (count($currentSession) !== 0) {
-         
-            $userRole = $currentSession["user_role"];
-            
-            $role = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\Role", [ "id" => $userRole ]);
-            $sessionData["isAdmin"] = $role->permission;
-            
-            return $role->permission;
-        }
-
-        return false;
+        return AuthRepository::verifyAdminStatus();
     }
 
     public static function preventAdmin(): void

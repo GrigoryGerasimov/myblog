@@ -8,7 +8,7 @@ interface DelightAuthInterface
 {
     public static function init(): object;
     
-    public static function triggerRegistration(object $requestData, ?callable $fn): int;
+    public static function triggerRegistration(object $requestData): int;
     
     public static function triggerLogin(?string $email, ?string $password): void;
     
@@ -19,4 +19,6 @@ interface DelightAuthInterface
     public static function getAuthUserEmail(): string;
     
     public static function getAuthUsername(): string;
+    
+    public static function isAdmin(): bool;
 }

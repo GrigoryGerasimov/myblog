@@ -10,7 +10,7 @@ use Rehor\Myblog\models\Auths\NativeAuth\NativeAuth;
 
 class AuthRepository implements AuthRepositoryInterface
 {
-    public static function processAuthRegistration(object $requestData, ?callable $fn = null)
+    public static function processAuthRegistration(object $requestData)
     {
         return DelightAuth::triggerRegistration($requestData);
     }
@@ -32,5 +32,10 @@ class AuthRepository implements AuthRepositoryInterface
             "user_email" => DelightAuth::getAuthUserEmail(),
             "user_username" => DelightAuth::getAuthUsername()
         );
+    }
+    
+    public static function verifyAdminStatus(): bool
+    {
+        return DelightAuth::isAdmin();
     }
 }
