@@ -7,6 +7,7 @@ namespace Rehor\Myblog\models\Auths\DelightAuth;
 use Rehor\Myblog\models\Auths\DelightAuth\interfaces\DelightAuthInterface;
 use Rehor\Myblog\models\Auths\Auth\Auth;
 use Rehor\Myblog\config\Config;
+use Rehor\Myblog\controllers\MailController\MailController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
@@ -16,7 +17,7 @@ final class DelightAuth extends Auth implements DelightAuthInterface
 {
     protected static $auth;
     
-    public function __construct()
+    private function __construct()
     {
         self::$auth = Config::setPHPAuth(DBController::getDBName());
     }
@@ -37,9 +38,11 @@ final class DelightAuth extends Auth implements DelightAuthInterface
             
             extract($requestDataAssoc, EXTR_SKIP);
             
-            $createdUserId = self::init()->registerWithUniqueUsername($email, $password, $username, function($selector, $token) {
+            $createdUserId = self::init()->registerWithUniqueUsername($email, $password, $username, function($selector, $token) use($email) {
                
-                #TODO implement url and mail
+                $verificationURL = "http://localhost:6500/check/verify_email?selector=".urlencode($selector)."&token=".urlencode($token);
+                
+                MailController::mail($email, "Verify your MyBlog account", $verificationURL);
                 
             });
             
@@ -153,6 +156,32 @@ final class DelightAuth extends Auth implements DelightAuthInterface
             die("You are currently not signed in. Please sign in first to be able to sign out");
             
         }
+    }
+    
+    public static function verifyRegisteredEmail(): array
+    {
+        try {
+            
+            return self::init()->confirmEmail($_GET("selector"), $_GET("token"));
+            
+        } catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
+            
+            throw new \Exception("Invalid token");
+            
+        } catch (\Delight\Auth\TokenExpiredException $e) {
+            
+            throw new \Exception("Token expired");
+            
+        } catch (\Delight\Auth\UserAlreadyExistsException $e) {
+            
+            throw new \Exception("Email address is already registered");
+        
+        } catch (\Delight\Auth\TooManyRequestsException $e) {
+            
+            throw new \Exception("Too many requests. Please try once again later");
+            
+        }
+        
     }
     
     public static function getAuthUserId(): ?int

@@ -14,6 +14,8 @@ interface AuthRepositoryInterface
     
     public static function retrieveAuthUserData(): array;
     
+    public static function verifyAuthRegisteredMail(): array;
+    
     public static function verifyAdminStatus(): bool;
     
     public static function verifyAuthStatus(): bool;

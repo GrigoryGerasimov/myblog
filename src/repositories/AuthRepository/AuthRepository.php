@@ -52,6 +52,11 @@ final class AuthRepository implements AuthRepositoryInterface
         return $authUserData;
     }
     
+    public static function verifyAuthRegisteredMail(): array
+    {
+        return DelightAuth::verifyRegisteredEmail();
+    }
+    
     public static function verifyAdminStatus(): bool
     {
         return DelightAuth::isAdmin();
