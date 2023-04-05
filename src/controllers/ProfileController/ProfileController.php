@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rehor\Myblog\controllers\ProfileController;
 
 use Rehor\Myblog\controllers\ProfileController\interfaces\ProfileControllerInterface;
-use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\controllers\UserController\UserController;
 use Rehor\Myblog\controllers\FileController\FileController;
@@ -13,18 +12,19 @@ use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
+use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
 
-class ProfileController implements ProfileControllerInterface
+final class ProfileController implements ProfileControllerInterface
 {
     protected static $renderData = [];
     
     public static function isAuthorized()
     {
-        self::$renderData["isAuth"] = SessionRepository::validateSession();
+        self::$renderData["isAuth"] = AuthRepository::verifyAuthStatus();
 
-        extract(SessionRepository::getSession(), EXTR_SKIP);
+        extract(AuthRepository::retrieveAuthUserData(), EXTR_SKIP);
         
-        if (SessionRepository::validateSession()) {
+        if (!empty(self::$renderData["isAuth"])) {
             self::$renderData["username"] = $user_username;
             self::$renderData["firstname"] = $user_firstname;
             self::$renderData["lastname"] = $user_lastname;

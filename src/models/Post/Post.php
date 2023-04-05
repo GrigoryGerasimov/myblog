@@ -7,7 +7,7 @@ namespace Rehor\Myblog\models\Post;
 use Rehor\Myblog\models\Post\interfaces\PostInterface;
 use Rehor\Myblog\controllers\DBController\DBController;
 
-class Post implements PostInterface
+final class Post implements PostInterface
 {
     private $data;
 

@@ -7,7 +7,7 @@ namespace Rehor\Myblog\repositories\PostRepository;
 use Rehor\Myblog\repositories\PostRepository\interfaces\PostRepositoryInterface;
 use Rehor\Myblog\models\Post\Post;
 
-class PostRepository implements PostRepositoryInterface
+final class PostRepository implements PostRepositoryInterface
 {
     public static function PostInstance(?object $postData = null)
     {

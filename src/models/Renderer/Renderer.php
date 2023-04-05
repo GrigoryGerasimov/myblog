@@ -6,7 +6,7 @@ namespace Rehor\Myblog\models\Renderer;
 
 use Rehor\Myblog\models\Renderer\interfaces\RendererInterface;
 
-class Renderer implements RendererInterface
+final class Renderer implements RendererInterface
 {
     public static function trigger(string $view, array $renderData): void
     {

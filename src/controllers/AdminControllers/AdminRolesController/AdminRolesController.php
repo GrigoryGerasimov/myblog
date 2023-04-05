@@ -7,20 +7,21 @@ namespace Rehor\Myblog\controllers\AdminControllers\AdminRolesController;
 use Rehor\Myblog\controllers\AdminControllers\AdminRolesController\interfaces\AdminRolesControllerInterface;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
 use Rehor\Myblog\controllers\UserController\UserController;
-use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
-use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
+use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
 use Rehor\Myblog\entities\Role;
 
-class AdminRolesController extends AdminController implements AdminRolesControllerInterface
+final class AdminRolesController extends AdminController implements AdminRolesControllerInterface
 {
     public static function showAdminRoles(): void
     {
-        if (SessionRepository::validateSession()) {
-            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
+        if (AuthRepository::verifyAuthStatus()) {
+            
+            self::$renderData["firstname"] = array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null;
             self::$renderData["adminRolesList"] = self::getList("Rehor\Myblog\\entities\Role");
+            
         }
 
         self::show("admin/admin-roles/admin-roles.php", self::$renderData);
@@ -28,8 +29,10 @@ class AdminRolesController extends AdminController implements AdminRolesControll
 
     public static function createRoles(): void
     {
-        if (SessionRepository::validateSession()) {
-            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
+        if (AuthRepository::verifyAuthStatus()) {
+            
+            self::$renderData["firstname"] = array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null;
+        
         }
 
         $request = DBConnectorFlightRepository::requestConnector();
@@ -39,6 +42,7 @@ class AdminRolesController extends AdminController implements AdminRolesControll
             if (self::validateRequestData($request)) {
                 
                 try {
+                    
                     $newRole = new Role();
                     $newRole->role_name = UserController::handleUserInput($request["rolename"]);
                     $newRole->permission = $request["permission"];
@@ -49,14 +53,18 @@ class AdminRolesController extends AdminController implements AdminRolesControll
                     exit();
                 
                 } catch(\Exception $e) {
+                    
                     echo $e->getMessage();
                     exit(1);
+                    
                 }
             } else {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "error" => "Imcomplete role data provided! Please fill all the fields and try once again"
                 ];
+                
             }
         }
 
@@ -74,6 +82,7 @@ class AdminRolesController extends AdminController implements AdminRolesControll
             if (self::validateRequestData($request)) {
                 
                 try {
+                    
                     $roleToUpdate->role_name = UserController::handleUserInput($request["rolename"]);
                     $roleToUpdate->permission = (int) $request["permission"];
                     
@@ -83,32 +92,41 @@ class AdminRolesController extends AdminController implements AdminRolesControll
                     exit();
                 
                 } catch(\Exception $e) {
+                    
                     echo $e->getMessage();
                     exit(1);
+                    
                 }
             } else {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "error" => "Imcomplete role data provided! Please fill all the fields and try once again"
                 ];
+                
             }
         }
 
-        if (SessionRepository::validateSession()) {
-            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
+        if (AuthRepository::verifyAuthStatus()) {
+            
+            self::$renderData["firstname"] = array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null;
 
             if (!is_null($roleToUpdate)) {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "id" => $id,
                     "rolename" => $roleToUpdate->role_name,
                     "permission" => $roleToUpdate->permission
                 ];
+                
             } else {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "error" => "No role found!"
                 ];
+                
             }
         }
 
@@ -130,27 +148,32 @@ class AdminRolesController extends AdminController implements AdminRolesControll
                 exit();
 
             } catch(\Exception $e) {
+                
                 echo $e->getMessage();
                 exit(1);
+                
             }
+            
         }
         
-        if (SessionRepository::validateSession()) {
-            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
+        if (AuthRepository::verifyAuthStatus()) {
+            
+            self::$renderData["firstname"] = array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null;
 
             if (!is_null($roleToDelete)) {
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "id" => $id,
                     "rolename" => $roleToDelete->role_name,
                     "permission" => $roleToDelete->permission
                 ];
             } else {
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "error" => "No role found!"
                 ];
             }
+            
         }
 
         self::show("admin/admin-roles/admin-roles-delete.php", self::$renderData);

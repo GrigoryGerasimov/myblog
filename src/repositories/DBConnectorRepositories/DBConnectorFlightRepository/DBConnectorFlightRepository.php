@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository;
 
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\interfaces\DBConnectorFlightRepositoryInterface;
+use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorRepository\DBConnectorRepository;
 use Rehor\Myblog\models\DBConnectors\DBConnectorFlight\DBConnectorFlight;
 
-class DBConnectorFlightRepository implements DBConnectorFlightRepositoryInterface
+final class DBConnectorFlightRepository extends DBConnectorRepository implements DBConnectorFlightRepositoryInterface
 {
     public static function initConnector(string $dbName): object
     {

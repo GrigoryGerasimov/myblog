@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Rehor\Myblog\models\DBConnectors\DBConnectorDoctrine;
 
 use Rehor\Myblog\models\DBConnectors\DBConnectorDoctrine\interfaces\DBConnectorDoctrineInterface;
+use Rehor\Myblog\models\DBConnectors\DBConnector\DBConnector;
 use Rehor\Myblog\config\Config;
 use \Doctrine\DBAL\DriverManager;
 use \Doctrine\ORM\EntityManager;
 
-class DBConnectorDoctrine implements DBConnectorDoctrineInterface
+final class DBConnectorDoctrine extends DBConnector implements DBConnectorDoctrineInterface
 {
     protected static $instance;
 

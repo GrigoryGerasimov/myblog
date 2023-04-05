@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Rehor\Myblog\models\Auths\DelightAuth;
 
 use Rehor\Myblog\models\Auths\DelightAuth\interfaces\DelightAuthInterface;
+use Rehor\Myblog\models\Auths\Auth\Auth;
 use Rehor\Myblog\config\Config;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 use Rehor\Myblog\entities\User;
 
-class DelightAuth implements DelightAuthInterface
+final class DelightAuth extends Auth implements DelightAuthInterface
 {
     protected static $auth;
     
@@ -154,17 +155,17 @@ class DelightAuth implements DelightAuthInterface
         }
     }
     
-    public static function getAuthUserId(): int
+    public static function getAuthUserId(): ?int
     {
         return self::init()->getUserId();
     }
     
-    public static function getAuthUserEmail(): string
+    public static function getAuthUserEmail(): ?string
     {
         return self::init()->getEmail();
     }
     
-    public static function getAuthUsername(): string
+    public static function getAuthUsername(): ?string
     {
         return self::init()->getUsername();
     }
@@ -180,5 +181,10 @@ class DelightAuth implements DelightAuthInterface
             \Delight\Auth\Role::SUPER_EDITOR,
             \Delight\Auth\Role::SUPER_MODERATOR
         ]);
+    }
+    
+    public static function createUserAsAdmin(): void
+    {
+        
     }
 }

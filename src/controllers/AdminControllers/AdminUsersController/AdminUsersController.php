@@ -7,20 +7,21 @@ namespace Rehor\Myblog\controllers\AdminControllers\AdminUsersController;
 use Rehor\Myblog\controllers\AdminControllers\AdminController\AdminController;
 use Rehor\Myblog\controllers\AdminControllers\AdminUsersController\interfaces\AdminUsersControllerInterface;
 use Rehor\Myblog\controllers\UserController\UserController;
-use Rehor\Myblog\controllers\AuthController\AuthController;
 use Rehor\Myblog\controllers\DBController\DBController;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorDoctrineRepository\DBConnectorDoctrineRepository;
-use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
+use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
 use Rehor\Myblog\entities\User;
 
-class AdminUsersController extends AdminController implements AdminUsersControllerInterface
+final class AdminUsersController extends AdminController implements AdminUsersControllerInterface
 {
     public static function showAdminUsers(): void
     {
-        if (SessionRepository::validateSession()) {
-            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
+        if (AuthRepository::verifyAuthStatus()) {
+            
+            self::$renderData["firstname"] = array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null;
             self::$renderData["adminUsersList"] = self::getList("Rehor\Myblog\\entities\User");
+            
         }
 
         self::show("admin/admin-users/admin-users.php", self::$renderData);
@@ -28,8 +29,10 @@ class AdminUsersController extends AdminController implements AdminUsersControll
 
     public static function createUsers(): void
     {
-        if (SessionRepository::validateSession()) {
-            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
+        if (AuthRepository::verifyAuthStatus()) {
+            
+            self::$renderData["firstname"] = array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null;
+        
         }
 
         $request = DBConnectorFlightRepository::requestConnector();
@@ -55,14 +58,18 @@ class AdminUsersController extends AdminController implements AdminUsersControll
                     exit();
                 
                 } catch(\Exception $e) {
+                    
                     echo $e->getMessage();
                     exit(1);
+                    
                 }
             } else {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "error" => "Imcomplete user data provided! Please fill all the fields and try once again"
                 ];
+                
             }
         }
 
@@ -95,23 +102,29 @@ class AdminUsersController extends AdminController implements AdminUsersControll
                     exit();
                 
                 } catch(\Exception $e) {
+                    
                     echo $e->getMessage();
                     exit(1);
+                    
                 }
             } else {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "error" => "Imcomplete user data provided! Please fill all the fields and try once again"
                 ];
+                
             }
         }
 
-        if (SessionRepository::validateSession()) {
-            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
+        if (AuthRepository::verifyAuthStatus()) {
+            
+            self::$renderData["firstname"] = array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null;
 
             if (!is_null($userToUpdate)) {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "id" => $id,
                     "email" => $userToUpdate->email,
                     "password" => $userToUpdate->password,
@@ -120,11 +133,14 @@ class AdminUsersController extends AdminController implements AdminUsersControll
                     "lastname" => $userToUpdate->lastname,
                     "role" => $userToUpdate->roles_mask
                 ];
+                
             } else {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "error" => "No user found!"
                 ];
+                
             }
         }
 
@@ -140,23 +156,28 @@ class AdminUsersController extends AdminController implements AdminUsersControll
         if (self::validateRequestData($request)) {
 
             try {
+                
                 DBConnectorDoctrineRepository::deleteConnector(DBController::getDBName(), $userToDelete);
 
                 header("Location: /admin/users");
                 exit();
 
             } catch(\Exception $e) {
+                
                 echo $e->getMessage();
                 exit(1);
+                
             }
         }
         
-        if (SessionRepository::validateSession()) {
-            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
+        if (AuthRepository::verifyAuthStatus()) {
+            
+            self::$renderData["firstname"] = array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null;
 
             if (!is_null($userToDelete)) {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "id" => $id,
                     "email" => $userToDelete->email,
                     "password" => $userToDelete->password,
@@ -165,11 +186,14 @@ class AdminUsersController extends AdminController implements AdminUsersControll
                     "lastname" => $userToDelete->lastname,
                     "role" => $userToDelete->roles_mask
                 ];
+                
             } else {
+                
                 self::$renderData = [
-                    "firstname" => SessionRepository::getSession()["user_firstname"],
+                    "firstname" => array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null,
                     "error" => "No user found!"
                 ];
+                
             }
         }
 

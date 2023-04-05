@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Rehor\Myblog\models\DBConnectors\DBConnectorFlight;
 
 use Rehor\Myblog\models\DBConnectors\DBConnectorFlight\interfaces\DBConnectorFlightInterface;
+use Rehor\Myblog\models\DBConnectors\DBConnector\DBConnector;
 
-class DBConnectorFlight implements DBConnectorFlightInterface
+final class DBConnectorFlight extends DBConnector implements DBConnectorFlightInterface
 {
     public static function init(string $dbName): object
     {

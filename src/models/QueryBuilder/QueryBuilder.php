@@ -6,7 +6,7 @@ namespace Rehor\Myblog\models\QueryBuilder;
 
 use Rehor\Myblog\models\QueryBuilder\interfaces\{QueryCommandsInterface, QueryClausesInterface};
 
-class QueryBuilder implements QueryCommandsInterface, QueryClausesInterface
+final class QueryBuilder implements QueryCommandsInterface, QueryClausesInterface
 {
     private $query = "";
     

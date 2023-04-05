@@ -16,8 +16,9 @@ use Rehor\Myblog\repositories\PostRepository\PostRepository;
 use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepository\DBConnectorFlightRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
+use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
 
-class BlogPostController extends BlogController
+final class BlogPostController extends BlogController
 {
     use BlogControllerTrait;
     
@@ -35,12 +36,14 @@ class BlogPostController extends BlogController
     
     public static function isAuthorized(): void
     {
-        self::$renderData["isAuth"] = SessionRepository::validateSession();
-        self::$renderData["isAdmin"] = AdminController::checkAdmin();
+        self::$renderData["isAuth"] = AuthRepository::verifyAuthStatus();
+        self::$renderData["isAdmin"] = AuthRepository::verifyAdminStatus();
         
-        if (SessionRepository::validateSession()) {
-            self::$renderData["firstname"] = SessionRepository::getSession()["user_firstname"];
-            self::$renderData["lastname"] = SessionRepository::getSession()["user_lastname"];
+        if (!empty(self::$renderData["isAuth"])) {
+            
+            self::$renderData["firstname"] = array_key_exists("user_firstname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_firstname"] : null;
+            self::$renderData["lastname"] = array_key_exists("user_lastname", AuthRepository::retrieveAuthUserData()) ? AuthRepository::retrieveAuthUserData()["user_lastname"] : null;
+            
         }
     }
 

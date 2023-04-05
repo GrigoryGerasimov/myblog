@@ -9,7 +9,7 @@ use Rehor\Myblog\repositories\DBConnectorRepositories\DBConnectorFlightRepositor
 use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
 use Rehor\Myblog\repositories\RendererRepository\RendererRepository;
 
-class AuthController implements AuthControllerInterface
+final class AuthController implements AuthControllerInterface
 {
     public static function auth(): void
     {

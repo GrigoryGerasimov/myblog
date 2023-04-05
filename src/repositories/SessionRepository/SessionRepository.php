@@ -7,7 +7,7 @@ namespace Rehor\Myblog\repositories\SessionRepository;
 use Rehor\Myblog\repositories\SessionRepository\interfaces\SessionRepositoryInterface;
 use Rehor\Myblog\models\Sessions\Session;
 
-class SessionRepository implements SessionRepositoryInterface
+final class SessionRepository implements SessionRepositoryInterface
 {
     public static function getSessionInstance()
     {

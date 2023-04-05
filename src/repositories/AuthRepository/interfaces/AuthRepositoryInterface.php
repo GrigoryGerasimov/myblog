@@ -15,4 +15,8 @@ interface AuthRepositoryInterface
     public static function retrieveAuthUserData(): array;
     
     public static function verifyAdminStatus(): bool;
+    
+    public static function verifyAuthStatus(): bool;
+    
+    public static function processUserCreationAsAdmin(): void;
 }

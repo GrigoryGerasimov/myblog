@@ -7,7 +7,7 @@ namespace Rehor\Myblog\controllers\FileController;
 use Rehor\Myblog\controllers\FileController\interfaces\FileControllerInterface;
 use Rehor\Myblog\controllers\FileController\traits\FileControllerTrait;
 
-class FileController implements FileControllerInterface
+final class FileController implements FileControllerInterface
 {
     use FileControllerTrait;
 

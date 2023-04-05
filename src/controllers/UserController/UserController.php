@@ -15,14 +15,14 @@ use Rehor\Myblog\repositories\SessionRepository\SessionRepository;
 use Rehor\Myblog\repositories\AuthRepository\AuthRepository;
 use Rehor\Myblog\entities\User;
 
-class UserController implements UserControllerInterface
+final class UserController implements UserControllerInterface
 {
     use UserControllerTrait;
 
     public static function login(): void
     {
         RendererRepository::displayView("auth/login.php", [
-            "isAuth" => SessionRepository::validateSession(),
+            "isAuth" => AuthRepository::verifyAuthStatus(),
             "isAdmin" => AdminController::checkAdmin()
         ]);
     }
@@ -78,7 +78,7 @@ class UserController implements UserControllerInterface
         RendererRepository::displayView("auth/register.php", [
             "notification" => $notification,
             "isRegistered" => $isRegistered,
-            "isAuth" => SessionRepository::validateSession()
+            "isAuth" => AuthRepository::verifyAuthStatus()
         ]);
     }
 

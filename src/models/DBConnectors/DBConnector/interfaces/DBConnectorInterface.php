@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rehor\Myblog\models\DBConnectors\interfaces;
+namespace Rehor\Myblog\models\DBConnectors\DBConnector\interfaces;
 
 interface DBConnectorInterface
 {
