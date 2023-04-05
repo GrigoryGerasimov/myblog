@@ -15,9 +15,9 @@ class AuthRepository implements AuthRepositoryInterface
         return DelightAuth::triggerRegistration($requestData);
     }
     
-    public static function processAuthLogin(?string $email = null, ?string $password = null): void
+    public static function processAuthLogin(?string $email = null, ?string $password = null, ?string $remember = null): void
     {
-        DelightAuth::triggerLogin($email, $password);
+        DelightAuth::triggerLogin($email, $password, $remember);
     }
     
     public static function processAuthLogout(): void

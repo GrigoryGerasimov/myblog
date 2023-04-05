@@ -78,13 +78,18 @@ class DelightAuth implements DelightAuthInterface
         }
     }
     
-    public static function triggerLogin(?string $email = null, ?string $password = null): void
+    public static function triggerLogin(?string $email = null, ?string $password = null, ?string $remember = null): void
     {
         if (!is_null($email) && !is_null($password)) {
             
             try {
+                $rememberDuration = null;
                 
-                self::init()->login($email, $password);
+                if ($remember === "on") {
+                    $rememberDuration = 60 * 60 * 24;
+                }
+                
+                self::init()->login($email, $password, $rememberDuration);
             
                 $currentUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $email ]);
             

@@ -10,7 +10,7 @@ interface DelightAuthInterface
     
     public static function triggerRegistration(object $requestData): int;
     
-    public static function triggerLogin(?string $email, ?string $password): void;
+    public static function triggerLogin(?string $email, ?string $password, ?string $remember): void;
     
     public static function triggerLogout(): void;
     
