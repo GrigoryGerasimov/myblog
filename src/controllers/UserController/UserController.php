@@ -50,15 +50,7 @@ final class UserController implements UserControllerInterface
                     
                     if (!is_null($registeredUserId)) {
                         
-                        $createdUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "id" => $registeredUserId ]);
-                        
-                        if (!is_null($createdUser)) {
-                            
-                            AuthRepository::processAuthLogin($createdUser->email, $requestData["password"]);
-                            
-                        }
-                        
-                        header("Location: /posts");
+                        header("Location: /login");
                         exit();
                         
                     }
