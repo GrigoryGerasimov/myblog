@@ -60,9 +60,8 @@
             <button type="submit" class="styles-resetter register-form__btn">Sign Up</button>
         </div>
         <div class="register-form__links-block">
-            <p>
-               <a href="/login" class="login__link margin-divider">Already have an account?</a>
-            </p>
+            <a href="/login" class="login__link margin-divider">Already have an account?</a>
+            <a href="/auth/password" class="register__link margin-divider">I already have an account, but I forgot my password</a>
         </div>
     </form>
     

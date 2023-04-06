@@ -12,6 +12,10 @@ interface AuthRepositoryInterface
     
     public static function processAuthLogout(): void;
     
+    public static function triggerForgottenPasswordReset(string $email): void;
+    
+    public static function processForgottenPasswordReset(string $selector, string $token, string $password): void;
+    
     public static function retrieveAuthUserData(): array;
     
     public static function verifyAuthRegisteredMail(string $selector, string $token): array;

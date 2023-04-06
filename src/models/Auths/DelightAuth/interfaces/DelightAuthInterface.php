@@ -13,4 +13,8 @@ interface DelightAuthInterface extends AuthInterface
     public static function triggerRegistration(object $requestData): int;
     
     public static function verifyRegisteredEmail(string $selector, string $token): array;
+    
+    public static function triggerForgottenPasswordReset(string $email): void;
+    
+    public static function resetForgottenPassword(string $selector, string $token, string $password): void;
 }

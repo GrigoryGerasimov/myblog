@@ -27,6 +27,16 @@ final class AuthRepository implements AuthRepositoryInterface
         DelightAuth::triggerLogout();
     }
     
+    public static function triggerForgottenPasswordReset(string $email): void
+    {
+        DelightAuth::triggerForgottenPasswordReset($email);
+    }
+    
+    public static function processForgottenPasswordReset(string $selector, string $token, string $password): void
+    {
+        DelightAuth::resetForgottenPassword($selector, $token, $password);
+    }
+    
     public static function retrieveAuthUserData(): array
     {
         $authUserId = DelightAuth::getAuthUserId();

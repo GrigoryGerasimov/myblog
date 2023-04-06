@@ -40,9 +40,8 @@
             <button type="submit" class="styles-resetter login-form__btn">Sign In</button>
         </div>
         <div class="login-form__links-block">
-            <p>
-               <a href="/register" class="register__link margin-divider">Don't have an account yet?</a>
-            </p>
+            <a href="/register" class="register__link margin-divider">Don't have an account yet?</a>
+            <a href="/auth/password" class="register__link margin-divider">I already have an account, but I forgot my password</a>            
         </div>
     </form>
     

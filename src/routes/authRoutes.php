@@ -10,7 +10,11 @@ function getAuthRoutes(): array
 {
     return [
         "/auth/login" => fn() => AuthController::auth(),
+        "/auth/logout" => fn() => AuthController::logout(),
+        
         "/auth/check/verify_email" => fn() => AuthController::authCheck(),
-        "/auth/logout" => fn() => AuthController::logout()
+        
+        "/auth/password" => fn() => AuthController::triggerPasswordReset(),
+        "/auth/password/reset_password" => fn() => AuthController::resetPassword()
     ];
 }

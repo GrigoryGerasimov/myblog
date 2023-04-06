@@ -17,7 +17,8 @@
 }
 
 .login-form,
-.register-form {
+.register-form,
+.password-reset-form {
 	width: 50%;
 	height: fit-content;
 	display: flex;
@@ -29,14 +30,16 @@
 
 .login-form__labelled-checkbox-block,
 .login-form__labelled-block,
-.register-form__labelled-block {
+.register-form__labelled-block,
+.password-reset-form__labelled-block {
 	width: 100%;
 	display: flex;
 	flex-flow: row wrap;
 }
 
 .login-form__labelled-block,
-.register-form__labelled-block {
+.register-form__labelled-block,
+.password-reset-form__labelled-block {
 	justify-content: space-between;
 	align-items: baseline;
 }
@@ -47,7 +50,8 @@
 }
 
 .login-form__labelled-block,
-.login-form__labelled-checkbox-block {
+.login-form__labelled-checkbox-block,
+.password-reset-form__labelled-block {
 	margin: 30px 0;
 }
 
@@ -60,8 +64,13 @@
 	width: 100px;
 }
 
+.password-reset-form__label {
+	width: 150px;
+}
+
 .login-form__input,
-.register-form__input {
+.register-form__input,
+.password-reset-form__input {
 	flex-grow: 1;
 	padding: 10px;
 	border-radius: 10px;
@@ -69,7 +78,8 @@
 }
 
 .login-form__btn-block,
-.register-form__btn-block {
+.register-form__btn-block,
+.password-reset-form__btn-block {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
@@ -78,7 +88,8 @@
 }
 
 .login-form__btn,
-.register-form__btn {
+.register-form__btn,
+.password-reset-form__btn {
 	cursor: pointer;
 	font-weight: 700;
 	letter-spacing: 3px;
@@ -87,6 +98,7 @@
 
 .login-form__btn:hover,
 .register-form__btn:hover,
+.password-reset-form__btn:hover
 .login__link:hover,
 .register__link:hover {
 	color: var(--secondary-theme);
@@ -98,11 +110,10 @@
 	color: inherit;	
 }
 
-.login__links-block,
-.register__links-block {
-	margin-top: 35px;
+.login-form__links-block,
+.register-form__links-block {
 	display: flex;
-	flex-flow: row wrap;
-	justify-content: space-between;
+	flex-flow: column wrap;
+	justify-content: center;
 	align-items: center;
 }
