@@ -34,7 +34,7 @@ class User
     #[Column(type: "integer", nullable: false)]
     protected $roles_mask;
     
-    #[Column(type: "boolean")]
+    #[Column(type: "boolean", nullable: false)]
     protected $verified;
     
     #[Column(type: "integer", nullable: false)]

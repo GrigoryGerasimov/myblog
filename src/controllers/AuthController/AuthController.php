@@ -30,9 +30,31 @@ final class AuthController implements AuthControllerInterface
         } catch (\Exception $e) {
             
             RendererRepository::displayView("auth/login.php", [
-                "notification" => $e->getMessage()
+                "error" => $e->getMessage()
             ]);
         }
+    }
+    
+    public static function authCheck(): void
+    {
+        $successNotification = $errorNotification = "";
+        
+        try {
+            
+            $registeredEmailList = AuthRepository::verifyAuthRegisteredMail($_GET["selector"], $_GET["token"]);
+            
+            $successNotification = "The registered email id $registeredEmailList[1] has been successfully verified. You can now sign in with your credentials";
+            
+        } catch (\Exception $e) {
+            
+            $errorNotification = $e->getMessage();
+            
+        }
+        
+        RendererRepository::displayView("auth/login.php", [
+            "success" => $successNotification,
+            "error" => $errorNotification
+        ]);
     }
     
     public static function logout(): void
