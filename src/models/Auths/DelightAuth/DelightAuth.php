@@ -183,6 +183,91 @@ final class DelightAuth extends Auth implements DelightAuthInterface
         
     }
     
+    public static function triggerForgottenPasswordReset(string $email): void
+    {
+        try {
+            
+            self::init()->forgotPassword($email, function ($selector, $token) use($email) {
+                
+                $passwordResetURL = "http://localhost:6500/auth/password/reset_password?selector=".urlencode($selector)."&token=".urlencode($token);
+                
+                MailController::mail($email, "Password Reset Link", $passwordResetURL);
+                
+            });
+            
+        } catch (\Delight\Auth\InvalidEmailException $e) {
+                
+            throw new \Exception("Invalid email");
+            
+        } catch (\Delight\Auth\EmailNotVerifiedException $e) {
+            
+            throw new \Exception("Email address has not been verified");
+            
+        } catch (\Delight\Auth\ResetDisabledException $e) {
+            
+            throw new \Exception("Password reset is disabled");
+            
+        } catch (\Delight\Auth\TooManyRequestsException $e) {
+            
+            throw new \Exception("Too many requests. Please try once again later");
+        }
+    }
+    
+    public static function resetForgottenPassword(string $selector, string $token, string $password): void
+    {
+        try {
+            
+            self::init()->canResetPasswordOrThrow($selector, $token);
+            
+            try {
+                
+                self::init()->resetPassword($selector, $token, $password);
+                
+            } catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
+                
+                throw new \Exception("Invalid token");
+                
+            }
+            catch (\Delight\Auth\TokenExpiredException $e) {
+                
+                throw new \Exception("Token expired");
+                
+            }
+            catch (\Delight\Auth\ResetDisabledException $e) {
+                
+                throw new \Exception("Password reset is disabled");
+                
+            }
+            catch (\Delight\Auth\InvalidPasswordException $e) {
+                
+                throw new \Exception("Invalid password");
+                
+            }
+            catch (\Delight\Auth\TooManyRequestsException $e) {
+                
+                throw new \Exception("Too many requests");
+                
+            }
+            
+        } catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
+            
+            throw new \Exception("Invalid token");
+            
+        } catch (\Delight\Auth\TokenExpiredException $e) {
+            
+            throw new \Exception("Token expired");
+            
+        } catch (\Delight\Auth\ResetDisabledException $e) {
+            
+            throw new \Exception("Password reset is disabled");
+            
+        } catch (\Delight\Auth\TooManyRequestsException $e) {
+            
+            throw new \Exception("Too many requests. Please try once again later");
+        }
+        
+    }
+    
     public static function getAuthUserId(): ?int
     {
         return self::init()->getUserId();
