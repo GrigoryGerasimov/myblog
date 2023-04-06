@@ -52,9 +52,9 @@ final class AuthRepository implements AuthRepositoryInterface
         return $authUserData;
     }
     
-    public static function verifyAuthRegisteredMail(): array
+    public static function verifyAuthRegisteredMail(string $selector, string $token): array
     {
-        return DelightAuth::verifyRegisteredEmail();
+        return DelightAuth::verifyRegisteredEmail($selector, $token);
     }
     
     public static function verifyAdminStatus(): bool

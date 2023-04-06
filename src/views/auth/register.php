@@ -66,7 +66,7 @@
         </div>
     </form>
     
-    <h4 class="notification-fail">{{ notification }}</h4>
+    <h4 class="notification-fail margin-top-divider">{{ notification }}</h4>
     
 {% endif %}
 

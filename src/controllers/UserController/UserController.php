@@ -36,35 +36,44 @@ final class UserController implements UserControllerInterface
         
         if (!empty($requestData["username"]) && !empty($requestData["email"]) && !empty($requestData["password"])) {
             
-            $requestData["email"] = self::handleUserInput($requestData["email"]);
-            $requestData["password"] = self::handleUserInput($requestData["password"]);
-            $requestData["username"] = self::handleUserInput($requestData["username"]);
-        
-            $registeredUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $requestData["email"] ]); 
-        
-            if (is_null($registeredUser)) {
+            try {
                 
-                try {
+                self::handlePasswordCheck($requestData["password"]);
+                
+                $requestData["email"] = self::handleUserInput($requestData["email"]);
+                $requestData["password"] = self::handleUserInput($requestData["password"]);
+                $requestData["username"] = self::handleUserInput($requestData["username"]);
+                
+                $registeredUser = DBConnectorDoctrineRepository::retrieveOneFromConnector(DBController::getDBName(), "Rehor\Myblog\\entities\User", [ "email" => $requestData["email"] ]); 
+        
+                if (is_null($registeredUser)) {
+                
+                    try {
                     
-                    $registeredUserId = AuthRepository::processAuthRegistration($requestData);
+                        $registeredUserId = AuthRepository::processAuthRegistration($requestData);
                     
-                    if (!is_null($registeredUserId)) {
+                        if (!is_null($registeredUserId)) {
                         
-                        header("Location: /login");
-                        exit();
+                            $notification = "Verification link has just been sent to your registered email address. Please follow the link and verify your new account to proceed";
                         
+                        }
+                    
+                    } catch (\Exception $e) {
+                    
+                        $notification = $e->getMessage();
                     }
-                    
-                } catch (\Exception $e) {
-                    
-                    $notification = $e->getMessage();
-                }
 
-            } else {
+                } else {
                 
-                $isRegistered = true;
+                    $isRegistered = true;
                 
-            }
+                }
+                
+            } catch (\Exception $e) {
+                
+                $notification = $e->getMessage();
+                
+            }            
         }
 
         RendererRepository::displayView("auth/register.php", [

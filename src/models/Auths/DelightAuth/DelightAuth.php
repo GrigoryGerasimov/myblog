@@ -40,7 +40,7 @@ final class DelightAuth extends Auth implements DelightAuthInterface
             
             $createdUserId = self::init()->registerWithUniqueUsername($email, $password, $username, function($selector, $token) use($email) {
                
-                $verificationURL = "http://localhost:6500/check/verify_email?selector=".urlencode($selector)."&token=".urlencode($token);
+                $verificationURL = "http://localhost:6500/auth/check/verify_email?selector=".urlencode($selector)."&token=".urlencode($token);
                 
                 MailController::mail($email, "Verify your MyBlog account", $verificationURL);
                 
@@ -52,7 +52,6 @@ final class DelightAuth extends Auth implements DelightAuthInterface
                 $createdUser->firstname = $firstname;
                 $createdUser->lastname = $lastname;
                 $createdUser->roles_mask = $role;
-                $createdUser->verified = true;
                 $createdUser->last_login = time();
             }
             
@@ -158,11 +157,11 @@ final class DelightAuth extends Auth implements DelightAuthInterface
         }
     }
     
-    public static function verifyRegisteredEmail(): array
+    public static function verifyRegisteredEmail(string $selector, string $token): array
     {
         try {
             
-            return self::init()->confirmEmail($_GET("selector"), $_GET("token"));
+            return self::init()->confirmEmail($selector, $token);
             
         } catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
             

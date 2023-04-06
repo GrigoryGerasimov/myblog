@@ -46,7 +46,9 @@
         </div>
     </form>
     
-    <h4 class="notification-fail">{{ notification }}</h4>
+    <h4 class="notification-success margin-top-divider">{{ success }}</h4>
+    
+    <h4 class="notification-fail margin-top-divider">{{ error }}</h4>
 
 {% endif %}
 
