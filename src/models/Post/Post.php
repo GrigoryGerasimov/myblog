@@ -24,18 +24,26 @@ final class Post implements PostInterface
     public function add(): void
     {
         try {
+            
             DBController::insert($this->data);
+            
         } catch(\Exception $e) {
+            
             throw $e;
+            
         }
     }
     
     public function update(array $params): object
     {
         try {
+            
             return DBController::update($params, $this->data);
+            
         } catch(\Exception $e) {
+            
             throw $e;
+            
         }
     }
     
@@ -52,9 +60,13 @@ final class Post implements PostInterface
     public function delete(array $params): void
     {
         try {
+            
             DBController::delete($params);
+            
         } catch(\Exception $e) {
+            
             throw $e;
+            
         }
     }
 }

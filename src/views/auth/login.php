@@ -14,7 +14,7 @@
 
     <h4>You are already successfully logged in</h4>
     
-    <div class="login__links-block">
+    <div class="login__links-block margin-top-divider">
         <a href="/posts" class="login__link margin-divider">Back</a>
         <a href="/auth/logout" class="login__link margin-divider">Sign Out</a>
     </div>
@@ -34,7 +34,7 @@
         </div>
         <div class="login-form__labelled-checkbox-block">
             <label for="rememberme" class="login-form__label">Remember Me</label>
-            <input type="checkbox" id="rememberme" name="rememberme" class="margin-divider"/>
+            <input type="checkbox" id="rememberme" name="rememberme" class="styles-resetter margin-divider login-form__checkbox"/>
         </div>
         <div class="login-form__btn-block">
             <button type="submit" class="styles-resetter login-form__btn">Sign In</button>

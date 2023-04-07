@@ -77,6 +77,20 @@
 	border: 1px solid var(--contrast-theme);
 }
 
+.login-form__checkbox {
+	width: 15px;
+	height: 15px;
+	border: 1px solid var(--contrast-theme);
+	border-radius: 5px;
+	background-clip: content-box;
+	padding: 3px;
+	cursor: pointer;
+}
+
+.login-form__checkbox:checked {
+	background-color: var(--secondary-theme);
+}
+
 .login-form__btn-block,
 .register-form__btn-block,
 .password-reset-form__btn-block {
@@ -104,16 +118,24 @@
 	color: var(--secondary-theme);
 }
 
-.login__link,
-.register__link {
-	text-decoration: none;
-	color: inherit;	
-}
-
 .login-form__links-block,
 .register-form__links-block {
 	display: flex;
 	flex-flow: column wrap;
 	justify-content: center;
 	align-items: center;
+}
+
+.login__links-block,
+.register__links-block {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.login__link,
+.register__link {
+	text-decoration: none;
+	color: inherit;	
 }
