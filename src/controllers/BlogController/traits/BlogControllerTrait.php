@@ -24,6 +24,9 @@ trait BlogControllerTrait
     public static function handleException(\Exception $e): void
     {
         echo "Oops... Something bad has happened. More details here: ".$e->getMessage();
+        echo "<pre>";
+        print_r($e->getTrace());
+        echo "</pre>";
         exit(1);
     }
 }

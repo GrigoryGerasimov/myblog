@@ -8,9 +8,9 @@ interface QueryBuilderRepositoryInterface
 {
     public static function buildSelectQuery(string $tableName, ?array $params = null): string;
     
-    public static function buildInsertQuery(string $tableName, object $data): string;
+    public static function buildInsertQuery(string $tableName, array $data): string;
     
-    public static function buildUpdateQuery(string $tableName, ?array $params, object $data): string;
+    public static function buildUpdateQuery(string $tableName, ?array $params, array $data): string;
     
-    public static function buildDeleteQuery(string $tableName, ?array $params): string;
+    public static function buildDeleteQuery(string $tableName, array $params): string;
 }

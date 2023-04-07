@@ -14,7 +14,7 @@
 
     <h4>You are already registered under the given credentials</h4>
     
-    <div class="register__links-block">
+    <div class="register__links-block margin-top-divider">
         <a href="/login" class="register__link margin-divider">Back</a>
     </div>
     
@@ -23,7 +23,7 @@
     <h4 class="height-divider">You are already registered in the system and currently logged in</h4>
     <h4 class="height-divider">To register under new credentials please first sign out</h4>
     
-    <div class="register__links-block">
+    <div class="register__links-block margin-top-divider">
         <a href="/posts" class="register__link margin-divider">Back</a>
         <a href="/auth/logout" class="register__link margin-divider">Sign Out</a>
     </div>

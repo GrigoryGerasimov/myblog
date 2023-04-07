@@ -12,5 +12,5 @@ interface DBControllerInterface
     
     public static function update(?array $params, object $data): object;
     
-    public static function delete(?array $params): void;
+    public static function delete(array $params): void;
 }
